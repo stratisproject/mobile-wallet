@@ -110,9 +110,7 @@ export class CreateWalletPage implements OnInit {
     this.tc = this.isShared ? this.defaults.wallet.totalCopayers : 1;
     this.copayers = _.range(2, this.defaults.limits.totalCopayers + 1);
     this.derivationPathByDefault = this.isShared
-      ? this.coin === 'bch'
-        ? this.derivationPathHelperProvider.defaultMultisigBCH
-        : this.derivationPathHelperProvider.defaultMultisigBTC
+      ? this.derivationPathHelperProvider.defaultMultisigBTC
       : this.bwcProvider.getCore().Deriver.pathFor(this.coin, 'livenet');
     this.derivationPathForTestnet = this.bwcProvider
       .getCore()
@@ -136,8 +134,6 @@ export class CreateWalletPage implements OnInit {
       coin: [null, Validators.required]
     });
     this.createForm.controls['coin'].setValue(this.coin);
-    if (this.coin === 'btc')
-      this.createForm.controls['useNativeSegwit'].setValue(true);
     this.showKeyOnboarding = this.navParams.data.showKeyOnboarding;
 
     this.setTotalCopayers(this.tc);
@@ -270,16 +266,6 @@ export class CreateWalletPage implements OnInit {
       }
 
       // set opts.useLegacyCoinType
-      if (
-        this.coin == 'bch' &&
-        this.derivationPathHelperProvider.parsePath(
-          this.createForm.value.derivationPath
-        ).coinCode == "0'"
-      ) {
-        opts.useLegacyCoinType = true;
-        this.logger.debug('Using 0 for BCH creation');
-      }
-
       if (
         !opts.networkName ||
         !opts.derivationStrategy ||

@@ -1,6 +1,6 @@
 {
-  "name": "copay",
-  "description": "A Secure Bitcoin Wallet",
+  "name": "stratis",
+  "description": "A Secure Strax Wallet",
   "author": "BitPay",
   "version": "12.4.1",
   "keywords": [
@@ -9,10 +9,12 @@
     "bitpay",
     "copay",
     "multisignature",
-    "bitcore"
+    "bitcore",
+    "stratis",
+    "strax"
   ],
   "main": "electron/main.js",
-  "title": "Copay",
+  "title": "Stratis",
   "user-agent": "%name %ver (%osinfo)",
   "webkit": {
     "page-cache": false,
@@ -78,10 +80,11 @@
     "run:android": "npm run env:dev && ionic cordova run android --device --debug",
     "run:android-release": "npm run env:prod && ionic cordova run android --device --release",
     "log:android": "adb logcat | grep chromium",
-    "sign:android": "rm -f platforms/android/app/build/outputs/apk/release/android-release-signed-aligned.apk; jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../copay.keystore -signedjar platforms/android/app/build/outputs/apk/release/android-release-signed.apk platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk  copay_play && $ANDROID_HOME/build-tools/28.0.3/zipalign -v 4 platforms/android/app/build/outputs/apk/release/android-release-signed.apk platforms/android/app/build/outputs/apk/release/android-release-signed-aligned.apk",
+    "sign:android": "rm -f platforms/android/app/build/outputs/apk/release/android-release-signed-aligned.apk; jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ../stratiswallet.keystore -signedjar platforms/android/app/build/outputs/apk/release/android-release-signed.apk platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk  stratiswallet && $ANDROID_HOME/build-tools/28.0.3/zipalign -v 4 platforms/android/app/build/outputs/apk/release/android-release-signed.apk platforms/android/app/build/outputs/apk/release/android-release-signed-aligned.apk",
     "apply:copay": "cd app-template && node apply.js copay",
     "apply:bitpay": "cd app-template && node apply.js bitpay",
     "apply:bitpay-dev": "cd app-template && NODE_ENV=dev node apply.js bitpay",
+    "apply:stratis": "cd app-template && node apply.js stratis",
     "fix:fcm": "echo platforms/ios/Copay/Resources platforms/ios/Copay/Resources/Resources platforms/ios/Bitpay/Resources platforms/ios/Bitpay/Resources/Resources | xargs -n 1 cp GoogleService-Info.plist 2>/dev/null; mkdir -p platforms/android/app/src/debug platforms/android/app/src/release; echo platforms/android/app/src/debug platforms/android/app/src/release platforms/android/app | xargs -n 1 cp google-services.json",
     "sign:copay-desktop": "npm run sign:copay-linux && npm run sign:copay-windows && npm run sign:copay-macos",
     "sign:copay-macos": "gpg -u 1112CFA1 --output dist/Copay.dmg.sig --detach-sig dist/Copay.dmg",
@@ -127,7 +130,7 @@
     "apple-wallet-ng": "1.1.1",
     "base64-js": "1.3.0",
     "bitauth": "git+https://github.com/bitpay/bitauth.git#68cf0353bf517a7e5293478608839fa904351eb6",
-    "bitcore-wallet-client": "8.25.7",
+    "bitcore-wallet-client": "file:../fenix2222/bitcore/packages/bitcore-wallet-client",
     "buffer-compare": "1.1.1",
     "chart.js": "2.8.0",
     "cordova": "9.0.0",
@@ -237,7 +240,9 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-clipboard": {},
       "cordova-plugin-x-toast": {},
-      "cordova-plugin-x-socialsharing": {},
+      "cordova-plugin-x-socialsharing": {
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+      },
       "cordova-plugin-qrscanner": {},
       "cordova-plugin-dialogs": {},
       "cordova-plugin-file": {},
@@ -266,7 +271,9 @@
       "im.ltdev.cordova.UserAgent": {},
       "cordova-launch-review": {},
       "cordova-plugin-wkwebview-engine": {},
-      "cordova-plugin-advanced-http": {},
+      "cordova-plugin-advanced-http": {
+        "OKHTTP_VERSION": "3.10.0"
+      },
       "cordova-plugin-theme-detection": {},
       "cordova-apple-wallet-ng": {},
       "cordova-plugin-add-swift-support": {},

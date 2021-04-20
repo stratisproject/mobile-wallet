@@ -10,8 +10,8 @@
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-$color-primary: #1abb9b;
-$color-secondary: #2c3d51;
+$color-primary: #1382c6;
+$color-secondary: #002458;
 $color-secondary-dark: $color-secondary;
 $icon-border-radius: 3px;
 $txp-icon-border-radius: 0.3rem;
@@ -25,11 +25,11 @@ $onboarding-gradient-top-color: #192c3a;
 
 $slider-bg-color: linear-gradient(
   90deg,
-  rgba(6, 144, 116, 1) 0%,
-  rgba(5, 111, 89, 1) 100%
+  #1382c6 0%,
+  #002458 100%
 );
 $slider-bg-button: linear-gradient(
   180deg,
-  rgba(10, 139, 113, 1) 0%,
-  rgba(11, 96, 79, 1) 100%
+  #1382c6 0%,
+  #002458 100%
 );

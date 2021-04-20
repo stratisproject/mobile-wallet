@@ -560,7 +560,7 @@ export class WalletProvider {
   }
 
   public getAddressView(coin: Coin, network: string, address: string): string {
-    if (coin != 'bch') return address;
+    
     const protoAddr = this.getProtoAddress(coin, network, address);
     return protoAddr;
   }
@@ -587,7 +587,7 @@ export class WalletProvider {
         .then((addr: string) => {
           if (addr) {
             // prevent to show legacy address
-            const isBchLegacy = wallet.coin == 'bch' && addr.match(/^[CHmn]/);
+            const isBchLegacy = false;
             const isValid = this.addressProvider.isValid(addr);
             if (!forceNew && !isBchLegacy && isValid) return resolve(addr);
           }

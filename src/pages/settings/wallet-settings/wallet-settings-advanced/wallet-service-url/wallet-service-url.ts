@@ -80,15 +80,15 @@ export class WalletServiceUrlPage {
     switch (this.walletServiceForm.value.bwsurl) {
       case 'prod':
       case 'production':
-        bws = 'https://bws.bitpay.com/bws/api';
+        bws = 'https://mw-ws.stratisplatform.com:3032/bws/api';
         break;
       case 'sta':
       case 'staging':
-        bws = 'https://bws-staging.b-pay.net/bws/api';
+        bws = 'https://mw-ws.stratisplatform.com:3032/bws/api';
         break;
       case 'loc':
       case 'local':
-        bws = 'http://localhost:3232/bws/api';
+        bws = 'https://mw-ws.stratisplatform.com:3032/bws/api';
         break;
     }
     if (bws) {

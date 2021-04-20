@@ -113,7 +113,7 @@ export class WalletDuplicatePage {
       n: wallet.n,
       myName: wallet.credentials.copayerName,
       networkName: wallet.network,
-      coin: Coin.BCH,
+      coin: Coin.STRAX,
       walletPrivKey: wallet.credentials.walletPrivKey,
       compliantDerivation: wallet.credentials.compliantDerivation,
       bwsurl: this.defaults.bws.url,

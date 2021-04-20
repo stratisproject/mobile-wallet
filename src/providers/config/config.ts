@@ -159,10 +159,10 @@ export class ConfigProvider {
         reconnectDelay: 5000,
         idleDurationMin: 4,
         settings: {
-          unitName: 'BTC',
+          unitName: 'STRAX',
           unitToSatoshi: 100000000,
           unitDecimals: 8,
-          unitCode: 'btc',
+          unitCode: 'strax',
           alternativeName: 'US Dollar',
           alternativeIsoCode: 'USD',
           defaultLanguage: '',
@@ -172,7 +172,7 @@ export class ConfigProvider {
 
       // Bitcore wallet service URL
       bws: {
-        url: 'https://bws.bitpay.com/bws/api' // Uncomment and replace w/ http://localhost:3232/bws/api for testing
+        url: 'https://mw-ws.stratisplatform.com:3032/bws/api' // Uncomment and replace w/ http://localhost:3232/bws/api for testing
       },
 
       adPubKey: {

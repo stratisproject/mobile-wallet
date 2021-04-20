@@ -14,10 +14,11 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es6",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "node_modules/*", "node_modules/@walletconnect/browser-utils/dist/cjs/browser.d.ts"],
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false

@@ -370,7 +370,7 @@ export class IncomingDataProvider {
     this.logger.debug('Incoming-data: Bitcoin URI');
     let amountFromRedirParams =
       redirParams && redirParams.amount ? redirParams.amount : '';
-    const coin = Coin.BTC;
+    const coin = Coin.STRAX;
     let parsed = this.bwcProvider.getBitcore().URI(data);
     let address = parsed.address ? parsed.address.toString() : '';
     let message = parsed.message;
@@ -385,7 +385,7 @@ export class IncomingDataProvider {
     this.logger.debug('Incoming-data: Bitcoin Cash URI');
     let amountFromRedirParams =
       redirParams && redirParams.amount ? redirParams.amount : '';
-    const coin = Coin.BCH;
+    const coin = Coin.STRAX;
     let parsed = this.bwcProvider.getBitcoreCash().URI(data);
     let address = parsed.address ? parsed.address.toString() : '';
 
@@ -407,7 +407,7 @@ export class IncomingDataProvider {
     this.logger.debug('Incoming-data: Ethereum URI');
     let amountFromRedirParams =
       redirParams && redirParams.amount ? redirParams.amount : '';
-    const coin = Coin.ETH;
+    const coin = Coin.STRAX;
     const value = /[\?\&]value=(\d+([\,\.]\d+)?)/i;
     const gasPrice = /[\?\&]gasPrice=(\d+([\,\.]\d+)?)/i;
     let parsedAmount;
@@ -432,7 +432,7 @@ export class IncomingDataProvider {
     this.logger.debug('Incoming-data: Ripple URI');
     let amountFromRedirParams =
       redirParams && redirParams.amount ? redirParams.amount : '';
-    const coin = Coin.XRP;
+    const coin = Coin.STRAX;
     const amountParam = /[\?\&]amount=(\d+([\,\.]\d+)?)/i;
     const tagParam = /[\?\&]dt=(\d+([\,\.]\d+)?)/i;
     let parsedAmount;
@@ -468,7 +468,7 @@ export class IncomingDataProvider {
     this.logger.debug('Incoming-data: Dogecoin URI');
     let amountFromRedirParams =
       redirParams && redirParams.amount ? redirParams.amount : '';
-    const coin = Coin.DOGE;
+    const coin = Coin.STRAX;
     let parsed = this.bwcProvider.getBitcoreDoge().URI(data);
     let address = parsed.address ? parsed.address.toString() : '';
     let message = parsed.message;
@@ -500,7 +500,7 @@ export class IncomingDataProvider {
 
   private handleBitcoinCashUriLegacyAddress(data: string): void {
     this.logger.debug('Incoming-data: Bitcoin Cash URI with legacy address');
-    const coin = Coin.BCH;
+    const coin = Coin.STRAX;
     let parsed = this.bwcProvider
       .getBitcore()
       .URI(data.replace(/^(bitcoincash:|bchtest:)/, 'bitcoin:'));
@@ -541,7 +541,7 @@ export class IncomingDataProvider {
     redirParams?: RedirParams
   ): void {
     this.logger.debug('Incoming-data: Bitcoin plain address');
-    const coin = Coin.BTC;
+    const coin = Coin.STRAX;
     if (redirParams && redirParams.activePage === 'ScanPage') {
       this.showMenu({
         data,
@@ -560,7 +560,7 @@ export class IncomingDataProvider {
     redirParams?: RedirParams
   ): void {
     this.logger.debug('Incoming-data: Bitcoin Cash plain address');
-    const coin = Coin.BCH;
+    const coin = Coin.STRAX;
     if (redirParams && redirParams.activePage === 'ScanPage') {
       this.showMenu({
         data,
@@ -576,7 +576,7 @@ export class IncomingDataProvider {
 
   private handleEthereumAddress(data: string, redirParams?: RedirParams): void {
     this.logger.debug('Incoming-data: Ethereum address');
-    const coin = Coin.ETH;
+    const coin = Coin.STRAX;
     if (redirParams && redirParams.activePage === 'ScanPage') {
       this.showMenu({
         data,
@@ -592,7 +592,7 @@ export class IncomingDataProvider {
 
   private handleRippleAddress(data: string, redirParams?: RedirParams): void {
     this.logger.debug('Incoming-data: Ripple address');
-    const coin = Coin.XRP;
+    const coin = Coin.STRAX;
     if (redirParams && redirParams.activePage === 'ScanPage') {
       this.showMenu({
         data,
@@ -611,7 +611,7 @@ export class IncomingDataProvider {
     redirParams?: RedirParams
   ): void {
     this.logger.debug('Incoming-data: Dogecoin plain address');
-    const coin = Coin.DOGE;
+    const coin = Coin.STRAX;
     if (redirParams && redirParams.activePage === 'ScanPage') {
       this.showMenu({
         data,
@@ -1382,10 +1382,8 @@ export class IncomingDataProvider {
         option => option.currency.toLowerCase() === coin
       );
       const instructions = payProDetails.instructions[0];
-      const { outputs, toAddress, data } = instructions;
-      if (coin === 'xrp' && outputs) {
-        invoiceID = outputs[0].invoiceID;
-      }
+      const { toAddress, data } = instructions;
+      
       const stateParams = {
         amount: estimatedAmount,
         toAddress,

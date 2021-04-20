@@ -210,12 +210,12 @@ describe('TxFormatProvider', () => {
 
     it('should return same tx if tx.action is invalid', () => {
       tx.action = 'invalid';
-      expect(txFormatProvider.processTx(Coin.BTC, tx)).toEqual(tx);
+      expect(txFormatProvider.processTx(Coin.STRAX, tx)).toEqual(tx);
     });
 
     it('should return tx with defined values if tx.action is received', () => {
       tx.action = 'received';
-      let result = txFormatProvider.processTx(Coin.BTC, tx);
+      let result = txFormatProvider.processTx(Coin.STRAX, tx);
 
       expect(tx.toAddress).toBeDefined();
       expect(tx.toAddress).toEqual('mxMUZvgFR8D3LRscz5GbXERPXNSp1ww8Bb');
@@ -228,7 +228,7 @@ describe('TxFormatProvider', () => {
     it('should return tx.toAddress in CashAddress format if coin is BCH', () => {
       tx.action = 'received';
       tx.outputs[0].toAddress = 'CWtp9bmTjiwBp89SvnZRbshkEkTY9TRZnt';
-      txFormatProvider.processTx(Coin.BCH, tx);
+      txFormatProvider.processTx(Coin.STRAX, tx);
       expect(tx.toAddress).toEqual(
         'qz0ys7q7utlsd7fmcsecxtpp9y8j8xhxtsy35kmzka'
       );
@@ -237,7 +237,7 @@ describe('TxFormatProvider', () => {
     it('should return tx.addressTo in CashAddress format if coin is BCH', () => {
       tx.action = 'received';
       tx.addressTo = 'CWtp9bmTjiwBp89SvnZRbshkEkTY9TRZnt';
-      txFormatProvider.processTx(Coin.BCH, tx);
+      txFormatProvider.processTx(Coin.STRAX, tx);
       expect(tx.addressTo.toString()).toEqual(
         'qz0ys7q7utlsd7fmcsecxtpp9y8j8xhxtsy35kmzka'
       );
@@ -245,7 +245,7 @@ describe('TxFormatProvider', () => {
 
     it('should return same tx.amount if only has one output', () => {
       tx.action = 'sent';
-      txFormatProvider.processTx(Coin.BTC, tx);
+      txFormatProvider.processTx(Coin.STRAX, tx);
       expect(tx.hasMultiplesOutputs).toBeFalsy();
       expect(tx.amount).toEqual(447100);
     });
@@ -264,7 +264,7 @@ describe('TxFormatProvider', () => {
           toAddress: 'mxMUZvgFR8D3LRscz5GbXERPXNSp1ww8Bb'
         }
       ];
-      txFormatProvider.processTx(Coin.BTC, tx);
+      txFormatProvider.processTx(Coin.STRAX, tx);
       expect(tx.hasMultiplesOutputs).toBeTruthy();
       expect(tx.amount).toEqual(1094200);
     });
@@ -285,7 +285,7 @@ describe('TxFormatProvider', () => {
     });
 
     it('should return amount parsed correctly if the currency is BTC', () => {
-      let result = txFormatProvider.parseAmount(Coin.BTC, 0.012235, 'BTC', {
+      let result = txFormatProvider.parseAmount(Coin.STRAX, 0.012235, 'BTC', {
         onlyIntegers: false
       });
       expect(result).toEqual({
@@ -301,7 +301,7 @@ describe('TxFormatProvider', () => {
       spyOn(filterProvider, 'formatFiatAmount').and.returnValue('1,505');
       spyOn(rateProvider, 'fromFiat').and.returnValue(24117237);
 
-      let result = txFormatProvider.parseAmount(Coin.BTC, 1505, 'USD', {
+      let result = txFormatProvider.parseAmount(Coin.STRAX, 1505, 'USD', {
         onlyIntegers: false
       });
       expect(result).toEqual({
@@ -329,7 +329,7 @@ describe('TxFormatProvider', () => {
       spyOn(rateProvider, 'fromFiat').and.returnValue(24117237);
 
       let onlyIntegers = true;
-      let result = txFormatProvider.parseAmount(Coin.BTC, 1505, 'JPY', {
+      let result = txFormatProvider.parseAmount(Coin.STRAX, 1505, 'JPY', {
         onlyIntegers
       });
       expect(result).toEqual({
@@ -344,7 +344,7 @@ describe('TxFormatProvider', () => {
     it('should return amount parsed correctly if the currency is sat', () => {
       spyOn(filterProvider, 'formatFiatAmount').and.returnValue('1,505');
 
-      let result = txFormatProvider.parseAmount(Coin.BTC, 1505, 'sat', {
+      let result = txFormatProvider.parseAmount(Coin.STRAX, 1505, 'sat', {
         onlyIntegers: false
       });
       expect(result).toEqual({
@@ -373,7 +373,7 @@ describe('TxFormatProvider', () => {
     });
 
     it('should return amount in unit format', () => {
-      let result = txFormatProvider.satToUnit(12312312, Coin.BTC);
+      let result = txFormatProvider.satToUnit(12312312, Coin.STRAX);
       expect(result).toEqual(0.12312312);
     });
   });

@@ -106,7 +106,7 @@ export class ImportWalletPage {
       filePassword: [null],
       derivationPathEnabled: [false],
       coin: ['btc'],
-      derivationPath: [this.derivationPathHelperProvider.defaultBTC],
+      derivationPath: [this.derivationPathHelperProvider.defaultSTRAT],
       bwsURL: [this.defaults.bws.url],
       isMultisig: [false]
     });
@@ -416,15 +416,6 @@ export class ImportWalletPage {
 
     // set opts.useLegacyCoinType
     if (
-      coin == 'bch' &&
-      this.derivationPathHelperProvider.parsePath(derivationPath).coinCode ==
-        "0'"
-    ) {
-      opts.useLegacyCoinType = true;
-      this.logger.debug('Using 0 for BCH creation');
-    }
-
-    if (
       !opts.networkName ||
       !opts.derivationStrategy ||
       !Number.isInteger(opts.account)
@@ -564,15 +555,6 @@ export class ImportWalletPage {
       }
 
       // set opts.useLegacyCoinType
-      if (
-        opts.coin == 'bch' &&
-        this.derivationPathHelperProvider.parsePath(derivationPath).coinCode ==
-          "0'"
-      ) {
-        opts.useLegacyCoinType = true;
-        this.logger.debug('Using 0 for BCH creation');
-      }
-
       if (
         !opts.networkName ||
         !opts.derivationStrategy ||

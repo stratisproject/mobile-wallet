@@ -129,8 +129,7 @@ export class ProfileProvider {
     // for token wallets
     wallet.linkedEthWallet = this.currencyProvider.getLinkedEthWallet(
       wallet.coin,
-      wallet.id,
-      wallet.n
+      wallet.id
     );
 
     if (wallet.linkedEthWallet) {

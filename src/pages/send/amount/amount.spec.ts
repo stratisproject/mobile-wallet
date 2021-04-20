@@ -56,7 +56,7 @@ describe('AmountPage', () => {
       instance.unitIndex = 1;
       instance.unitToSatoshi = 1e8;
       instance.sendMax();
-      expect(toFiatSpy).toHaveBeenCalledWith(100000000, 'USD', Coin.BCH);
+      expect(toFiatSpy).toHaveBeenCalledWith(100000000, 'USD', Coin.STRAX);
       expect(instance.expression).toBe('1000000.00');
     });
 

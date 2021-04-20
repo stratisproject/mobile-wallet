@@ -4,17 +4,18 @@ import { availableCoins, CoinOpts } from './coin';
 import { Token, TokenOpts } from './token';
 
 export enum Coin {
-  BTC = 'btc',
-  BCH = 'bch',
-  ETH = 'eth',
-  XRP = 'xrp',
-  USDC = 'usdc',
-  GUSD = 'gusd',
-  PAX = 'pax',
-  BUSD = 'busd',
-  DAI = 'dai',
-  WBTC = 'wbtc',
-  DOGE = 'doge'
+  // BTC = 'btc',
+  STRAX = 'strax',
+  // BCH = 'bch',
+  // ETH = 'eth',
+  // XRP = 'xrp',
+  // USDC = 'usdc',
+  // GUSD = 'gusd',
+  // PAX = 'pax',
+  // BUSD = 'busd',
+  // DAI = 'dai',
+  // WBTC = 'wbtc',
+  // DOGE = 'doge'
 }
 
 export type CoinsMap<T> = { [key in Coin]: T };
@@ -61,10 +62,10 @@ export class CurrencyProvider {
     return !!this.coinOpts[coin].properties.isERCToken;
   }
 
-  getLinkedEthWallet(coin: Coin, walletId: string, m: number): string {
-    if (!this.coinOpts[coin].properties.isERCToken && coin !== 'eth')
+  getLinkedEthWallet(coin: Coin, walletId: string): string {
+    if (!this.coinOpts[coin].properties.isERCToken)
       return null;
-    if (coin === 'eth' && m === 1) return null;
+    
     return walletId.replace(/-0x.*$/, '');
   }
 
