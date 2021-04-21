@@ -22,7 +22,7 @@ export class ChangellyProvider {
   ) {
     this.logger.debug('ChangellyProvider initialized');
     this.env = 'production';
-    this.uri = 'https://bws.bitpay.com/bws/api';
+    this.uri = 'ttps://mw-ws.stratisplatform.com:3032/bws/api';
     this.supportedCoins = [
       'btc',
       'bch',
@@ -31,7 +31,8 @@ export class ChangellyProvider {
       'usdc',
       'gusd',
       'dai',
-      'doge'
+      'doge',
+      'strax'
     ];
   }
 

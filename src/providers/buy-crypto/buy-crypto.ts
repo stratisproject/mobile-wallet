@@ -17,7 +17,7 @@ export class BuyCryptoProvider {
   public exchangeCoinsSupported: string[];
 
   // private baseUrl: string = 'http://localhost:3232/bws/api'; // testing
-  private baseUrl: string = 'https://bws.bitpay.com/bws/api';
+  private baseUrl: string = 'ttps://mw-ws.stratisplatform.com:3032/bws/api';
 
   constructor(
     private http: HttpClient,

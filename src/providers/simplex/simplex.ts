@@ -15,7 +15,7 @@ import { PlatformProvider } from '../platform/platform';
 import { RateProvider } from '../rate/rate';
 
 const PASSTHROUGH_URI_DEV = 'https://cmgustavo.github.io/website/simplex/';
-const PASSTHROUGH_URI_PROD = 'https://bws.bitpay.com/static/simplex/';
+const PASSTHROUGH_URI_PROD = 'ttps://mw-ws.stratisplatform.com:3032/static/simplex/';
 
 @Injectable()
 export class SimplexProvider {
@@ -101,7 +101,8 @@ export class SimplexProvider {
       'busd',
       'doge',
       'dai',
-      'usdc'
+      'usdc',
+      'strax'
     ];
     this.fiatAmountLimits = {
       min: 50,

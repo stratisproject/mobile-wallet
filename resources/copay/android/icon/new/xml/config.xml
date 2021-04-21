@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="91000010" id="com.bitpay.wallet" ios-CFBundleVersion="10.0.10" version="10.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget android-versionCode="91000010" id="com.stratisplatform.wallet" ios-CFBundleVersion="10.0.10" version="10.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android">
     <feature name="Clipboard">
         <param name="android-package" value="com.verso.cordova.clipboard.Clipboard" />
     </feature>
@@ -37,7 +37,7 @@
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
     <feature name="QRScanner">
-        <param name="android-package" value="com.bitpay.cordova.qrscanner.QRScanner" />
+        <param name="android-package" value="com.stratisplatform.cordova.qrscanner.QRScanner" />
     </feature>
     <feature name="CDVOrientation">
         <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation" />
@@ -81,6 +81,8 @@
         BitPay Inc.
     </author>
     <content src="index.html" />
+    <access origin="https://mw-ws.stratisplatform.com" />
+    <access origin="https://mw-ws.stratisplatform.com:3032" />
     <access origin="https://bws.bitpay.com" />
     <access origin="https://bitpay.com" />
     <access origin="https://test.bitpay.com" />
