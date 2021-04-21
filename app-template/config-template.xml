@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.stratisplatform.*BUNDLENAME*"
+<widget id="com.stratisplatform.mobile"
   version="*VERSION*"
   android-versionCode="*ANDROIDVERSION*"
   ios-CFBundleVersion="*IOSBUILDVERSION*"

@@ -1,8 +1,8 @@
 {
-  "name": "stratis",
-  "description": "A Secure Strax Wallet",
+  "name": "stratiswallet",
+  "description": "A Secure Stratis Wallet",
   "author": "BitPay",
-  "version": "12.4.1",
+  "version": "1.0.1",
   "keywords": [
     "bitcoin",
     "wallet",
@@ -14,7 +14,7 @@
     "strax"
   ],
   "main": "electron/main.js",
-  "title": "Stratis",
+  "title": "Stratis Wallet",
   "user-agent": "%name %ver (%osinfo)",
   "webkit": {
     "page-cache": false,
@@ -249,7 +249,7 @@
       "cordova-custom-config": {},
       "cordova-plugin-customurlscheme-ng": {
         "URL_SCHEME": "bitcoin",
-        "SECOND_URL_SCHEME": "copay",
+        "SECOND_URL_SCHEME": "stratiswallet",
         "THIRD_URL_SCHEME": "bitcoincash",
         "FOURTH_URL_SCHEME": "bchtest",
         "FIFTH_URL_SCHEME": "ethereum",
