@@ -125,7 +125,7 @@
         </ion-icon>
         <ion-label>
           <div class="main-label">
-            {{ 'Bitcoin Network Fee Policy' | translate }}
+            {{ 'Strax Network Fee Policy' | translate }}
           </div>
         </ion-label>
       </button>
@@ -186,7 +186,7 @@
         {{ 'Cards' | translate }}
       </ion-item-divider>
 
-      <div *ngIf="isCordova && !isCopay && showBitPayCard && bitpayCardItems?.length">
+      <!-- <div *ngIf="isCordova && !isCopay && showBitPayCard && bitpayCardItems?.length">
         <ion-list>
           <ng-container *ngFor="let card of bitpayCardItems; let i = index; trackBy: trackBy">
             <button ion-item (click)="openCardSettings(card.id)" @fade *ngIf="!card.hide">
@@ -200,9 +200,9 @@
             </button>
           </ng-container>
         </ion-list>
-      </div>
+      </div> -->
 
-      <button ion-item *ngFor="let card of (cardServices | orderBy: ['title'])" (click)="openSettingIntegration(card.name)">
+      <!-- <button ion-item *ngFor="let card of (cardServices | orderBy: ['title'])" (click)="openSettingIntegration(card.name)">
         <ion-icon class="item-img" item-start>
           <img src="{{card.icon}}" />
         </ion-icon>
@@ -213,9 +213,9 @@
             {{ card.show ? ('On' | translate) : ('Off' | translate) }}
           </span>
         </ion-note>
-      </button>
+      </button> -->
 
-      <ng-container *ngIf="isCordova && !isCopay">
+      <!-- <ng-container *ngIf="isCordova && !isCopay">
         <ion-item-divider tappable (click)="mdesFlag()">
           {{'BitPay Account' | translate}}
         </ion-item-divider>
@@ -229,10 +229,10 @@
             <span translate>Linked</span>
           </ion-note>
         </button>
-      </ng-container>
+      </ng-container> -->
 
 
-      <ion-item-divider *ngIf="integrationServices && integrationServices[0]">
+      <!-- <ion-item-divider *ngIf="integrationServices && integrationServices[0]">
         {{ 'Exchanges' | translate }}
       </ion-item-divider>
 
@@ -259,7 +259,7 @@
           <img src="{{externalService.icon}}" />
         </ion-icon>
         <span class="main-label">{{ externalService.title }}</span>
-      </button>
+      </button> -->
 
 
       <ion-item-divider tappable (click)="mdesCertOnlyFlag()">{{ 'More' | translate }}</ion-item-divider>

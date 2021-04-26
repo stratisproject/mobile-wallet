@@ -38,7 +38,7 @@ export class NoLowFee {
       this.popupProvider
         .ionicAlert(
           'Low Fee Error',
-          'Please change your Bitcoin Network Fee Policy setting to Normal or higher to use this service'
+          'Please change your Strax Network Fee Policy setting to Normal or higher to use this service'
         )
         .then(() => {
           this.navCtrl.pop();

@@ -16,7 +16,7 @@
         <br>
         <span translate>Live on crypto.</span>
       </div>
-      <p translate>The fastest, easiest way to turn your crypto into dollars for shopping. Load funds in the BitPay App and spend in minutes.</p>
+      <p translate>The fastest, easiest way to turn your crypto into dollars for shopping. Load funds in the Stratis App and spend in minutes.</p>
     </div>
 
     <div>
@@ -35,7 +35,7 @@
           <img src="assets/img/bitpay-card/bitpay-card-intro-2.svg" />
           <div class="bitpayCard-item-title" translate>Flexibility</div>
         </div>
-        <p translate>Designed for people who want to live life on crypto. View your balance, request a new PIN, and reload instantly all within the BitPay App.</p>
+        <p translate>Designed for people who want to live life on crypto. View your balance, request a new PIN, and reload instantly all within the Stratis App.</p>
       </div>
       <div class="bitpayCard-item">
         <div class="bitpayCard-item-header">
@@ -65,16 +65,16 @@
     <ion-toolbar>
 
       <ng-container *ngIf="bitPayIdConnected else notConnected">
-        <button ion-button class="button-standard button-primary" (click)="orderBitPayCard('login')">
+        <button ion-button class="button-standard button-primary" (click)="orderStratisCard('login')">
           {{'Sign Up' | translate}}
         </button>
       </ng-container>
 
       <ng-template #notConnected>
-        <button ion-button class="button-standard button-primary" (click)="orderBitPayCard('createAccount')">
+        <button ion-button class="button-standard button-primary" (click)="orderStratisCard('createAccount')">
           {{'Sign Up' | translate}}
         </button>
-        <div class="bitpayCard__link-button" (click)="orderBitPayCard('login')">
+        <div class="bitpayCard__link-button" (click)="orderStratisCard('login')">
           {{'I already have an account' | translate}}
         </div>
       </ng-template>

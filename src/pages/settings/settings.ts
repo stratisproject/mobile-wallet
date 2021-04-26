@@ -407,8 +407,8 @@ export class SettingsPage {
     this.analyticsProvider.logEvent('help', {});
     const url =
       this.appName == 'Copay'
-        ? 'https://github.com/bitpay/copay/issues'
-        : 'https://help.bitpay.com/bitpay-app';
+        ? 'https://www.stratisplatform.com/contact/'
+        : 'https://www.stratisplatform.com/contact/';
     const optIn = true;
     const title = null;
     const message = this.translate.instant(

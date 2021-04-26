@@ -1,4 +1,4 @@
-To prevent unautorized network access, Copay and Bitpay Wallet v5.3.0 and above use the following Content Security Policy (CSP)
+To prevent unautorized network access, Stratis Wallet v5.3.0 and above use the following Content Security Policy (CSP)
 
   <meta http-equiv="c" content="default-src 'self' 'unsafe-eval' https://bws.bitpay.com
   https://bitpay.com https://auth.shapeshift.io https://shapeshift.io https://api.coinbase.com https://coinbase.com; 

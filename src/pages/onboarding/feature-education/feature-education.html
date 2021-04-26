@@ -4,7 +4,7 @@
 
 <ion-content no-bounce>
   <ion-slides (ionSlideDidChange)="slideChanged()" #featureEducationSlides [pager]="!featureEducationSlides.isEnd()" class="onboarding-slides">
-    <ion-slide *ngIf="appName !== 'Copay'">
+    <!-- <ion-slide *ngIf="appName !== 'Copay'">
       <ion-content>
         <div class="slide-info">
           <div class="img-container">
@@ -21,7 +21,7 @@
           </div>
         </div>
       </ion-content>
-    </ion-slide>
+    </ion-slide> -->
     <ion-slide *ngIf="appName !== 'Copay'">
       <ion-content>
         <div class="slide-info">
@@ -60,7 +60,7 @@
           </div>
           <div class="info">
             <h3 class="title" translate>Control your money without an account</h3>
-            <div class="text" translate>Websites and exchanges get hacked. BitPay allows you to privately store, manage, and use your crypto funds without having to trust a centralized bank or exchange.</div>
+            <div class="text" translate>Websites and exchanges get hacked. Stratis Wallet allows you to privately store, manage, and use your crypto funds without having to trust a centralized bank or exchange.</div>
           </div>
         </div>
       </ion-content>

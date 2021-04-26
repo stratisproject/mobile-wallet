@@ -31,10 +31,10 @@ export class BuyCryptoProvider {
   ) {
     this.logger.debug('BuyCrypto Provider initialized');
 
-    this.exchangeCoinsSupported = _.union(
-      this.simplexProvider.supportedCoins,
-      this.wyreProvider.supportedCoins
-    );
+    this.exchangeCoinsSupported = []; // _.union(
+    //   this.simplexProvider.supportedCoins,
+    //   this.wyreProvider.supportedCoins
+    // );
     this.paymentMethodsAvailable = {
       applePay: {
         label: this.translate.instant('Apple Pay'),

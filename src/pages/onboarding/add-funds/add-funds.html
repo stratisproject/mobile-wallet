@@ -1,7 +1,7 @@
 <wide-header-page title="{{ 'Let’s add some funds' | translate }}" hideBackButton="true">
   <div page-content>
     <ion-list no-lines>
-      <div class="option-container" (click)="goToCoinbase()" *ngIf="showCoinbase">
+      <!-- <div class="option-container" (click)="goToCoinbase()" *ngIf="showCoinbase">
         <ion-item>
           <img src="assets/img/coinbase/coinbase-icon.png" class="coinbase-icon" />
         </ion-item>
@@ -26,7 +26,7 @@
             {{'Buy crypto with a credit card.' | translate}}
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="option-container" (click)="goToImportWallet()" *ngIf="needsBackup">
         <ion-item>
           <img src="assets/img/receive.svg" />

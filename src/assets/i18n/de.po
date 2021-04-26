@@ -17,7 +17,7 @@ msgstr ""
 msgid "(possible double spend)"
 msgstr "(mögliche Doppelausgabe)"
 
-msgid "* A payment proposal can be deleted if 1) you are the creator, and no other copayer has signed, or 2) 10 minutes have passed since the proposal was created."
+msgid "* A payment proposal can be deleted if 1) you are the creator, and no other stratis wallet user has signed, or 2) 10 minutes have passed since the proposal was created."
 msgstr ""
 
 msgid "*Currently available in the USA. More countries coming soon."
@@ -38,7 +38,7 @@ msgstr ""
 msgid "5 USD minimum fee or 3.9% of the amount + 0.30 USD, whichever is greater + Required miners fee."
 msgstr ""
 
-msgid "5-star ratings help us get BitPay Wallet into more hands, and more users means more resources can be committed to the app!"
+msgid "5-star ratings help us get Stratis Wallet into more hands, and more users means more resources can be committed to the app!"
 msgstr ""
 
 msgid "A Destination Tag is an optional number that corresponds to an invoice or a XRP account on an exchange."
@@ -47,7 +47,7 @@ msgstr ""
 msgid "A dog without funds is a sad dog"
 msgstr ""
 
-msgid "A new copayer just joined your wallet {{walletName}}."
+msgid "A new stratis wallet user just joined your wallet {{walletName}}."
 msgstr ""
 
 msgid "A new payment proposal has been created in your wallet {{walletName}}."
@@ -107,8 +107,8 @@ msgstr "Aktivität"
 msgid "Add"
 msgstr "Hinzufügen"
 
-msgid "Add BitPay Account?"
-msgstr "BitPay-Konto hinzufügen?"
+msgid "Add Stratis Account?"
+msgstr "Stratis-Konto hinzufügen?"
 
 msgid "Add Encryption"
 msgstr ""
@@ -128,8 +128,8 @@ msgstr "Konto hinzufügen"
 msgid "Add as a contact"
 msgstr "Zu Kontakten hinzufügen"
 
-msgid "Add copayers"
-msgstr "Copayers hinzufügen"
+msgid "Add stratis wallet users"
+msgstr "Stratis wallet users hinzufügen"
 
 msgid "Add funds"
 msgstr "Guthaben aufladen"
@@ -137,8 +137,8 @@ msgstr "Guthaben aufladen"
 msgid "Add funds from an existing wallet."
 msgstr ""
 
-msgid "Add this BitPay account ({{email}})?"
-msgstr "Dieses BitPay-Konto hinzufügen ({{email}})?"
+msgid "Add this Stratis account ({{email}})?"
+msgstr "Dieses Stratis-Konto hinzufügen ({{email}})?"
 
 msgid "Add {coinName} address"
 msgstr ""
@@ -263,7 +263,7 @@ msgstr "Wollen Sie wirklich diese Transaktion ablehnen?"
 msgid "Are you sure you want to remove this transaction?"
 msgstr "Wollen Sie wirklich diese Transaktion löschen?"
 
-msgid "Are you sure you would like to disconnect your BitPay ID?"
+msgid "Are you sure you would like to disconnect your Stratis ID?"
 msgstr ""
 
 msgid "Are you sure?"
@@ -323,7 +323,7 @@ msgstr ""
 msgid "Because you are speeding up this transaction, the {coinName} miner fee ({fee} {coin}) will be deducted from the total."
 msgstr ""
 
-msgid "Because your encrypted password is not stored by BitPay, there is no way to reset it."
+msgid "Because your encrypted password is not stored by Stratis, there is no way to reset it."
 msgstr ""
 
 msgid "Before duplicating your wallet, it's recommended that you first write down your recovery phrase and store it securely so that your wallet can be recovered in the case your device was lost or stolen."
@@ -341,37 +341,37 @@ msgstr ""
 msgid "Biometric"
 msgstr "Biometrisch"
 
-msgid "BitPay Account"
+msgid "Stratis Account"
 msgstr ""
 
-msgid "BitPay ID"
-msgstr "BitPay ID"
+msgid "Stratis ID"
+msgstr "Stratis ID"
 
-msgid "BitPay ID successfully connected."
-msgstr "BitPay ID erfolgreich verbunden."
+msgid "Stratis ID successfully connected."
+msgstr "Stratis ID erfolgreich verbunden."
 
-msgid "BitPay ID successfully disconnected."
-msgstr "BitPay ID erfolgreich getrennt."
+msgid "Stratis ID successfully disconnected."
+msgstr "Stratis ID erfolgreich getrennt."
 
-msgid "BitPay cannot validate the destination tag. Before sending XRP please double-check the destination tag with the receiver, if not valid it may result in the permanent loss of the funds."
+msgid "Stratis cannot validate the destination tag. Before sending XRP please double-check the destination tag with the receiver, if not valid it may result in the permanent loss of the funds."
 msgstr ""
 
-msgid "BitPay would also like to send you marketing and promotional communications about our products, services and special promotions. You can change your preferences at any time in “Settings” in our app or by contacting us as set forth in our"
+msgid "Stratis would also like to send you marketing and promotional communications about our products, services and special promotions. You can change your preferences at any time in “Settings” in our app or by contacting us as set forth in our"
 msgstr ""
 
-msgid "Bitcoin Address"
-msgstr "Bitcoin-Adresse"
+msgid "Strax Address"
+msgstr "Strax-Adresse"
 
 msgid "Bitcoin Cash Address"
 msgstr ""
 
-msgid "Bitcoin Network Fee Policy"
-msgstr "Bitcoin-Netzwerk Gebührenübersicht"
+msgid "Strax Network Fee Policy"
+msgstr "Strax-Netzwerk Gebührenübersicht"
 
-msgid "Bitcoin transactions include a fee collected by miners on the network."
-msgstr "Bitcoin Transaktionen enthalten eine Gebühr für die \"Miners\" im Netzwerk."
+msgid "Strax transactions include a fee collected by miners on the network."
+msgstr "Strax Transaktionen enthalten eine Gebühr für die \"Miners\" im Netzwerk."
 
-msgid "Bitcore Wallet Service is under maintenance. Please check https://status.bitpay.com/."
+msgid "Strax Wallet Service is under maintenance. Please check https://status.bitpay.com/."
 msgstr ""
 
 msgid "Broadcast Payment"
@@ -416,10 +416,10 @@ msgstr "Kaufe Bitcoins..."
 msgid "Buying Gift Card..."
 msgstr "Geschenkkarte kaufen..."
 
-msgid "By giving my email address, I give explicit consent to BitPay to use it to contact me about payment issues."
+msgid "By giving my email address, I give explicit consent to Stratis to use it to contact me about payment issues."
 msgstr ""
 
-msgid "By providing your email address, you give explicit consent to BitPay to use your email address to send you email notifications about payments."
+msgid "By providing your email address, you give explicit consent to Stratis to use your email address to send you email notifications about payments."
 msgstr ""
 
 msgid "CLOSE"
@@ -599,13 +599,13 @@ msgstr ""
 msgid "Connect Coinbase Account"
 msgstr ""
 
-msgid "Connect Your BitPay ID"
+msgid "Connect Your Stratis ID"
 msgstr ""
 
 msgid "Connect with Coinbase"
 msgstr ""
 
-msgid "Connect your BitPay ID"
+msgid "Connect your Stratis ID"
 msgstr ""
 
 msgid "Connect your Coinbase!"
@@ -614,8 +614,8 @@ msgstr ""
 msgid "Connected with"
 msgstr ""
 
-msgid "Connecting BitPay ID..."
-msgstr "BitPay-ID verbinden..."
+msgid "Connecting Stratis ID..."
+msgstr "Stratis-ID verbinden..."
 
 msgid "Connecting to Changelly..."
 msgstr ""
@@ -665,19 +665,19 @@ msgstr "Trage zu Übersetzungen bei"
 msgid "Control your money without an account"
 msgstr ""
 
-msgid "Copayer already in this wallet"
-msgstr "Copayer nimmt bereits teil"
+msgid "Stratis wallet user already in this wallet"
+msgstr "Stratis wallet user nimmt bereits teil"
 
-msgid "Copayer already voted on this spend proposal"
-msgstr "Copayer hat schon für diesen Zahlungsvorschlag angestimmt"
+msgid "Stratis wallet user already voted on this spend proposal"
+msgstr "Stratis wallet user hat schon für diesen Zahlungsvorschlag angestimmt"
 
-msgid "Copayer data mismatch"
-msgstr "Copayer Datenkonflikt"
+msgid "Stratis wallet user data mismatch"
+msgstr "Stratis wallet user Datenkonflikt"
 
-msgid "Copayer {{idx+1}}"
+msgid "Stratis wallet user {{idx+1}}"
 msgstr ""
 
-msgid "Copayers"
+msgid "Stratis wallet users"
 msgstr ""
 
 msgid "Copied"
@@ -923,7 +923,7 @@ msgstr ""
 msgid "Designed for people who want to live life on crypto."
 msgstr ""
 
-msgid "Designed for people who want to live life on crypto. View your balance, request a new PIN, and reload instantly all within the BitPay App."
+msgid "Designed for people who want to live life on crypto. View your balance, request a new PIN, and reload instantly all within the Stratis App."
 msgstr ""
 
 msgid "Destination"
@@ -950,8 +950,8 @@ msgstr "Deaktiviert"
 msgid "Disconnect"
 msgstr ""
 
-msgid "Disconnect BitPay ID"
-msgstr "BitPay ID trennen"
+msgid "Disconnect Stratis ID"
+msgstr "Stratis ID trennen"
 
 msgid "Discount"
 msgstr ""
@@ -1010,7 +1010,7 @@ msgstr ""
 msgid "Each bitcoin wallet can generate billions of addresses from your 12-word recovery phrase. A new address is automatically generated and shown each time you receive a payment."
 msgstr ""
 
-msgid "Each copayer has their own recovery phrase. To recover funds stored in a Shared Wallet you will need the recovery phrase from each copayer."
+msgid "Each stratis wallet user has their own recovery phrase. To recover funds stored in a Shared Wallet you will need the recovery phrase from each stratis wallet user."
 msgstr ""
 
 msgid "Easily deposit and withdraw funds."
@@ -1061,7 +1061,7 @@ msgstr ""
 msgid "Enter Amount"
 msgstr ""
 
-msgid "Enter Two Factor for your BitPay account"
+msgid "Enter Two Factor for your Stratis account"
 msgstr ""
 
 msgid "Enter a destination tag"
@@ -1136,7 +1136,7 @@ msgstr ""
 msgid "Error getting fee rate"
 msgstr ""
 
-msgid "Error pairing BitPay Account"
+msgid "Error pairing Stratis Account"
 msgstr "Ein Fehler ist beim Koppeln des Bitpay-Account's aufgetreten"
 
 msgid "Error scanning funds:"
@@ -1250,10 +1250,10 @@ msgstr "Feedback konnte nicht abgeschickt werden. Bitte versuchen Sie es später
 msgid "Feedback!"
 msgstr ""
 
-msgid "Fetching BitPay Account..."
-msgstr "BitPay Konto abrufen..."
+msgid "Fetching Stratis Account..."
+msgstr "Stratis Konto abrufen..."
 
-msgid "Fetching BitPay Cards..."
+msgid "Fetching Stratis Cards..."
 msgstr ""
 
 msgid "Fetching payment information..."
@@ -1274,10 +1274,10 @@ msgstr ""
 msgid "Flexibility"
 msgstr ""
 
-msgid "For BitPay invoices and gift cards the subtotal amount is the product or service amount plus network costs."
+msgid "For Stratis invoices and gift cards the subtotal amount is the product or service amount plus network costs."
 msgstr ""
 
-msgid "For best security this should not match your BitPay ID password."
+msgid "For best security this should not match your Stratis ID password."
 msgstr ""
 
 msgid "Forgot your password?"
@@ -1289,8 +1289,8 @@ msgstr ""
 msgid "From"
 msgstr "Von"
 
-msgid "From BitPay account"
-msgstr "Von BitPay Konto"
+msgid "From Stratis account"
+msgstr "Von Stratis Konto"
 
 msgid "Fund it. Spend it."
 msgstr ""
@@ -1346,8 +1346,8 @@ msgstr ""
 msgid "Get help"
 msgstr ""
 
-msgid "Get news and updates from BitPay"
-msgstr "Erhalten Sie Neuigkeiten und Aktualisierungen von BitPay"
+msgid "Get news and updates from Stratis"
+msgstr "Erhalten Sie Neuigkeiten und Aktualisierungen von Stratis"
 
 msgid "Get on Chrome"
 msgstr ""
@@ -1358,7 +1358,7 @@ msgstr "Los geht’s"
 msgid "Get started by adding your first one."
 msgstr "Starten Sie indem Sie ihr erstes hinzufügen."
 
-msgid "Get the BitPay Card"
+msgid "Get the Stratis Card"
 msgstr ""
 
 msgid "Getting data from the exchange..."
@@ -1415,7 +1415,7 @@ msgstr ""
 msgid "Help & support"
 msgstr "Hilfe & Support"
 
-msgid "Help BitPay improve"
+msgid "Help Stratis improve"
 msgstr ""
 
 msgid "Help and support information is available at the website"
@@ -1457,7 +1457,7 @@ msgstr ""
 msgid "How to recover your funds if you lose this device?"
 msgstr ""
 
-msgid "However, unconfirmed funds are not allowed for spending with merchants, BitPay Card loads, or BitPay in-app gift card purchases."
+msgid "However, unconfirmed funds are not allowed for spending with merchants, Stratis Card loads, or Stratis in-app gift card purchases."
 msgstr ""
 
 msgid "I Understand"
@@ -1496,10 +1496,10 @@ msgstr ""
 msgid "If enabled, wallets will also try to spend unconfirmed funds."
 msgstr "Wenn aktiviert wird versucht, unbestätigte Transaktionen beim Senden zu verwenden."
 
-msgid "If enabled, your gift card purchases will be associated with your BitPay ID, allowing you to keep track of your gift card purchases even if this device is lost."
+msgid "If enabled, your gift card purchases will be associated with your Stratis ID, allowing you to keep track of your gift card purchases even if this device is lost."
 msgstr ""
 
-msgid "If you delete the BitPay app or lose this device, you’ll need a recovery key to regain access to your funds."
+msgid "If you delete the Stratis app or lose this device, you’ll need a recovery key to regain access to your funds."
 msgstr ""
 
 msgid "If you do not have the recovery phrase, you will not be able to regain access to your wallet."
@@ -1658,7 +1658,7 @@ msgstr ""
 msgid "Join Shared Wallet"
 msgstr ""
 
-msgid "Join more Copayers"
+msgid "Join more Stratis wallet users"
 msgstr ""
 
 msgid "Join the waitlist and be first to experience the new card."
@@ -1742,7 +1742,7 @@ msgstr ""
 msgid "Linked to"
 msgstr ""
 
-msgid "Linked to (Copayer 1)"
+msgid "Linked to (Stratis wallet user 1)"
 msgstr ""
 
 msgid "Linked to wallet: {linkedEthWalletName}"
@@ -1904,8 +1904,8 @@ msgstr ""
 msgid "New contact"
 msgstr ""
 
-msgid "New copayer"
-msgstr "Neuer Copayer"
+msgid "New stratis wallet user"
+msgstr "Neuer Stratis wallet user"
 
 msgid "New payment proposal"
 msgstr "Neuer Zahlungsvorschlag"
@@ -2120,7 +2120,7 @@ msgstr "PIN"
 msgid "PRIMARY"
 msgstr ""
 
-msgid "Pair My BitPay Card"
+msgid "Pair My Stratis Card"
 msgstr ""
 
 msgid "Part or the entirety of the funds in your wallet/s are unconfirmed"
@@ -2753,11 +2753,11 @@ msgstr ""
 msgid "Share this address with the devices joining this account."
 msgstr ""
 
-msgid "Share this invitation with the Copayers who join this wallet."
+msgid "Share this invitation with the Stratis wallet users who join this wallet."
 msgstr ""
 
-msgid "Share this invitation with your copayers"
-msgstr "Einladung mit Copayern teilen"
+msgid "Share this invitation with your stratis wallet users"
+msgstr "Einladung mit Stratis wallet usern teilen"
 
 msgid "Share with friends"
 msgstr ""
@@ -3008,7 +3008,7 @@ msgstr ""
 msgid "The ethereum paired wallet you choose does not belong to this contract"
 msgstr ""
 
-msgid "The fastest, easiest way to turn your crypto into dollars for shopping. Load funds in the BitPay App and spend in minutes."
+msgid "The fastest, easiest way to turn your crypto into dollars for shopping. Load funds in the Stratis App and spend in minutes."
 msgstr ""
 
 msgid "The final crypto amount you receive when the transaction is complete may differ because it is based on Simplex's exchange rate."
@@ -3029,7 +3029,7 @@ msgstr ""
 msgid "The invoice is no available"
 msgstr ""
 
-msgid "The maximum number of Copayers has already been reached"
+msgid "The maximum number of Stratis wallet users has already been reached"
 msgstr ""
 
 msgid "The payment was created but could not be completed. Please try again from home screen"
@@ -3200,7 +3200,7 @@ msgstr "An"
 msgid "To get started, you'll need to enter a valid address or select an existent contact or wallet."
 msgstr ""
 
-msgid "To {{reason}} you must first add your BitPay account - {{email}}"
+msgid "To {{reason}} you must first add your Stratis account - {{email}}"
 msgstr ""
 
 msgid "Top up in progress..."
@@ -3218,8 +3218,8 @@ msgstr "Ingesamt gesperrter Gesamtsaldo"
 msgid "Total cash value"
 msgstr ""
 
-msgid "Total number of copayers"
-msgstr "Gesamtanzahl der Copayer"
+msgid "Total number of stratis wallet users"
+msgstr "Gesamtanzahl der Stratis wallet user"
 
 msgid "Total selected inputs"
 msgstr ""
@@ -3278,13 +3278,13 @@ msgstr "Es werden keine Transaktionen ohne Gebühren unterstützt."
 msgid "Transfer from"
 msgstr ""
 
-msgid "Transfer from BitPay"
+msgid "Transfer from Stratis"
 msgstr ""
 
 msgid "Transfer to"
 msgstr ""
 
-msgid "Transfer to BitPay"
+msgid "Transfer to Stratis"
 msgstr ""
 
 msgid "Transfer to Multiple Recipients"
@@ -3308,7 +3308,7 @@ msgstr ""
 msgid "Try it"
 msgstr ""
 
-msgid "Turn crypto into dollars using our BitPay Card."
+msgid "Turn crypto into dollars using our Stratis Card."
 msgstr ""
 
 msgid "Two things you should know"
@@ -3344,10 +3344,10 @@ msgstr ""
 msgid "Unlock App"
 msgstr "App entsperren"
 
-msgid "Unlock BitPay faster by setting up facial recognition."
+msgid "Unlock Stratis faster by setting up facial recognition."
 msgstr ""
 
-msgid "Unlock BitPay faster by setting up fingerprint authentication."
+msgid "Unlock Stratis faster by setting up fingerprint authentication."
 msgstr ""
 
 msgid "Unsent transactions"
@@ -3392,7 +3392,7 @@ msgstr ""
 msgid "Use fingerprint authentication to unlock?"
 msgstr ""
 
-msgid "Use multi-factor wallets to split payment authorization across up to 6 devices or trusted copayers for enhanced security."
+msgid "Use multi-factor wallets to split payment authorization across up to 6 devices or trusted stratis wallet users for enhanced security."
 msgstr ""
 
 msgid "Used Exchanges"
@@ -3476,7 +3476,7 @@ msgstr ""
 msgid "Waiting"
 msgstr ""
 
-msgid "Waiting for authorized copayers to join"
+msgid "Waiting for authorized stratis wallet users to join"
 msgstr ""
 
 msgid "Wallet Addresses"
@@ -3584,7 +3584,7 @@ msgstr ""
 msgid "We were unable to parse your payment. Please try again or contact your wallet provider"
 msgstr ""
 
-msgid "We'll let you know as soon as the BitPay Card"
+msgid "We'll let you know as soon as the Stratis Card"
 msgstr ""
 
 msgid "We'll notify you as soon as the card is ready."
@@ -3599,7 +3599,7 @@ msgstr ""
 msgid "We're always listening for ways we can improve your experience. Is there anything we could do to improve your experience?"
 msgstr ""
 
-msgid "Websites and exchanges get hacked. BitPay allows you to privately store, manage, and use your crypto funds without having to trust a centralized bank or exchange."
+msgid "Websites and exchanges get hacked. Stratis allows you to privately store, manage, and use your crypto funds without having to trust a centralized bank or exchange."
 msgstr ""
 
 msgid "What could have happened?"
@@ -3686,7 +3686,7 @@ msgstr "Ja"
 msgid "Yes, please use my email address to send me exclusive email offers."
 msgstr ""
 
-msgid "You are creating a {m}-{n} wallet. And you need all {m} copayers addresses at creation time."
+msgid "You are creating a {m}-{n} wallet. And you need all {m} stratis wallet users addresses at creation time."
 msgstr ""
 
 msgid "You are saving {{tx.minerFee | satToUnit: tx.coin}}"
@@ -3767,16 +3767,16 @@ msgstr ""
 msgid "You're on the list!"
 msgstr ""
 
-msgid "Your BitPay Card is ready. Add funds to your card to start using it at stores."
+msgid "Your Stratis Card is ready. Add funds to your card to start using it at stores."
 msgstr ""
 
 msgid "Your ETH linked wallet funds are locked by pending spend proposals"
 msgstr ""
 
-msgid "Your Key is all that is needed to access your funds. Be sure to protect your key and store it only on secure devices. BitPay does not have access to your keys, so you alone are responsible for your keys. If you share key access with external services, you take responsibility for the risk of theft or breach."
+msgid "Your Key is all that is needed to access your funds. Be sure to protect your key and store it only on secure devices. Stratis does not have access to your keys, so you alone are responsible for your keys. If you share key access with external services, you take responsibility for the risk of theft or breach."
 msgstr ""
 
-msgid "Your extended private keys are all that is needed to access your funds. Be sure to protect your private keys and store them only on secure devices. BitPay does not have access to your private keys, so you alone are responsible for your keys. If you share key access with external services, you take responsibility for the risk of theft or breach. Only advanced users should handle extended private keys directly."
+msgid "Your extended private keys are all that is needed to access your funds. Be sure to protect your private keys and store them only on secure devices. Stratis does not have access to your private keys, so you alone are responsible for your keys. If you share key access with external services, you take responsibility for the risk of theft or breach. Only advanced users should handle extended private keys directly."
 msgstr ""
 
 msgid "Your fee is lower than recommended."
@@ -3824,8 +3824,8 @@ msgstr "[Guthaben versteckt]"
 msgid "[Scanning Funds]"
 msgstr "[Prüfe Wallet auf neue Beiträge]"
 
-msgid "add your BitPay Visa card(s)"
-msgstr "Ihre BitPay Visa Karte(n) hinzufügen"
+msgid "add your Stratis Visa card(s)"
+msgstr "Ihre Stratis Visa Karte(n) hinzufügen"
 
 msgid "dummy"
 msgstr ""
@@ -3884,8 +3884,8 @@ msgstr ""
 msgid "{{ swapTx.status | titlecase }}"
 msgstr ""
 
-msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Copayer synchronization. The default configuration points to https://bws.bitpay.com (BitPay's public BWS instance)."
-msgstr "{{appName}} hängt von Bitcore Wallet Service (BWS) ab bezüglich Blockchain Informationen, Vernetzung und Copayer Synchronisation. Die Standard Konfiguration verweist auf https://bws.bitpay.com (BitPays öffentlicher BWS Instanz)."
+msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Stratis wallet user synchronization. The default configuration points to https://bws.bitpay.com (Stratis's public BWS instance)."
+msgstr "{{appName}} hängt von Bitcore Wallet Service (BWS) ab bezüglich Blockchain Informationen, Vernetzung und Stratis wallet user Synchronisation. Die Standard Konfiguration verweist auf https://bws.bitpay.com (Stratiss öffentlicher BWS Instanz)."
 
 msgid "{{appName}} only supports Bitcoin Cash using new version numbers addresses."
 msgstr ""
