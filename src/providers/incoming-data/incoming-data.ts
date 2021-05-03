@@ -184,6 +184,13 @@ export class IncomingDataProvider {
     );
   }
 
+  private isValidStraxAddress(data: string): boolean {
+    return !!(
+      this.bwcProvider.getBitcoreStrax().Address.isValid(data, 'livenet') ||
+      this.bwcProvider.getBitcoreStrax().Address.isValid(data, 'testnet')
+    );
+  }
+
   private isValidCoinbaseUri(data: string): boolean {
     data = this.sanitizeUri(data);
     return !!(
@@ -964,6 +971,11 @@ export class IncomingDataProvider {
     } else if (this.isValidImportPrivateKey(data)) {
       this.goToImportByPrivateKey(data);
       return true;
+    }
+      else if (this.isValidStraxAddress(data)) {
+        this.handlePlainBitcoinAddress(data, redirParams);
+        return true;
+  
     } else if (data.includes('wallet-card')) {
       const event = data.split('wallet-card/')[1];
       const [switchExp, payload] = (event || '').split('?');

@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { Events, NavController } from 'ionic-angular';
-import * as _ from 'lodash';
+import { take } from 'rxjs/operators';
 import { PricePage } from '../../pages/home/price-page/price-page';
 import { ConfigProvider, CurrencyProvider, Logger } from '../../providers';
 import { Coin } from '../../providers/currency/currency';
 import {
-  DateRanges,
-  ExchangeRate,
   RateProvider
 } from '../../providers/rate/rate';
 
@@ -69,33 +67,56 @@ export class ExchangeRates {
   public getPrices() {
     this.setIsoCode();
 
+    try {
+      this.rateProvider.getCurrentRate()
+      .pipe(take(1))
+      .subscribe(response => {
+        this.logger.error('Loaded');
+        // _.forEach(this.coins, (_, index) => {
+          const rate = response.find(r => r.code.toUpperCase() === this.fiatIsoCode.toUpperCase());
+          this.coins[0].currentPrice = response.find(r => r.code.toUpperCase() === this.fiatIsoCode.toUpperCase()).rate;
+          this.coins[0].totalBalanceChangeAmount = 0;
+          this.coins[0].totalBalanceChange = 0;
+          this.rateProvider.setRate('strax', this.fiatIsoCode.toUpperCase(), +rate.rate);
+        // }
+        // );
+        // err => {
+        //   this.coins[0].currentPrice = err;
+        //   this.logger.error('Error getting rates:', err);
+        // };
+      },
+      err => this.logger.error(JSON.stringify(err)));
+    } catch(err) {
+      this.logger.error(JSON.stringify(err));
+    }
+
     // TODO: Add a new endpoint in BWS that
     // provides JUST  the current prices and the delta.
-    this.rateProvider
-      .fetchHistoricalRates(this.fiatIsoCode, DateRanges.Day)
-      .then(response => {
-        _.forEach(this.coins, (coin, index) => {
-          if (response[coin.unitCode])
-            this.update(index, response[coin.unitCode]);
-        });
-        err => {
-          this.logger.error('Error getting rates:', err);
-        };
-      });
+    // this.rateProvider
+    //   .fetchHistoricalRates(this.fiatIsoCode, DateRanges.Day)
+    //   .then(response => {
+    //     _.forEach(this.coins, (coin, index) => {
+    //       if (response[coin.unitCode])
+    //         this.update(index, response[coin.unitCode]);
+    //     });
+    //     err => {
+    //       this.logger.error('Error getting rates:', err);
+    //     };
+    //   });
   }
 
-  private update(i: number, values: ExchangeRate[]) {
-    if (!values[0] || !_.last(values)) {
-      this.logger.warn('No exchange rate data');
-      return;
-    }
-    const lastRate = _.last(values).rate;
-    this.coins[i].currentPrice = values[0].rate;
-    this.coins[i].totalBalanceChangeAmount =
-      this.coins[i].currentPrice - lastRate;
-    this.coins[i].totalBalanceChange =
-      (this.coins[i].totalBalanceChangeAmount * 100) / lastRate;
-  }
+  // private update(i: number, values: ExchangeRate[]) {
+  //   if (!values[0] || !_.last(values)) {
+  //     this.logger.warn('No exchange rate data');
+  //     return;
+  //   }
+  //   const lastRate = _.last(values).rate;
+  //   this.coins[i].currentPrice = values[0].rate;
+  //   this.coins[i].totalBalanceChangeAmount =
+  //     this.coins[i].currentPrice - lastRate;
+  //   this.coins[i].totalBalanceChange =
+  //     (this.coins[i].totalBalanceChangeAmount * 100) / lastRate;
+  // }
 
   private setIsoCode() {
     const alternativeIsoCode = this.configProvider.get().wallet.settings
@@ -117,3 +138,4 @@ export class ExchangeRates {
     }
   }
 }
+

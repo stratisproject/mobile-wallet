@@ -83,6 +83,7 @@
     <content src="index.html" />
     <access origin="https://mw-ws.stratisplatform.com" />
     <access origin="https://mw-ws.stratisplatform.com:3032" />
+    <access origin="https://stratrates.stratisplatform.com" />
     <access origin="https://bws.bitpay.com" />
     <access origin="https://bitpay.com" />
     <access origin="https://test.bitpay.com" />
@@ -92,6 +93,7 @@
     <access origin="https://api.coinbase.com" />
     <access origin="https://coinbase.com" />
     <access origin="https://www.coinbase.com" />
+    <allow-navigation href="https://*/*" />
     <allow-navigation href="gap://ready" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:icon="@mipmap/ic_launcher" android:resource="@drawable/fcm_push_icon" android:roundIcon="@mipmap/ic_launcher_round" />

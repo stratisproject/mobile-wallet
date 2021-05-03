@@ -43,7 +43,7 @@ export class AddressProvider {
     const address = this.extractAddress(str);
     try {
       network = this.bitcore.Address(address).network.name;
-      return { coin: 'btc', network };
+      return { coin: 'strax', network };
     } catch (e) {
       try {
         network = this.bitcoreCash.Address(address).network.name;
@@ -77,7 +77,12 @@ export class AddressProvider {
               network = this.bitcoreDoge.Address(address).network.name;
               return { coin: 'doge', network };
             } catch (e) {
-              return null;
+              try {
+                network = this.bitcore.Address(address).network.name;
+                return { coin: 'strax', network };
+              } catch (e) {
+                return null;
+              }
             }
           }
         }

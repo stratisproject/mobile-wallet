@@ -304,10 +304,11 @@ export class TxDetailsModal {
             : `https://${this.blockexplorerUrlTestnet}tx/DOGETEST/${btx.txid}`;
         break;
       default:
-        url =
-          this.wallet.credentials.network === 'livenet'
-            ? `https://${this.blockexplorerUrl}tx/${btx.txid}`
-            : `https://${this.blockexplorerUrlTestnet}tx/${btx.txid}`;
+        url = `https://chainz.cryptoid.info/strax/tx.dws?${btx.txid}`;
+        // url =
+        //   this.wallet.credentials.network === 'livenet'
+        //     ? `https://${this.blockexplorerUrl}tx/${btx.txid}`
+        //     : `https://${this.blockexplorerUrlTestnet}tx/${btx.txid}`;
     }
     let optIn = true;
     let title = null;

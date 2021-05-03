@@ -23,6 +23,10 @@ export class BwcProvider {
     return BWC.BitcoreDoge;
   }
 
+  public getBitcoreStrax() {
+    return BWC.Bitcore;
+  }
+
   public getCore() {
     return BWC.Core;
   }

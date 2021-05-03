@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
+import { take } from 'rxjs/operators';
 import env from '../../environments';
 import { ConfigProvider } from '../../providers/config/config';
 import { CoinsMap, CurrencyProvider } from '../../providers/currency/currency';
@@ -21,8 +23,7 @@ export enum DateRanges {
 }
 
 export interface HistoricalRates {
-  btc: ExchangeRate[];
-  bch: ExchangeRate[];
+  strax: ExchangeRate[];
 }
 
 @Injectable()
@@ -33,6 +34,7 @@ export class RateProvider {
   private rateServiceUrl = {} as CoinsMap<string>;
 
   private bwsURL: string;
+  private ratesApiUrl: string;
   private ratesCache: any;
 
   constructor(
@@ -47,16 +49,27 @@ export class RateProvider {
       this.rateServiceUrl[coin] = env.ratesAPI[coin];
       this.rates[coin] = { USD: 1 };
       this.ratesAvailable[coin] = false;
+      this.http.get<any>('https://stratrates.stratisplatform.com/api/rates')
+        .pipe(take(1))
+        .subscribe(response => {
+          const rate = response.find(r => r.code.toUpperCase() === 'USD');
+          this.rates['strax']['USD'] = rate.rate;
+        });
     }
 
     const defaults = this.configProvider.getDefaults();
     this.bwsURL = defaults.bws.url;
+    this.ratesApiUrl = 'https://stratrates.stratisplatform.com/api/rates';
     this.ratesCache = {
       1: [],
       7: [],
       30: []
     };
     this.updateRates();
+  }
+
+  public setRate(chain: string, code: string, rate: number) {
+    this.rates[chain][code] = rate;
   }
 
   public updateRates(chain?: string): Promise<any> {
@@ -267,5 +280,11 @@ export class RateProvider {
       this.ratesCache[dateRange].expiration = now + EXPIRATION_TIME_MS;
     }
     return this.ratesCache[dateRange].data;
+  }
+
+  public getCurrentRate(): Observable<[{ code: string, rate: string, name: string }]> {
+    const req = this.http.get<any>(this.ratesApiUrl);
+
+    return req;
   }
 }

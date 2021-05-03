@@ -3,7 +3,7 @@ import { NavParams, ViewController } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { ConfigProvider } from '../../../../providers/config/config';
+// import { ConfigProvider } from '../../../../providers/config/config';
 import { ExternalLinkProvider } from '../../../../providers/external-link/external-link';
 
 @Component({
@@ -16,7 +16,7 @@ export class CoinbaseTxDetailsPage {
   constructor(
     private viewCtrl: ViewController,
     private navParams: NavParams,
-    private configProvider: ConfigProvider,
+    // private configProvider: ConfigProvider,
     private externalLinkProvider: ExternalLinkProvider,
     private translate: TranslateService
   ) {
@@ -24,12 +24,13 @@ export class CoinbaseTxDetailsPage {
   }
 
   public viewOnBlockchain(): void {
-    const defaults = this.configProvider.getDefaults();
-    const blockexplorerUrl =
-      defaults.blockExplorerUrl[this.tx.amount.currency.toLowerCase()];
+    // const defaults = this.configProvider.getDefaults();
+    // const blockexplorerUrl =
+    //   defaults.blockExplorerUrl[this.tx.amount.currency.toLowerCase()];
     const btx = this.tx;
-    const network = 'mainnet/';
-    const url = `https://${blockexplorerUrl}${network}tx/${btx.network.hash}`;
+    // const network = 'mainnet/';
+    // const url = `https://${blockexplorerUrl}${network}tx/${btx.network.hash}`;
+    const url = `https://chainz.cryptoid.info/strax/tx.dws?${btx.network.hash}`;
     const optIn = true;
     const title = null;
     const message = this.translate.instant('View Transaction');

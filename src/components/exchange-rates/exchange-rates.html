@@ -1,6 +1,6 @@
 <ion-list class="bp-list">
   <div *ngFor="let coin of coins">
-    <button ion-item (click)="goToPricePage(coin)">
+    <button ion-item> <!-- (click)="goToPricePage(coin)"> -->
       <ion-icon class="item-img" item-start>
         <img src="assets/img/currencies/{{coin.unitCode}}.svg">
       </ion-icon>
@@ -14,9 +14,9 @@
           <span class="unit" *ngIf="fiatIsoCode !== 'USD' && isFiatIsoCodeSupported">{{ fiatIsoCode }}</span>
           <span class="unit" *ngIf="!isFiatIsoCodeSupported">USD</span>
         </div>
-        <div class="average-container" [ngClass]="coin.totalBalanceChange > 0 ? 'possitive-avg' : 'negative-avg'">
+        <!-- <div class="average-container" [ngClass]="coin.totalBalanceChange > 0 ? 'possitive-avg' : 'negative-avg'">
           <span class="average"><span *ngIf="coin.totalBalanceChange > 0">+</span>{{ coin.totalBalanceChange | number:'1.2-2' }}%</span>
-        </div>
+        </div> -->
       </ion-note>
     </button>
   </div>

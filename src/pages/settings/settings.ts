@@ -446,7 +446,7 @@ export class SettingsPage {
 
   public openSupportEncryptPassword(): void {
     const url =
-      'https://support.bitpay.com/hc/en-us/articles/360000244506-What-Does-a-Spending-Password-Do-';
+      'https://www.stratisplatform.com/contact/';
     const optIn = true;
     const title = null;
     const message = this.translate.instant('Read more in our support page');
@@ -504,7 +504,7 @@ export class SettingsPage {
   }
 
   public openPrivacyPolicy() {
-    const url = 'https://bitpay.com/about/privacy';
+    const url = 'https://www.stratisplatform.com/privacy/';
     const optIn = true;
     const title = null;
     const message = this.translate.instant('View Privacy Notice');
@@ -521,7 +521,7 @@ export class SettingsPage {
   }
 
   public openTermsOfUse() {
-    const url = 'https://bitpay.com/legal/terms-of-use/#wallet-terms-of-use';
+    const url = 'https://www.stratisplatform.com/terms-of-use/';
     const optIn = true;
     const title = null;
     const message = this.translate.instant('View Wallet Terms of Use');
