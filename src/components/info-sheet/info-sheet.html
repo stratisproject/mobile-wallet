@@ -208,7 +208,7 @@
     <info-sheet-template *ngSwitchCase="'appreciate-review'" type="love">
       <span sheet-title-text translate>We appreciate your review</span>
       <span sheet-text translate>
-        5-star ratings help us get BitPay Wallet into more hands, and more users means more resources can be committed to the app!
+        5-star ratings help us get Stratis Wallet into more hands, and more users means more resources can be committed to the app!
       </span>
       <span sheet-button-text>{{'Continue to {storeName}' | translate: {storeName: params?.storeName}
         }}</span>
@@ -337,7 +337,7 @@
       <span sheet-title-text translate>RBF transaction</span>
       <span sheet-text>
         <span translate>Be careful. Until it confirms, the transaction could be replaced/redirected by the sender. You can try to speed it up by using a higher fee.</span>
-        <a class="label-tip-link" (click)="openInBrowser('https://support.bitpay.com/hc/en-us/articles/360028824532-Why-can-t-I-pay-a-BitPay-invoice-using-RBF-')" translate>Read more</a>
+        <a class="label-tip-link" (click)="openInBrowser('https://support.bitpay.com/hc/en-us/articles/360028824532-Why-can-t-I-pay-a-Stratis-invoice-using-RBF-')" translate>Read more</a>
       </span>
       <span sheet-button-text translate>Speed up transaction</span>
       <span sheet-second-button-text translate>View details</span>
@@ -354,8 +354,8 @@
     <info-sheet-template *ngSwitchCase="'subtotal-amount'" type="info">
       <span sheet-title-text>{{ 'Subtotal' | translate }}</span>
       <span sheet-text>
-        {{ 'For BitPay invoices and gift cards the subtotal amount is the product or service amount plus network costs.' | translate }}
-        <a class="label-tip-link" (click)="openInBrowser('https://support.bitpay.com/hc/en-us/articles/115002990803-What-is-the-Network-Cost-fee-on-BitPay-invoices-and-why-is-BitPay-charging-it')" translate>Read more</a>
+        {{ 'For Stratis invoices and gift cards the subtotal amount is the product or service amount plus network costs.' | translate }}
+        <a class="label-tip-link" (click)="openInBrowser('https://support.bitpay.com/hc/en-us/articles/115002990803-What-is-the-Network-Cost-fee-on-Stratis-invoices-and-why-is-Stratis-charging-it')" translate>Read more</a>
       </span>
       <span sheet-button-text translate>GOT IT</span>
     </info-sheet-template>
@@ -457,9 +457,9 @@
     </info-sheet-template>
 
     <info-sheet-template *ngSwitchCase="'auth-required'" type="warning">
-      <span sheet-title-text translate>Connect Your BitPay ID</span>
+      <span sheet-title-text translate>Connect Your Stratis ID</span>
       <span sheet-text>
-        To complete this payment, please login with your BitPay ID.
+        To complete this payment, please login with your Stratis ID.
       </span>
       <span sheet-button-text translate>CONTINUE</span>
     </info-sheet-template>

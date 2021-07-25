@@ -184,7 +184,7 @@ export class ExchangeCheckoutPage {
                     receivingPercentage;
                   this.totalExchangeFee = this.exchangeFee + this.bitpayFee;
                   this.logger.debug(
-                    `Changelly fee: ${this.exchangeFee} - BitPay fee: ${this.bitpayFee} - Total fee: ${this.totalExchangeFee}`
+                    `Changelly fee: ${this.exchangeFee} - Stratis fee: ${this.bitpayFee} - Total fee: ${this.totalExchangeFee}`
                   );
                 }
 

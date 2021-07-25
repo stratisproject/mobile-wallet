@@ -45,10 +45,10 @@ export class InvoiceProvider {
       .get(`${this.credentials.BITPAY_API_URL}/invoices/${id}`)
       .toPromise()
       .catch(err => {
-        this.logger.error('BitPay Get Invoice: ERROR ' + err.error.message);
+        this.logger.error('Stratis Get Invoice: ERROR ' + err.error.message);
         throw err.error.message;
       });
-    this.logger.info('BitPay Get Invoice: SUCCESS');
+    this.logger.info('Stratis Get Invoice: SUCCESS');
     return res.data;
   }
 

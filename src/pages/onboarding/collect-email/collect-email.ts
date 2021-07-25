@@ -63,7 +63,7 @@ export class CollectEmailPage {
     // Confirm for notifications
     this.emailProvider.updateEmail(opts);
 
-    // Confirm to get news and updates from BitPay
+    // Confirm to get news and updates from Stratis
     if (this.emailForm.value.accept) this.collectEmail();
   }
 

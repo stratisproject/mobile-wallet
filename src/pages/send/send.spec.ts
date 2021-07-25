@@ -126,7 +126,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
+            'Payment request for Stratis invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/MB6kXuVY9frBW1DyoZkE5e',
           paymentOptions: [
             {
@@ -198,7 +198,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
+            'Payment request for Stratis invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/3dZDvRXdxpkL4FoWtkB6ZZ',
           paymentOptions: [
             {
@@ -238,7 +238,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice JTfRobeRFmiCjBivDnzV1Q for merchant Johnco',
+            'Payment request for Stratis invoice JTfRobeRFmiCjBivDnzV1Q for merchant Johnco',
           payProUrl: 'https://test.bitpay.com/i/JTfRobeRFmiCjBivDnzV1Q',
           paymentOptions: [
             {
@@ -271,7 +271,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice S5jbsUtrHVuvYQN6XHPuvJ for merchant Johnco',
+            'Payment request for Stratis invoice S5jbsUtrHVuvYQN6XHPuvJ for merchant Johnco',
           payProUrl: 'https://test.bitpay.com/i/S5jbsUtrHVuvYQN6XHPuvJ',
           paymentOptions: [
             {
@@ -331,7 +331,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice S5jbsUtrHVuvYQN6XHPuvJ for merchant Johnco',
+            'Payment request for Stratis invoice S5jbsUtrHVuvYQN6XHPuvJ for merchant Johnco',
           payProUrl: 'https://test.bitpay.com/i/S5jbsUtrHVuvYQN6XHPuvJ',
           paymentOptions: [
             {
@@ -403,7 +403,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
+            'Payment request for Stratis invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/3dZDvRXdxpkL4FoWtkB6ZZ',
           paymentOptions: [
             {
@@ -442,7 +442,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice JTfRobeRFmiCjBivDnzV1Q for merchant Johnco',
+            'Payment request for Stratis invoice JTfRobeRFmiCjBivDnzV1Q for merchant Johnco',
           payProUrl: 'https://test.bitpay.com/i/JTfRobeRFmiCjBivDnzV1Q',
           paymentOptions: [
             {
@@ -482,7 +482,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
+            'Payment request for Stratis invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/MB6kXuVY9frBW1DyoZkE5e',
           paymentOptions: [
             {
@@ -542,7 +542,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
+            'Payment request for Stratis invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/3dZDvRXdxpkL4FoWtkB6ZZ',
           paymentOptions: [
             {
@@ -614,7 +614,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
+            'Payment request for Stratis invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/MB6kXuVY9frBW1DyoZkE5e',
           paymentOptions: [
             {
@@ -647,7 +647,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice JTfRobeRFmiCjBivDnzV1Q for merchant Johnco',
+            'Payment request for Stratis invoice JTfRobeRFmiCjBivDnzV1Q for merchant Johnco',
           payProUrl: 'https://test.bitpay.com/i/JTfRobeRFmiCjBivDnzV1Q',
           paymentOptions: [
             {
@@ -687,7 +687,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice S5jbsUtrHVuvYQN6XHPuvJ for merchant Johnco',
+            'Payment request for Stratis invoice S5jbsUtrHVuvYQN6XHPuvJ for merchant Johnco',
           payProUrl: 'https://test.bitpay.com/i/S5jbsUtrHVuvYQN6XHPuvJ',
           paymentOptions: [
             {
@@ -747,7 +747,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
+            'Payment request for Stratis invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/3dZDvRXdxpkL4FoWtkB6ZZ',
           paymentOptions: [
             {
@@ -823,7 +823,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
+            'Payment request for Stratis invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/MB6kXuVY9frBW1DyoZkE5e',
           paymentOptions: [
             {
@@ -863,7 +863,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
+            'Payment request for Stratis invoice MB6kXuVY9frBW1DyoZkE5e for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/MB6kXuVY9frBW1DyoZkE5e',
           paymentOptions: [
             {
@@ -896,7 +896,7 @@ describe('SendPage', () => {
         const mockPayPro = Promise.resolve({
           expires: '2019-11-05T16:29:31.754Z',
           memo:
-            'Payment request for BitPay invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
+            'Payment request for Stratis invoice 3dZDvRXdxpkL4FoWtkB6ZZ for merchant Johnco',
           payProUrl: 'https://bitpay.com/i/3dZDvRXdxpkL4FoWtkB6ZZ',
           paymentOptions: [
             {

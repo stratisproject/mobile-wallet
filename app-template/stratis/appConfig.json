@@ -1,7 +1,7 @@
 {
   "packageName": "stratiswallet",
   "packageDescription": "Stratis Mobile Wallet",
-  "packageNameId": "com.stratisplatform.mobile",
+  "packageNameId": "com.stratis.live",
   "packageNameIdDesktop": "com.bitpay.copay.desktop2",
   "themeColor": "#192c3a",
   "userVisibleName": "Stratis Wallet",
@@ -26,8 +26,8 @@
   "WindowsApplicationId": "StratisforWindows",
   "pushSenderId": "1036948132229",
   "description": "A Secure Stratis Wallet",
-  "version": "1.0.0",
-  "androidVersion": "80000400",
+  "version": "1.0.2",
+  "androidVersion": "91204002",
   "_extraCSS": null,
   "iOSBuildVersion": "1",
   "_enabledExtensions": {

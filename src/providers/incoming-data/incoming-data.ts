@@ -233,7 +233,7 @@ export class IncomingDataProvider {
 
   private isValidBitPayDynamicLink(data: string): boolean {
     data = this.sanitizeUri(data);
-    return !!(data && data.indexOf('com.stratisplatform.mobile://google/link') === 0);
+    return !!(data && data.indexOf('com.stratis.live://google/link') === 0);
   }
 
   private isValidJoinCode(data: string): boolean {
