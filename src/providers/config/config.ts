@@ -172,7 +172,7 @@ export class ConfigProvider {
 
       // Bitcore wallet service URL
       bws: {
-        url: 'https://mw-ws.stratisplatform.com:3032/bws/api' // Uncomment and replace w/ http://localhost:3232/bws/api for testing
+        url: 'http://localhost:3000/bws/api' // Uncomment and replace w/ http://localhost:3232/bws/api for testing
       },
 
       adPubKey: {

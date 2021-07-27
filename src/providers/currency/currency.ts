@@ -6,6 +6,7 @@ import { Token, TokenOpts } from './token';
 export enum Coin {
   // BTC = 'btc',
   STRAX = 'strax',
+  CRS = 'crs'
   // BCH = 'bch',
   // ETH = 'eth',
   // XRP = 'xrp',

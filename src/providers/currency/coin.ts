@@ -23,7 +23,7 @@ export interface CoinOpts {
   };
   paymentInfo: {
     paymentCode: string;
-    protocolPrefix: { livenet: string; testnet: string };
+    protocolPrefix: { livenet: string; testnet: string, cirrusmain: string };
     // Urls
     ratesApi: string;
     blockExplorerUrls: string;
@@ -101,10 +101,47 @@ export const availableCoins: CoinsMap<CoinOpts> = {
     },
     paymentInfo: {
       paymentCode: 'BIP73',
-      protocolPrefix: { livenet: 'stratis', testnet: 'stratistest' },
+      protocolPrefix: { livenet: 'stratis', testnet: 'stratistest', cirrusmain: 'cirrus' },
       ratesApi: 'https://stratrates.stratisplatform.com/api/rates',
       blockExplorerUrls: 'https://stratisexplorer.stratisplatform.com/',
       blockExplorerUrlsTestnet: 'https://stratisexplorer.stratisplatform.com/'
+    },
+    feeInfo: {
+      feeUnit: 'sat/byte',
+      feeUnitAmount: 1000,
+      blockTime: 1,
+      maxMerchantFee: 'urgent'
+    },
+    theme: {
+      coinColor: '#007cba',
+      backgroundColor: 'rgba(19,130,198,1)',
+      gradientBackgroundColor: 'rgba(247,146,26, 0.2)'
+    }
+  },
+  crs: {
+    name: 'Cirrus',
+    chain: 'CRS',
+    coin: 'crs',
+    unitInfo: {
+      unitName: 'CRS',
+      unitToSatoshi: 100000000,
+      unitDecimals: 8,
+      unitCode: 'crs'
+    },
+    properties: {
+      hasMultiSig: false,
+      hasMultiSend: false,
+      isUtxo: true,
+      isERCToken: false,
+      isStableCoin: false,
+      singleAddress: false
+    },
+    paymentInfo: {
+      paymentCode: 'BIP73',
+      protocolPrefix: { livenet: 'cirrus', testnet: 'cirrus', cirrusmain: 'cirrus' },
+      ratesApi: 'https://stratrates.stratisplatform.com/api/rates',
+      blockExplorerUrls: 'https://cirrusexplorer.stratisplatform.com/',
+      blockExplorerUrlsTestnet: 'https://cirrusexplorer.stratisplatform.com/'
     },
     feeInfo: {
       feeUnit: 'sat/byte',

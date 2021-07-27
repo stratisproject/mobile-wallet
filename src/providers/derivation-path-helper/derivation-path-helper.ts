@@ -11,6 +11,7 @@ export class DerivationPathHelperProvider {
   public defaultMultisigBTC: string;
   public defaultMultisigBCH: string;
   public defaultSTRAT: string;
+  public defaultCRS: string;
 
   public constructor() {
     this.defaultBTC = "m/44'/0'/0'";
@@ -21,7 +22,8 @@ export class DerivationPathHelperProvider {
     this.defaultMultisigBTC = "m/48'/0'/0'";
     this.defaultMultisigBCH = "m/48'/145'/0'";
     this.defaultTestnet = "m/44'/1'/0'";
-    this.defaultSTRAT = "m/44'/105105'/0'"
+    this.defaultSTRAT = "m/44'/105105'/0'";
+    this.defaultCRS = "m/44'/401'/0'";
   }
 
   public parsePath(path: string) {
@@ -77,6 +79,12 @@ export class DerivationPathHelperProvider {
       case "3'": // for DOGE
         networkName = 'livenet';
         break;
+      case "105105'": // for DOGE
+        networkName = 'livenet';
+        break;
+      case "401'": // for DOGE
+        networkName = 'cirrusmain';
+        break;
     }
     return networkName;
   }
@@ -114,6 +122,12 @@ export class DerivationPathHelperProvider {
         break;
       case 'doge':
         isValid = ["3'", "1'"].indexOf(coinCode) > -1;
+        break;
+      case 'strax':
+        isValid = ["105105'", "1'"].indexOf(coinCode) > -1;
+        break;
+      case 'crs':
+        isValid = ["401'", "1'"].indexOf(coinCode) > -1;
         break;
     }
 
