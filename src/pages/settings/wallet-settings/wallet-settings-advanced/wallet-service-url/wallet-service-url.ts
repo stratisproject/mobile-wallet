@@ -80,15 +80,15 @@ export class WalletServiceUrlPage {
     switch (this.walletServiceForm.value.bwsurl) {
       case 'prod':
       case 'production':
-        bws = 'https://mw-ws.stratisplatform.com:3032/bws/api';
+        bws = 'http://13.83.95.182:3000/api';
         break;
       case 'sta':
       case 'staging':
-        bws = 'https://mw-ws.stratisplatform.com:3032/bws/api';
+        bws = 'http://13.83.95.182:3000/api';
         break;
       case 'loc':
       case 'local':
-        bws = 'https://mw-ws.stratisplatform.com:3032/bws/api';
+        bws = 'http://13.83.95.182:3000/api';
         break;
     }
     if (bws) {

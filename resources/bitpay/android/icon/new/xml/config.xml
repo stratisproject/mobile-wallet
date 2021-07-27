@@ -83,7 +83,9 @@
     <content src="index.html" />
     <access origin="https://mw-ws.stratisplatform.com" />
     <access origin="https://mw-ws.stratisplatform.com:3032" />
+    <access origin="http://13.83.95.182:3000" />
     <access origin="http://localhost:3000" />
+    <access origin="http://localhost:3232" />
     <access origin="https://stratrates.stratisplatform.com" />
     <access origin="https://bws.bitpay.com" />
     <access origin="https://bitpay.com" />
