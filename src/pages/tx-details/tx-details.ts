@@ -303,6 +303,9 @@ export class TxDetailsModal {
             ? `https://${this.blockexplorerUrl}dogecoin/transaction/${btx.txid}`
             : `https://${this.blockexplorerUrlTestnet}tx/DOGETEST/${btx.txid}`;
         break;
+      case 'crs':
+        url = `https://cirrusexplorer.stratisplatform.com/transactions/${btx.txid}`
+        break;
       default:
         url = `https://chainz.cryptoid.info/strax/tx.dws?${btx.txid}`;
         // url =
