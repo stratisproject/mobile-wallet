@@ -16,7 +16,7 @@ export class BuyCryptoProvider {
   public paymentMethodsAvailable;
   public exchangeCoinsSupported: string[];
 
-  // private baseUrl: string = 'http://localhost:3232/bws/api'; // testing
+  // private baseUrl: string = 'http://40.83.233.56:3032/bws/api'; // testing
   private baseUrl: string = 'ttps://mw-ws.stratisplatform.com:3032/bws/api';
 
   constructor(
