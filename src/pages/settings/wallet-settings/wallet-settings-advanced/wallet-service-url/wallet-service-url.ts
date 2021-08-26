@@ -88,7 +88,7 @@ export class WalletServiceUrlPage {
         break;
       case 'loc':
       case 'local':
-        bws = 'http://bws.stratis.top:3000/api';
+        bws = 'http://localhost:3000/api';
         break;
     }
     if (bws) {
