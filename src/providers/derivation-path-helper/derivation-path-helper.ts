@@ -79,11 +79,11 @@ export class DerivationPathHelperProvider {
       case "3'": // for DOGE
         networkName = 'livenet';
         break;
-      case "105105'": // for DOGE
+      case "105105'": // for STRAX
         networkName = 'livenet';
         break;
-      case "401'": // for DOGE
-        networkName = 'cirrusmain';
+      case "401'": // for CRS
+        networkName = 'livenet';
         break;
     }
     return networkName;

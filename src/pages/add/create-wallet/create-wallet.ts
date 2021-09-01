@@ -219,7 +219,7 @@ export class CreateWalletPage implements OnInit {
         this.createForm.value.totalCopayers > 1
           ? this.createForm.value.myName
           : null,
-      networkName: this.createForm.value.walletName === 'Cirrus' ? 'cirrusmain' : (this.createForm.value.testnetEnabled ? 'testnet' : 'livenet'),
+      networkName: this.createForm.value.testnetEnabled ? 'testnet' : 'livenet',
       useNativeSegwit: this.createForm.value.useNativeSegwit,
       bwsurl: this.createForm.value.bwsURL,
       singleAddress: this.currencyProvider.isSingleAddress(
