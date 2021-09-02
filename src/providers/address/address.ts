@@ -13,12 +13,16 @@ export class AddressProvider {
   private bitcore;
   private bitcoreCash;
   private bitcoreDoge;
+  private bitcoreStrax;
+  private bitcoreCirrus;
   private core;
 
   constructor(private bwcProvider: BwcProvider, private logger: Logger) {
     this.bitcore = this.bwcProvider.getBitcore();
     this.bitcoreCash = this.bwcProvider.getBitcoreCash();
     this.bitcoreDoge = this.bwcProvider.getBitcoreDoge();
+    this.bitcoreStrax = this.bwcProvider.getBitcoreStrax();
+    this.bitcoreCirrus = this.bwcProvider.getBitcoreCirrus();
     this.core = this.bwcProvider.getCore();
   }
 
@@ -81,7 +85,18 @@ export class AddressProvider {
                 network = this.bitcore.Address(address).network.name;
                 return { coin: 'strax', network };
               } catch (e) {
-                return null;
+                try {
+                  network = this.bitcoreStrax.Address(address).network.name;
+                  return { coin: 'strax', network };
+                } catch (e) {
+                  try {
+                    network = this.bitcoreCirrus.Address(address).network.name;
+                    return { coin: 'crs', network }
+                  }
+                  catch(e) {
+                    return null;
+                  }
+                }
               }
             }
           }

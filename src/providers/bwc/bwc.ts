@@ -24,7 +24,11 @@ export class BwcProvider {
   }
 
   public getBitcoreStrax() {
-    return BWC.Bitcore;
+    return BWC.BitcoreStrax;
+  }
+
+  public getBitcoreCirrus() {
+    return BWC.BitcoreCirrus;
   }
 
   public getCore() {
