@@ -46,12 +46,12 @@ export class AddressProvider {
   ): CoinNetwork {
     const address = this.extractAddress(str);
     try {
-      network = this.bitcore.Address(address).network.name;
+      network = this.bitcoreStrax.Address(address).network.name;
       return { coin: 'strax', network };
     } catch (e) {
       try {
-        network = this.bitcoreCash.Address(address).network.name;
-        return { coin: 'bch', network };
+        network = this.bitcoreCirrus.Address(address).network.name;
+        return { coin: 'crs', network };
       } catch (e) {
         try {
           const isValidEthAddress = this.core.Validation.validateAddress(
@@ -83,19 +83,13 @@ export class AddressProvider {
             } catch (e) {
               try {
                 network = this.bitcore.Address(address).network.name;
-                return { coin: 'strax', network };
+                return { coin: 'btc', network };
               } catch (e) {
                 try {
-                  network = this.bitcoreStrax.Address(address).network.name;
-                  return { coin: 'strax', network };
+                  network = this.bitcoreCash.Address(address).network.name;
+                  return { coin: 'bch', network };
                 } catch (e) {
-                  try {
-                    network = this.bitcoreCirrus.Address(address).network.name;
-                    return { coin: 'crs', network }
-                  }
-                  catch(e) {
                     return null;
-                  }
                 }
               }
             }
