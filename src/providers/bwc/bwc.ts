@@ -68,7 +68,7 @@ export class BwcProvider {
 
     // note opts use `bwsurl` all lowercase;
     let bwc = new BWC({
-      baseUrl: opts.bwsurl || 'http://localhost:3000/api', // 'http://bws.stratis.top:3032/bws/api', uncmment for local testing
+      baseUrl: opts.bwsurl || 'http://localhost:3032/bws/api', // 'http://bws.stratis.top:3032/bws/api', uncmment for local testing
       verbose: opts.verbose,
       timeout: 100000,
       transports: ['polling'],
