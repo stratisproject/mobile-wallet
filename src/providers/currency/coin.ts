@@ -134,7 +134,7 @@ export const availableCoins: CoinsMap<CoinOpts> = {
       isUtxo: true,
       isERCToken: false,
       isStableCoin: false,
-      singleAddress: false
+      singleAddress: true
     },
     paymentInfo: {
       paymentCode: 'BIP73',
