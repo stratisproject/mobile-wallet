@@ -108,12 +108,18 @@ export class AddressProvider {
     const URICash = this.bitcoreCash.URI;
     const AddressDoge = this.bitcoreDoge.Address;
     const URIDoge = this.bitcoreDoge.URI;
+    const AddressStrax = this.bitcoreStrax.Address;
+    const URIStrax = this.bitcoreStrax.URI;
+    const AddressCirrus = this.bitcoreCirrus.Address;
+    const URICirrus = this.bitcoreCirrus.URI;
     const { Validation } = this.core;
 
     // Bip21 uri
     if (URI.isValid(str)) return true;
     if (URICash.isValid(str)) return true;
     if (URIDoge.isValid(str)) return true;
+    if (URIStrax.isValid(str)) return true;
+    if (URICirrus.isValid(str)) return true;
     if (Validation.validateUri('ETH', str)) return true;
     if (Validation.validateUri('XRP', str)) return true;
 
@@ -124,6 +130,10 @@ export class AddressProvider {
     if (AddressCash.isValid(str, 'testnet')) return true;
     if (AddressDoge.isValid(str, 'livenet')) return true;
     if (AddressDoge.isValid(str, 'testnet')) return true;
+    if (AddressStrax.isValid(str, 'livenet')) return true;
+    if (AddressStrax.isValid(str, 'testnet')) return true;
+    if (AddressCirrus.isValid(str, 'livenet')) return true;
+    if (AddressCirrus.isValid(str, 'testnet')) return true;
     if (Validation.validateAddress('XRP', 'livenet', str)) return true;
     if (Validation.validateAddress('ETH', 'livenet', str)) return true;
 
