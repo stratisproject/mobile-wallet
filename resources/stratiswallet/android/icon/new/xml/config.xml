@@ -82,11 +82,8 @@
     </author>
     <content src="index.html" />
     <access origin="http://bws.stratis.top" />
-    <access origin="http://bws.stratis.top:3032" />
-    <access origin="http://bws.stratis.top:3000" />
+    <access origin="http://bitcore-testnet.stratis.top" />
     <access origin="http://localhost:3000" />
-    <access origin="http://bws.stratis.top:3032" />
-    <access origin="http://localhost:3032" />
     <access origin="https://stratrates.stratisplatform.com" />
     <access origin="https://bws.bitpay.com" />
     <access origin="https://bitpay.com" />
