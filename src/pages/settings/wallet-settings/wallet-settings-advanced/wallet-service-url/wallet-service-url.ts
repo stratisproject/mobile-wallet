@@ -80,11 +80,11 @@ export class WalletServiceUrlPage {
     switch (this.walletServiceForm.value.bwsurl) {
       case 'prod':
       case 'production':
-        bws = 'http://bws.stratis.top:3000/api';
+        bws = 'http://bitcore-testnet.stratis.top/api';
         break;
       case 'sta':
       case 'staging':
-        bws = 'http://bws.stratis.top:3000/api';
+        bws = 'http://bitcore-testnet.stratis.top/bws';
         break;
       case 'loc':
       case 'local':
