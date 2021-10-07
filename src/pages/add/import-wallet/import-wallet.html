@@ -101,7 +101,10 @@
           </div>
         </label-tip>
       </div>
-
+      <ion-item [ngClass]="{'with-label': importForm.value.testnetEnabled}">
+        <ion-label>Testnet</ion-label>
+        <ion-toggle formControlName="testnetEnabled" (ionChange)="setDerivationPath()"></ion-toggle>
+      </ion-item>
     </div>
   </form>
 </ion-content>

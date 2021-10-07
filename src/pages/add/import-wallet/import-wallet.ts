@@ -108,7 +108,8 @@ export class ImportWalletPage {
       coin: ['btc'],
       derivationPath: [this.derivationPathHelperProvider.defaultSTRAT],
       bwsURL: [this.defaults.bws.url],
-      isMultisig: [false]
+      isMultisig: [false],
+      testnetEnabled: [false]
     });
     this.events.subscribe('Local/BackupScan', this.updateWordsHandler);
     this.setForm();
@@ -362,7 +363,7 @@ export class ImportWalletPage {
       m: 1,
       n: 1,
       myName: null,
-      networkName: 'livenet',
+      networkName: this.importForm.value.testnetEnabled ? 'testnet' : 'livenet',
       bwsurl: this.importForm.value.bwsURL,
       singleAddress: this.currencyProvider.isSingleAddress(coin),
       coin: Coin[coin.toUpperCase()]
@@ -645,7 +646,7 @@ export class ImportWalletPage {
 
   public setDerivationPath(coin: string) {
     const defaultCoin = `default${coin.toUpperCase()}`;
-    const derivationPath = this.derivationPathHelperProvider[defaultCoin];
+    const derivationPath = this.importForm.value.testnetEnabled ? this.derivationPathHelperProvider['defaultTestnet'] : this.derivationPathHelperProvider[defaultCoin];
     this.importForm.controls['derivationPath'].setValue(derivationPath);
   }
 
