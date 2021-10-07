@@ -172,7 +172,7 @@ export class ConfigProvider {
 
       // Bitcore wallet service URL
       bws: {
-        url: 'http://bitcore-testnet.stratis.top/bws/api'
+        url: 'https://bws-test.stratis.top/bws/api'
       },
 
       adPubKey: {
