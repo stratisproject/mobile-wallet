@@ -1,0 +1,135 @@
+import { BwcProvider } from '../../providers/bwc/bwc';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
+import { Events, NavController, NavParams } from 'ionic-angular';
+import { Logger } from '../../providers/logger/logger';
+
+// providers
+import { ConfigProvider } from '../../providers/config/config';
+import { ProfileProvider } from '../../providers/profile/profile';
+import { ReplaceParametersProvider } from '../../providers/replace-parameters/replace-parameters';
+import { KeyProvider } from '../../providers/key/key';
+
+@Component({
+  selector: 'page-sign-message',
+  templateUrl: 'sign-message.html'
+})
+export class SignMessagePage {
+  public wallet;
+  public walletName: string;
+  public privKey: string;
+
+  public walletNameForm: FormGroup;
+  public description: string;
+
+  private config;
+  signedMessage: any;
+  hdPrivKey: any;
+
+  constructor(
+    private profileProvider: ProfileProvider,
+    private navCtrl: NavController,
+    private navParams: NavParams,
+    private configProvider: ConfigProvider,
+    private formBuilder: FormBuilder,
+    private events: Events,
+    private logger: Logger,
+    private replaceParametersProvider: ReplaceParametersProvider,
+    private translate: TranslateService,
+    private bwcProvider: BwcProvider,
+    private keyProvider: KeyProvider
+  ) {
+    this.walletName = this.navParams.data.walletName;
+
+    this.walletNameForm = this.formBuilder.group({
+      walletName: [
+        '',
+        Validators.compose([Validators.minLength(1), Validators.required])
+      ]
+    });
+  }
+
+  ionViewDidLoad() {
+    this.logger.info('Loaded: SignMessagePage');
+  }
+
+  ionViewWillEnter() {
+    this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
+    this.config = this.configProvider.get();
+    let alias =
+      this.config.aliasFor &&
+      this.config.aliasFor[this.wallet.credentials.walletId];
+    this.walletNameForm.value.walletName = alias
+      ? alias
+      : this.wallet.credentials.walletName;
+    this.walletName = this.wallet.credentials.walletName;
+    this.description = this.replaceParametersProvider.replace(
+      this.translate.instant(
+        'When this wallet was created, it was called "{{walletName}}". You can change the name displayed on this device below.'
+      ),
+      { walletName: this.walletName }
+    );
+
+    this.keyProvider
+      .handleEncryptedWallet(this.wallet.keyId)
+      .then((password: string) => {
+        console.log("Got keys");
+        const keys = this.keyProvider.get(this.wallet.keyId, password);
+
+        // let key2 = this.wallet.credentials.walletPrivKey;
+
+        let bitcore = this.bwcProvider.getBitcoreCirrus();
+        // var priv1 = new bitcore.PrivateKey.fromString(this.wallet.credentials.walletPrivKey); // This shouldn't be here lol
+        this.hdPrivKey = new bitcore.HDPrivateKey(keys.xPrivKey); // xPrivKey is HD priv key
+        
+        // this.xPrivKey = keys.xPrivKey;
+      })
+      .catch(err => {
+        // TODO handle this properly
+        console.log(err);
+        this.navCtrl.pop();
+      });
+  }
+
+  signMessage() {
+    // TODO get bitcore conditionally based on wallet.coin???
+    let bitcore = this.bwcProvider.getBitcoreCirrus();
+    let message = this.walletNameForm.value.walletName;
+    let bcMessage = new bitcore.Message(message);
+
+    // const changeNum = 0; // Not change
+    // const addressIndex = 0; // Always the first address on Cirrus
+    // const path = `m/${changeNum}/${addressIndex}`;
+    const privKey = this.hdPrivKey.deriveChild(0).privateKey;
+
+    // Two ways to do this but this one requires modifying message...
+    // let signedMessage1 = bcMessage.sign(privKey);
+
+    let ecdsa = bitcore.crypto.ECDSA().set({
+      hashbuf: bcMessage.magicHash(),
+      privkey: privKey
+    });    
+    ecdsa.sign()
+    ecdsa.calci();
+    
+    let sig = ecdsa.sig;
+    let sigBytes = sig.toCompact();
+    this.signedMessage = sigBytes.toString('base64');
+  };
+
+  public save(): void {
+    let opts = {
+      aliasFor: {}
+    };
+    opts.aliasFor[
+      this.wallet.credentials.walletId
+    ] = this.walletNameForm.value.walletName;
+    this.configProvider.set(opts);
+    this.events.publish('Local/ConfigUpdate', {
+      walletId: this.wallet.credentials.walletId
+    });
+    this.profileProvider.setOrderedWalletsByGroup();
+    this.navCtrl.pop();
+  }
+}
