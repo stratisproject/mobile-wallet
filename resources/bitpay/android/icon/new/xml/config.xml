@@ -85,6 +85,8 @@
     <access origin="http://bitcore-testnet.stratis.top" />
     <access origin="http://localhost:3000" />
     <access origin="http://localhost:3032" />
+    <access origin="https://walletservice-test.stratisplatform.com" />
+    <access origin="https://bws-test.stratis.top" />    
     <access origin="https://stratrates.stratisplatform.com" />
     <access origin="https://bws.bitpay.com" />
     <access origin="https://bitpay.com" />
