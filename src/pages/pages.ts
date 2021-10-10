@@ -153,6 +153,7 @@ import { WideHeaderPage } from './templates/wide-header-page/wide-header-page';
 import { CardCatalogPage } from './integrations/gift-cards/card-catalog/card-catalog';
 import { GIFT_CARD_PAGES } from './integrations/gift-cards/gift-cards';
 import { MerchantPage } from './merchant/merchant';
+import { SignMessagePage } from './sign-message/sign-message';
 
 export const PAGES = [
   AddPage,
@@ -272,5 +273,6 @@ export const PAGES = [
   LocalThemePage,
   NewFeaturePage,
   // Phases: card pages
-  PhaseOneCardIntro
+  PhaseOneCardIntro,
+  SignMessagePage
 ];

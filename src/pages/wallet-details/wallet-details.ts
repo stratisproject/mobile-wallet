@@ -43,6 +43,7 @@ import { TxDetailsModal } from '../../pages/tx-details/tx-details';
 import { ProposalsNotificationsPage } from '../../pages/wallets/proposals-notifications/proposals-notifications';
 import { AmountPage } from '../send/amount/amount';
 import { SearchTxModalPage } from './search-tx-modal/search-tx-modal';
+import { SignMessagePage } from '../sign-message/sign-message';
 import { WalletBalanceModal } from './wallet-balance/wallet-balance';
 
 const HISTORY_SHOW_LIMIT = 10;
@@ -748,16 +749,18 @@ export class WalletDetailsPage {
   }
 
   private signMessage(): void {
-    this.walletProvider.getAddress(this.wallet, false).then(addr => {
-      this.navCtrl.push(AmountPage, {
-        toAddress: addr,
-        id: this.wallet.credentials.walletId,
-        recipientType: 'wallet',
-        name: this.wallet.name,
-        color: this.wallet.color,
-        coin: this.wallet.coin,
-        nextPage: 'CustomAmountPage',
-        network: this.wallet.network
+    console.log("Signing message");
+    this.walletProvider.getAddress(this.wallet, false).then(_ => {
+      this.navCtrl.push(SignMessagePage, {
+        privKey: null,
+        walletName: this.wallet.name,
+        // toAddress: addr,
+        walletId: this.wallet.credentials.walletId,
+        // recipientType: 'wallet',
+        // color: this.wallet.color,
+        // coin: this.wallet.coin,
+        // nextPage: 'CustomAmountPage',
+        // network: this.wallet.network
       });
     });
   }
