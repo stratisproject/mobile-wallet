@@ -10,6 +10,15 @@
         </ion-label>
       </button>
 
+      <button ion-item (click)="optionClicked('sign-message')">
+        <ion-icon class="item-img icon-settings" item-start>
+          <img src="assets/img/specific-amount.svg">
+        </ion-icon>
+        <ion-label>
+          <span class="main-label" translate>Sign Message</span>
+        </ion-label>
+      </button>
+
       <button ion-item (click)="optionClicked('share-address')" *ngIf="params.showShare">
         <ion-icon class="item-img icon-settings" item-start>
           <img src="assets/img/icon-share.svg">

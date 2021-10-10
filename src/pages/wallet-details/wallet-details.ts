@@ -719,6 +719,7 @@ export class WalletDetailsPage {
     optionsSheet.onDidDismiss(option => {
       if (option == 'request-amount') this.requestSpecificAmount();
       if (option == 'share-address') this.shareAddress();
+      if (option == 'sign-message') this.signMessage();
     });
   }
 
@@ -743,6 +744,21 @@ export class WalletDetailsPage {
       if (this.platformProvider.isAndroid)
         this.appProvider.skipLockModal = true;
       this.socialSharing.share(addr);
+    });
+  }
+
+  private signMessage(): void {
+    this.walletProvider.getAddress(this.wallet, false).then(addr => {
+      this.navCtrl.push(AmountPage, {
+        toAddress: addr,
+        id: this.wallet.credentials.walletId,
+        recipientType: 'wallet',
+        name: this.wallet.name,
+        color: this.wallet.color,
+        coin: this.wallet.coin,
+        nextPage: 'CustomAmountPage',
+        network: this.wallet.network
+      });
     });
   }
 
