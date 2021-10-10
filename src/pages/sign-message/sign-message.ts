@@ -25,7 +25,7 @@ export class SignMessagePage {
 
   private config;
   signedMessage: any;
-  hdPrivKey: any;
+  xPrivKey: any;
 
   constructor(
     private profileProvider: ProfileProvider,
@@ -74,16 +74,8 @@ export class SignMessagePage {
     this.keyProvider
       .handleEncryptedWallet(this.wallet.keyId)
       .then((password: string) => {
-        console.log("Got keys");
         const keys = this.keyProvider.get(this.wallet.keyId, password);
-
-        // let key2 = this.wallet.credentials.walletPrivKey;
-
-        let bitcore = this.bwcProvider.getBitcoreCirrus();
-        // var priv1 = new bitcore.PrivateKey.fromString(this.wallet.credentials.walletPrivKey); // This shouldn't be here lol
-        this.hdPrivKey = new bitcore.HDPrivateKey(keys.xPrivKey); // xPrivKey is HD priv key
-        
-        // this.xPrivKey = keys.xPrivKey;
+        this.xPrivKey = keys.xPrivKey; // xPrivKey is HD priv key        
       })
       .catch(err => {
         // TODO handle this properly
@@ -94,14 +86,14 @@ export class SignMessagePage {
 
   signMessage() {
     // TODO get bitcore conditionally based on wallet.coin???
-    let bitcore = this.bwcProvider.getBitcoreCirrus();
+    let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
     let message = this.walletNameForm.value.walletName;
     let bcMessage = new bitcore.Message(message);
 
     // const changeNum = 0; // Not change
     // const addressIndex = 0; // Always the first address on Cirrus
     // const path = `m/${changeNum}/${addressIndex}`;
-    const privKey = this.hdPrivKey.deriveChild(0).privateKey;
+    const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(0).privateKey;
 
     // Two ways to do this but this one requires modifying message...
     // let signedMessage1 = bcMessage.sign(privKey);
