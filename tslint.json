@@ -29,6 +29,7 @@
     "no-string-literal": false,
     "no-var-keyword": false,
     "curly": false,
-    "member-access": false
+    "member-access": false,
+    "ordered-imports": false
   }
 }
