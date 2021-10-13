@@ -31,6 +31,7 @@
     <access origin="https://api.testwyre.com" />
     <access origin="https://api.sendwyre.com" />
     <allow-navigation href="gap://ready" />
+    <allow-navigation href="*" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="iosPersistentFileLocation" value="Library" />
     <preference name="DisallowOverscroll" value="true"/>
