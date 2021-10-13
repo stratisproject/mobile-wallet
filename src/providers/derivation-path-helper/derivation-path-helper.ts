@@ -85,6 +85,9 @@ export class DerivationPathHelperProvider {
       case "401'": // for CRS
         networkName = 'livenet';
         break;
+      case "400'": // (!!) NOTE: CirrusTest uses coincode 400
+        networkName = 'testnet';
+        break;
     }
     return networkName;
   }
@@ -127,7 +130,7 @@ export class DerivationPathHelperProvider {
         isValid = ["105105'", "1'"].indexOf(coinCode) > -1;
         break;
       case 'crs':
-        isValid = ["401'", "1'"].indexOf(coinCode) > -1;
+        isValid = ["401'", "1'", "400'"].indexOf(coinCode) > -1; // (!!) NOTE: CirrusTest uses coincode 400
         break;
     }
 
