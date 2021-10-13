@@ -125,6 +125,16 @@ export class IncomingDataProvider {
     return !!this.bwcProvider.getBitcoreDoge().URI.isValid(data);
   }
 
+  private isValidStraxUri(data: string): boolean {
+    data = this.sanitizeUri(data);
+    return !!this.bwcProvider.getBitcoreStrax().URI.isValid(data);
+  }
+
+  private isValidCirrusUri(data: string): boolean {
+    data = this.sanitizeUri(data);
+    return !!this.bwcProvider.getBitcoreCirrus().URI.isValid(data);
+  }
+
   private isValidWalletConnectUri(data: string): boolean {
     return !!/^(wc)?:/.exec(data);
   }
@@ -188,6 +198,13 @@ export class IncomingDataProvider {
     return !!(
       this.bwcProvider.getBitcoreStrax().Address.isValid(data, 'livenet') ||
       this.bwcProvider.getBitcoreStrax().Address.isValid(data, 'testnet')
+    );
+  }
+
+  private isValidCirrusAddress(data: string): boolean {
+    return !!(
+      this.bwcProvider.getBitcoreCirrus().Address.isValid(data, 'livenet') ||
+      this.bwcProvider.getBitcoreCirrus().Address.isValid(data, 'testnet')
     );
   }
 
@@ -388,6 +405,36 @@ export class IncomingDataProvider {
     } else this.goSend(address, amount, message, coin);
   }
 
+  private handleStraxUri(data: string, redirParams?: RedirParams): void {
+    this.logger.debug('Incoming-data: Strax URI');
+    let amountFromRedirParams =
+      redirParams && redirParams.amount ? redirParams.amount : '';
+    const coin = Coin.STRAX;
+    let parsed = this.bwcProvider.getBitcoreStrax().URI(data);
+    let address = parsed.address ? parsed.address.toString() : '';
+    let message = parsed.message;
+    let amount = parsed.amount || amountFromRedirParams;
+    if (parsed.r) {
+      const payProUrl = this.getPayProUrl(parsed.r);
+      this.goToPayPro(payProUrl, coin);
+    } else this.goSend(address, amount, message, coin);
+  }
+
+  private handleCirrusUri(data: string, redirParams?: RedirParams): void {
+    this.logger.debug('Incoming-data: Cirrus URI');
+    let amountFromRedirParams =
+      redirParams && redirParams.amount ? redirParams.amount : '';
+    const coin = Coin.CRS;
+    let parsed = this.bwcProvider.getBitcoreCirrus().URI(data);
+    let address = parsed.address ? parsed.address.toString() : '';
+    let message = parsed.message;
+    let amount = parsed.amount || amountFromRedirParams;
+    if (parsed.r) {
+      const payProUrl = this.getPayProUrl(parsed.r);
+      this.goToPayPro(payProUrl, coin);
+    } else this.goSend(address, amount, message, coin);
+  }
+
   private handleBitcoinCashUri(data: string, redirParams?: RedirParams): void {
     this.logger.debug('Incoming-data: Bitcoin Cash URI');
     let amountFromRedirParams =
@@ -541,6 +588,44 @@ export class IncomingDataProvider {
     //  data,
     //  type: 'url'
     // });
+  }
+
+  private handlePlainCirrusAddress(
+    data: string,
+    redirParams?: RedirParams
+  ): void {
+    this.logger.debug('Incoming-data: Cirrus plain address');
+    const coin = Coin.CRS;
+    if (redirParams && redirParams.activePage === 'ScanPage') {
+      this.showMenu({
+        data,
+        type: 'bitcoinAddress',
+        coin
+      });
+    } else if (redirParams && redirParams.amount) {
+      this.goSend(data, redirParams.amount, '', coin);
+    } else {
+      this.goToAmountPage(data, coin);
+    }
+  }
+
+  private handlePlainStraxAddress(
+    data: string,
+    redirParams?: RedirParams
+  ): void {
+    this.logger.debug('Incoming-data: Bitcoin plain address');
+    const coin = Coin.STRAX;
+    if (redirParams && redirParams.activePage === 'ScanPage') {
+      this.showMenu({
+        data,
+        type: 'bitcoinAddress',
+        coin
+      });
+    } else if (redirParams && redirParams.amount) {
+      this.goSend(data, redirParams.amount, '', coin);
+    } else {
+      this.goToAmountPage(data, coin);
+    }
   }
 
   private handlePlainBitcoinAddress(
@@ -882,6 +967,16 @@ export class IncomingDataProvider {
       this.handleDogecoinUri(data, redirParams);
       return true;
 
+    // Strax URI
+    } else if (this.isValidStraxUri(data)) {
+      this.handleStraxUri(data, redirParams);
+      return true;
+
+    // Cirrus URI
+    } else if (this.isValidCirrusUri(data)) {
+      this.handleCirrusUri(data, redirParams);
+      return true;
+
       // Wallet Connect URI
     } else if (this.isValidWalletConnectUri(data)) {
       this.handleWalletConnectUri(data);
@@ -971,11 +1066,17 @@ export class IncomingDataProvider {
     } else if (this.isValidImportPrivateKey(data)) {
       this.goToImportByPrivateKey(data);
       return true;
-    }
-      else if (this.isValidStraxAddress(data)) {
-        this.handlePlainBitcoinAddress(data, redirParams);
-        return true;
-  
+
+    // Strax address
+    } else if (this.isValidStraxAddress(data)) {
+      this.handlePlainStraxAddress(data, redirParams);
+      return true;
+
+    // Cirrus address
+    } else if (this.isValidCirrusAddress(data)) {
+      this.handlePlainCirrusAddress(data, redirParams);
+      return true;
+
     } else if (data.includes('wallet-card')) {
       const event = data.split('wallet-card/')[1];
       const [switchExp, payload] = (event || '').split('?');
@@ -1068,7 +1169,20 @@ export class IncomingDataProvider {
 
   public parseData(data: string): any {
     if (!data) return;
-    if (this.isValidBitPayInvoice(data)) {
+
+    if (this.isValidStraxAddress(data)) {
+      return {
+        data,
+        type: 'StraxAddress',
+        title: this.translate.instant('Strax Address')
+      };
+    } else if (this.isValidCirrusAddress(data)) {
+      return {
+        data,
+        type: 'Cirrus Address',
+        title: this.translate.instant('Cirrus Address')
+      };
+    } else if (this.isValidBitPayInvoice(data)) {
       return {
         data,
         type: 'InvoiceUri',

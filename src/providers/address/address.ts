@@ -45,13 +45,15 @@ export class AddressProvider {
     network: string = 'livenet'
   ): CoinNetwork {
     const address = this.extractAddress(str);
+    // Note: CirrusTest pubkey_address has the same value as StraxTest script_address
+    // Because of this Bitcore gets them mixed up, so check for Cirrus test first.
     try {
-      network = this.bitcoreStrax.Address(address).network.name;
-      return { coin: 'strax', network };
+      network = this.bitcoreCirrus.Address(address).network.name;
+      return { coin: 'crs', network };
     } catch (e) {
       try {
-        network = this.bitcoreCirrus.Address(address).network.name;
-        return { coin: 'crs', network };
+        network = this.bitcoreStrax.Address(address).network.name;
+        return { coin: 'strax', network };
       } catch (e) {
         try {
           const isValidEthAddress = this.core.Validation.validateAddress(
