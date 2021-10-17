@@ -141,6 +141,7 @@ import { WalletTransactionHistoryPage } from '../pages/settings/wallet-settings/
 import { CreateEthMultisigPage } from '../pages/add/create-eth-multisig/create-eth-multisig';
 import { AmountPage } from '../pages/send/amount/amount';
 import { ConfirmPage } from '../pages/send/confirm/confirm';
+import { ConfirmScPage } from '../pages/send/confirm-sc/confirm-sc';
 import { MultiSendPage } from '../pages/send/multi-send/multi-send';
 import { SelectInputsPage } from '../pages/send/select-inputs/select-inputs';
 import { TransferToModalPage } from '../pages/send/transfer-to-modal/transfer-to-modal';
@@ -202,6 +203,7 @@ export const PAGES = [
   BackupKeyPage,
   CreateEthMultisigPage,
   ConfirmPage,
+  ConfirmScPage,
   MultiSendPage,
   TransferToModalPage,
   TransferToPage,

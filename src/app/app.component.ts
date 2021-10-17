@@ -72,6 +72,7 @@ import { PaperWalletPage } from '../pages/paper-wallet/paper-wallet';
 import { PinModalPage } from '../pages/pin/pin-modal/pin-modal';
 import { AmountPage } from '../pages/send/amount/amount';
 import { ConfirmPage } from '../pages/send/confirm/confirm';
+import { ConfirmScPage } from '../pages/send/confirm-sc/confirm-sc';
 import { AboutPage } from '../pages/settings/about/about';
 import { AddressbookAddPage } from '../pages/settings/addressbook/add/add';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -110,6 +111,7 @@ export class CopayApp {
     PhaseOneCardIntro,
     CoinbasePage,
     ConfirmPage,
+    ConfirmScPage,
     CopayersPage,
     ImportWalletPage,
     JoinWalletPage,
