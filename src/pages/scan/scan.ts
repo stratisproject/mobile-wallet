@@ -42,6 +42,7 @@ export class ScanPage {
   public fromEthMultisig: boolean;
   public fromConfirm: boolean;
   public fromWalletConnect: boolean;
+  public fromScTx: boolean;
   public canGoBack: boolean;
   public tabBarElement;
 
@@ -253,6 +254,8 @@ export class ScanPage {
       this.events.publish('Local/TagScan', { value: contents });
     } else if (this.fromWalletConnect) {
       this.events.publish('Local/UriScan', { value: contents });
+    } else if (this.fromScTx) {
+      this.events.publish('Local/ScTx', { value: contents });
     } else {
       this.navCtrl.parent.select(1); // Workaround to avoid keep camera active
       const redirParms = { activePage: 'ScanPage' };

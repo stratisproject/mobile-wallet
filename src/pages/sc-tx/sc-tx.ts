@@ -10,6 +10,8 @@ import { ConfigProvider } from '../../providers/config/config';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { ReplaceParametersProvider } from '../../providers/replace-parameters/replace-parameters';
 import { KeyProvider } from '../../providers/key/key';
+import { ScanPage } from '../scan/scan';
+import { PlatformProvider } from '../../providers';
 
 @Component({
   selector: 'page-sc-tx',
@@ -38,8 +40,11 @@ export class ScTxPage {
     private replaceParametersProvider: ReplaceParametersProvider,
     private translate: TranslateService,
     private bwcProvider: BwcProvider,
-    private keyProvider: KeyProvider
+    private keyProvider: KeyProvider,
+    private platformProvider: PlatformProvider
   ) {
+    this.events.subscribe('Local/ScTx', this.updateScTxDataHandler);
+
     this.walletName = this.navParams.data.walletName;
 
     this.walletNameForm = this.formBuilder.group({
@@ -50,8 +55,23 @@ export class ScTxPage {
     });
   }
 
+  private updateScTxDataHandler: any = data => {
+    this.walletName = data.value;
+    this.processInput();
+  };
+
+  private processInput() {
+  }
+
+  public openScanner(): void {
+    this.navCtrl.push(ScanPage, { fromScTx: true }, { animate: false });
+  }
+
   ionViewDidLoad() {
-    this.logger.info('Loaded: SignMessagePage');
+    this.logger.info('Loaded: ScTxPage');
+    if(this.platformProvider.isCordova) {
+      this.openScanner();
+    }
   }
 
   ionViewWillEnter() {
