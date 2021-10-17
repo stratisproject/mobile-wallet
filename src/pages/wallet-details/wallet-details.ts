@@ -45,6 +45,7 @@ import { AmountPage } from '../send/amount/amount';
 import { SearchTxModalPage } from './search-tx-modal/search-tx-modal';
 import { SignMessagePage } from '../sign-message/sign-message';
 import { WalletBalanceModal } from './wallet-balance/wallet-balance';
+import { ScTxPage } from '../sc-tx/sc-tx';
 
 const HISTORY_SHOW_LIMIT = 10;
 const MIN_UPDATE_TIME = 2000;
@@ -721,6 +722,7 @@ export class WalletDetailsPage {
       if (option == 'request-amount') this.requestSpecificAmount();
       if (option == 'share-address') this.shareAddress();
       if (option == 'sign-message') this.signMessage();
+      if (option == 'sc-tx') this.scTx();
     });
   }
 
@@ -752,6 +754,22 @@ export class WalletDetailsPage {
     console.log("Signing message");
     this.walletProvider.getAddress(this.wallet, false).then(_ => {
       this.navCtrl.push(SignMessagePage, {
+        privKey: null,
+        walletName: this.wallet.name,
+        // toAddress: addr,
+        walletId: this.wallet.credentials.walletId,
+        // recipientType: 'wallet',
+        // color: this.wallet.color,
+        // coin: this.wallet.coin,
+        // nextPage: 'CustomAmountPage',
+        // network: this.wallet.network
+      });
+    });
+  }
+
+  private scTx(): void {
+    this.walletProvider.getAddress(this.wallet, false).then(_ => {
+      this.navCtrl.push(ScTxPage, {
         privKey: null,
         walletName: this.wallet.name,
         // toAddress: addr,
