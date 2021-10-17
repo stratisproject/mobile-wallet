@@ -188,13 +188,14 @@ export class ConfirmScPage {
   };
 
   ionViewDidLoad() {
-    this.logger.info('Loaded: ConfirmPage');
+    this.logger.info('Loaded: ConfirmScPage');
     this.navCtrl.swipeBackEnabled = false;
     this.isOpenSelector = false;
     this.coin = this.navParams.data.coin;
     let networkName;
     let amount;
     this.setTitle();
+    console.log("ionviewdidload")
     if (this.fromMultiSend) {
       networkName = this.navParams.data.network;
       amount = this.navParams.data.totalAmount;
@@ -236,10 +237,8 @@ export class ConfirmScPage {
     this.tx = {
       toAddress: this.navParams.data.toAddress,
       description: this.navParams.data.description,
-      destinationTag: this.navParams.data.destinationTag, // xrp
       paypro: this.navParams.data.paypro,
       data: this.navParams.data.data, // eth
-      invoiceID: this.navParams.data.invoiceID, // xrp
       payProUrl: this.navParams.data.payProUrl,
       spendUnconfirmed: this.config.wallet.spendUnconfirmed,
 
@@ -266,9 +265,6 @@ export class ConfirmScPage {
     this.tx.amount =
       this.navParams.data.useSendMax && this.shouldUseSendMax()
         ? 0
-        : this.tx.coin == 'ETH' ||
-          this.currencyProvider.isERCToken(this.tx.coin)
-        ? Number(amount)
         : parseInt(amount, 10);
 
     this.tx.origToAddress = this.tx.toAddress;
@@ -317,13 +313,7 @@ export class ConfirmScPage {
   }
 
   private setTitle(): void {
-    if (this.fromCoinbase) {
-      this.mainTitle = this.translate.instant('Confirm Deposit');
-    } else if (this.isSpeedUpTx) {
-      this.mainTitle = this.translate.instant('Confirm Speed Up');
-    } else {
-      this.mainTitle = this.translate.instant('Confirm Payment');
-    }
+    this.mainTitle = this.translate.instant('Confirm Smart Contract Transaction');
   }
 
   private getAmountDetails() {
@@ -756,6 +746,8 @@ export class ConfirmScPage {
   }
 
   protected getFeeRate(amount: number, fee: number) {
+    if (amount == 0) return 100;
+
     return (fee / amount) * 100;
   }
 

@@ -1,17 +1,16 @@
 import { BwcProvider } from '../../providers/bwc/bwc';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { Events, NavController, NavParams } from 'ionic-angular';
 import { Logger } from '../../providers/logger/logger';
 
 // providers
 import { ConfigProvider } from '../../providers/config/config';
 import { ProfileProvider } from '../../providers/profile/profile';
-import { ReplaceParametersProvider } from '../../providers/replace-parameters/replace-parameters';
 import { KeyProvider } from '../../providers/key/key';
 import { ScanPage } from '../scan/scan';
 import { PlatformProvider } from '../../providers';
+import { ConfirmScPage } from '../send/confirm-sc/confirm-sc';
 
 @Component({
   selector: 'page-sc-tx',
@@ -37,8 +36,8 @@ export class ScTxPage {
     private formBuilder: FormBuilder,
     private events: Events,
     private logger: Logger,
-    private replaceParametersProvider: ReplaceParametersProvider,
-    private translate: TranslateService,
+    // private replaceParametersProvider: ReplaceParametersProvider,
+    // private translate: TranslateService,
     private bwcProvider: BwcProvider,
     private keyProvider: KeyProvider,
     private platformProvider: PlatformProvider
@@ -93,7 +92,21 @@ export class ScTxPage {
   }
 
   broadcastSignedMessage() {
-    // TODO
+    // TODO finish this
+    this.navCtrl.push(ConfirmScPage, {
+      toAddress: 'tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r',
+      amount: 0,
+      walletId: this.wallet.credentials.walletId,
+      data: "EXTRADATA",
+      // totalInputsAmount:
+      //   this.totalAmount *
+      //   this.currencyProvider.getPrecision(this.wallet.coin).unitToSatoshi,
+      // toAddress: this.recipient.toAddress,
+      coin: this.wallet.coin,
+      network: this.wallet.network,
+      useSendMax: false,
+      // inputs: _.filter(this.inputs, 'checked')
+    });
   }
 
   signMessage() {
