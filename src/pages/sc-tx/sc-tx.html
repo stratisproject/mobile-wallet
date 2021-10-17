@@ -2,22 +2,28 @@
   <div page-content>
     <ion-list class="settings-list bp-list">
       <div class="settings-explanation">
-        <div class="settings-heading" translate>Enter the message to sign with the {{ walletName }} wallet's private key</div>
+        <div class="settings-heading" translate>Enter the smart contract transaction details to sign with the {{ walletName }} wallet's private key</div>
         <div class="settings-description">
           {{description}}
         </div>
       </div>
-      <form [formGroup]="walletNameForm">
         <ion-item>
-          <ion-label stacked>{{'Message' | translate}}</ion-label>
-          <ion-input type="text" formControlName="walletName" [value]="walletNameForm.value.walletName" required></ion-input>
+          <ion-label stacked>{{'Smart Contract Data' | translate}}</ion-label>
+          <ion-textarea class="summary-item-detail" placeholder="{{'SC Tx JSON Data' | translate}}" 
+          (ionBlur)="processInput()" 
+          [(ngModel)]="txData" 
+          name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
+          <!-- <ion-input type="text" formControlName="walletName" [value]="scTxDataForm.value.txData" required></ion-input> -->
         </ion-item>
-        <button ion-button class="button-standard" (click)="signMessage()" [disabled]="!walletNameForm.valid">
+        <button ion-button class="button-standard" (click)="signMessage()">
           {{'Sign' | translate}}
         </button>
-      </form>
     </ion-list>
     <div class="settings-heading">{{ signedMessage }}</div>
+
+    <button ion-button class="button-standard" (click)="broadcastSignedMessage()" [disabled]="!signedMessage">
+      {{'Broadcast' | translate}}
+    </button>
 
   </div>
 </wide-header-page>

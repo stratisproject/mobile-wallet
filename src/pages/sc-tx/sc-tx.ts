@@ -19,13 +19,13 @@ import { PlatformProvider } from '../../providers';
 })
 export class ScTxPage {
   public wallet;
-  public walletName: string;
+  public txData: string = '{ "sender": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "to": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "amount": "0", "methodName": "SwapExactSrcForCrs", "parameters": [{ "label": "Token In Amount", "value": "12#1000000" }] }';
   public privKey: string;
 
-  public walletNameForm: FormGroup;
+  public scTxDataForm: FormGroup;
   public description: string;
 
-  private config;
+  public config;
   signedMessage: any;
   xPrivKey: any;
 
@@ -45,10 +45,8 @@ export class ScTxPage {
   ) {
     this.events.subscribe('Local/ScTx', this.updateScTxDataHandler);
 
-    this.walletName = this.navParams.data.walletName;
-
-    this.walletNameForm = this.formBuilder.group({
-      walletName: [
+    this.scTxDataForm = this.formBuilder.group({
+      txData: [
         '',
         Validators.compose([Validators.minLength(1), Validators.required])
       ]
@@ -56,7 +54,7 @@ export class ScTxPage {
   }
 
   private updateScTxDataHandler: any = data => {
-    this.walletName = data.value;
+    this.txData = data.value;
     this.processInput();
   };
 
@@ -77,19 +75,9 @@ export class ScTxPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.config = this.configProvider.get();
-    let alias =
-      this.config.aliasFor &&
-      this.config.aliasFor[this.wallet.credentials.walletId];
-    this.walletNameForm.value.walletName = alias
-      ? alias
-      : this.wallet.credentials.walletName;
-    this.walletName = this.wallet.credentials.walletName;
-    this.description = this.replaceParametersProvider.replace(
-      this.translate.instant(
-        'When this wallet was created, it was called "{{walletName}}". You can change the name displayed on this device below.'
-      ),
-      { walletName: this.walletName }
-    );
+    // let alias =
+    //   this.config.aliasFor &&
+    //   this.config.aliasFor[this.wallet.credentials.walletId];
 
     this.keyProvider
       .handleEncryptedWallet(this.wallet.keyId)
@@ -104,10 +92,14 @@ export class ScTxPage {
       });
   }
 
+  broadcastSignedMessage() {
+    // TODO
+  }
+
   signMessage() {
     // TODO get bitcore conditionally based on wallet.coin???
     let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
-    let message = this.walletNameForm.value.walletName;
+    let message = this.scTxDataForm.value.walletName;
     let bcMessage = new bitcore.Message(message);
 
     // const changeNum = 0; // Not change
@@ -136,7 +128,7 @@ export class ScTxPage {
     };
     opts.aliasFor[
       this.wallet.credentials.walletId
-    ] = this.walletNameForm.value.walletName;
+    ] = this.scTxDataForm.value.walletName;
     this.configProvider.set(opts);
     this.events.publish('Local/ConfigUpdate', {
       walletId: this.wallet.credentials.walletId
