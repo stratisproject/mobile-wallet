@@ -48,6 +48,13 @@ import {
   WalletProvider
 } from '../../../providers/wallet/wallet';
 
+export const KNOWN_CONTRACTS_TESTNET = {
+  "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r": "Test Contract"
+};
+
+export const KNOWN_CONTRACTS_MAINNET = {
+};
+
 @Component({
   selector: 'page-confirm-sc',
   templateUrl: 'confirm-sc.html'
@@ -244,7 +251,6 @@ export class ConfirmScPage {
 
       // Vanity tx info (not in the real tx)
       recipientType: this.navParams.data.recipientType,
-      name: this.navParams.data.name,
       email: this.navParams.data.email,
       color: this.navParams.data.color,
       network: this.navParams.data.network
@@ -259,6 +265,10 @@ export class ConfirmScPage {
       fromSelectInputs: this.navParams.data.fromSelectInputs ? true : false,
       inputs: this.navParams.data.inputs
     };
+
+    this.tx.name = this.tx.network == 'testnet'
+    ? KNOWN_CONTRACTS_TESTNET[this.tx.toAddress]
+    : KNOWN_CONTRACTS_MAINNET[this.tx.toAddress];
 
     this.tx.sendMax = this.navParams.data.useSendMax ? true : false;
 
