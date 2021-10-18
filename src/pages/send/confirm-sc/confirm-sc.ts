@@ -153,7 +153,7 @@ export class ConfirmScPage {
     this.fromCoinbase = this.navParams.data.fromCoinbase;
     this.bitcoreCash = this.bwcProvider.getBitcoreCash();
     this.CONFIRM_LIMIT_USD = 20;
-    this.FEE_TOO_HIGH_LIMIT_PER = 15;
+    this.FEE_TOO_HIGH_LIMIT_PER = 100;
     this.config = this.configProvider.get();
     this.isCordova = this.platformProvider.isCordova;
     this.hideSlideButton = false;
