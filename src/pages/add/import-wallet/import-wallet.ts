@@ -106,7 +106,7 @@ export class ImportWalletPage {
       filePassword: [null],
       derivationPathEnabled: [false],
       coin: ['btc'],
-      derivationPath: [this.derivationPathHelperProvider.defaultSTRAT],
+      derivationPath: [this.derivationPathHelperProvider.defaultSTRAX],
       bwsURL: [this.defaults.bws.url],
       isMultisig: [false],
       testnetEnabled: [false]

@@ -9,7 +9,7 @@ describe('Derivation Path Helper Provider', () => {
 
   /* default paths */
   it('should get successfully the default derivation paths for livenet and testnet networks', () => {
-    const livenetBTC = service.defaultSTRAT;
+    const livenetBTC = service.defaultSTRAX;
     const livenetBCH = service.defaultBCH;
     const testnet = service.defaultTestnet;
 

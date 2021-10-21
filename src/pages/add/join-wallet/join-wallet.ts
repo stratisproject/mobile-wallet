@@ -203,7 +203,7 @@ export class JoinWalletPage {
         this.coin = walletData.coin;
         this.derivationPathForTestnet = this.derivationPathHelperProvider.defaultTestnet;
         this.derivationPathByDefault =
-          this.derivationPathHelperProvider.defaultSTRAT;
+          this.derivationPathHelperProvider.defaultSTRAX;
 
         this.setDerivationPath(walletData.network);
 
