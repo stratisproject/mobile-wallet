@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { Logger } from '../../providers/logger/logger';
 
 import BWC from 'bitcore-wallet-client';
+import { ConfigProvider } from '../config/config';
 
 @Injectable()
 export class BwcProvider {
   public parseSecret = BWC.parseSecret;
   public Client = BWC;
-  constructor(private logger: Logger) {
+
+  constructor(private logger: Logger, private config: ConfigProvider) {
     this.logger.debug('BwcProvider initialized');
   }
+
   public getBitcore() {
     return BWC.Bitcore;
   }
@@ -68,7 +71,7 @@ export class BwcProvider {
 
     // note opts use `bwsurl` all lowercase;
     let bwc = new BWC({
-      baseUrl: opts.bwsurl || 'http://localhost:3032/bws/api', // 'http://bws.stratis.top:3032/bws/api', uncmment for local testing
+      baseUrl: opts.bwsurl || this.config.get().bws?.url || 'http://localhost:3032/bws/api', // 'http://bws.stratis.top:3032/bws/api', uncmment for local testing
       verbose: opts.verbose,
       timeout: 100000,
       transports: ['polling'],
