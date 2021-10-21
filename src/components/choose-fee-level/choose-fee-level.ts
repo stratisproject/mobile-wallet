@@ -179,16 +179,20 @@ export class ChooseFeeLevelComponent extends ActionSheetParent {
   }
 
   private getMinRecommended(): number {
-    let value = _.find(this.feeLevels, feeLevel => {
-      return feeLevel.level == 'superEconomy';
+
+    // Replace Bitpay method with choosing the highest fee per KB
+    let value = this.feeLevels.reduce((prev, current) => {
+      return (prev.feePerKb < current.feePerKb) ? prev : current
     });
 
     return parseInt((value.feePerKb / this.feeUnitAmount).toFixed(), 10);
   }
 
   private getMaxRecommended(): number {
-    let value = _.find(this.feeLevels, feeLevel => {
-      return feeLevel.level == 'urgent';
+
+    // Replace Bitpay method with choosing the highest fee per KB
+    let value = this.feeLevels.reduce((prev, current) => {
+      return (prev.feePerKb > current.feePerKb) ? prev : current
     });
 
     return parseInt((value.feePerKb / this.feeUnitAmount).toFixed(), 10);
