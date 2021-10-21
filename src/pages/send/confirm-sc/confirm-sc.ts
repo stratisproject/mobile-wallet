@@ -1566,7 +1566,10 @@ export class ConfirmScPage {
   }
 
   public chooseFeeLevel(): void {
+    // CHANGE: There is currently only a single fee level for Strax/CRS
     if (
+      this.tx.coin === 'strax' || 
+      this.tx.coin === 'crs' || 
       this.tx.coin === 'bch' ||
       this.tx.coin === 'xrp' ||
       this.tx.coin === 'doge' ||
