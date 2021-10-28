@@ -140,7 +140,7 @@ export const availableCoins: CoinsMap<CoinOpts> = {
       paymentCode: 'BIP73',
       protocolPrefix: { livenet: 'cirrus', testnet: 'cirrus', cirrusmain: 'cirrus' },
       ratesApi: 'https://stratrates.stratisplatform.com/api/rates',
-      blockExplorerUrls: 'https://cirrusexplorer.stratisplatform.com/',
+      blockExplorerUrls: 'https://chainz.cryptoid.info/cirrus/',
       blockExplorerUrlsTestnet: 'https://cirrusexplorer.stratisplatform.com/'
     },
     feeInfo: {
