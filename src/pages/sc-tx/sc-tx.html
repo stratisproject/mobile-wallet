@@ -9,13 +9,14 @@
       </div>
         <ion-item>
           <ion-label stacked>{{'Smart Contract Data' | translate}}</ion-label>
+          {{ jsonTxData()}}
           <ion-textarea class="summary-item-detail" placeholder="{{'SC Tx JSON Data' | translate}}" 
           (ionBlur)="processInput()" 
-          [(ngModel)]="txData" 
+          (ngModel)="jsonTxData()" 
           name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
           <!-- <ion-input type="text" formControlName="walletName" [value]="scTxDataForm.value.txData" required></ion-input> -->
         </ion-item>
-        <ngx-qrcode *ngIf="txData" hide-toast="true" qrc-value="{{txData}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
+        <ngx-qrcode *ngIf="txData" hide-toast="true" qrc-value="{{jsonTxData()}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
         <button ion-button class="button-standard" (click)="signMessage()">
           {{'Sign' | translate}}
         </button>

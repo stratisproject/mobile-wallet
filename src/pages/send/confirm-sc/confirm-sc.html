@@ -94,6 +94,24 @@
         </ion-note>
       </ion-item>
 
+      <div class="line-divider" *ngIf="!coinbaseAccount"></div>
+
+      <ion-item>
+        <ion-label>
+          <div class="summary-item">
+            <span translate>Smart contract params</span>
+          </div>
+        </ion-label>
+
+        <ion-note item-end>
+          <div class="payment-proposal-to" *ngIf="tx.scData">
+            <div class="background-content" copy-to-clipboard="{{ tx.scData }}">
+              <span *ngIf="tx.scData">{{ tx.scData | json }}</span>
+            </div>
+          </div>
+        </ion-note>
+      </ion-item>
+
       <div *ngIf="tx && fromMultiSend && showMultiplesOutputs">
         <ion-item *ngFor="let recipient of recipients; let i = index" copy-to-clipboard="{{recipient.toAddress}}">
           <ion-label>

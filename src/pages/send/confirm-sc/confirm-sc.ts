@@ -47,6 +47,7 @@ import {
   TransactionProposal,
   WalletProvider
 } from '../../../providers/wallet/wallet';
+// import { ContractTxData, QrCodePayload } from "calldataserializer";
 
 export const KNOWN_CONTRACTS_TESTNET = {
   "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r": "Test Contract"
@@ -246,6 +247,7 @@ export class ConfirmScPage {
       description: this.navParams.data.description,
       paypro: this.navParams.data.paypro,
       data: this.navParams.data.data, // eth
+      scData: this.navParams.data.scData, // crs
       payProUrl: this.navParams.data.payProUrl,
       spendUnconfirmed: this.config.wallet.spendUnconfirmed,
 

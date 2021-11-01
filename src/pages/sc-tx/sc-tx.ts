@@ -11,6 +11,7 @@ import { KeyProvider } from '../../providers/key/key';
 import { ScanPage } from '../scan/scan';
 import { PlatformProvider } from '../../providers';
 import { ConfirmScPage } from '../send/confirm-sc/confirm-sc';
+import { QrCodePayload } from 'calldataserializer';
 
 @Component({
   selector: 'page-sc-tx',
@@ -18,7 +19,21 @@ import { ConfirmScPage } from '../send/confirm-sc/confirm-sc';
 })
 export class ScTxPage {
   public wallet;
-  public txData: string = '{ "sender": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "to": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "amount": "0", "methodName": "SwapExactSrcForCrs", "parameters": [{ "label": "Token In Amount", "value": "12#1000000" }] }';
+  public txData = {
+    to: 'tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r',
+    methodName: "SwapExactSrcForCrs",
+    amount: "100",
+    parameters: [
+      {
+        label: "Token In Amount",
+        value: "12#10000000"
+      }
+    ],
+    callback: "http://test.example.com"
+  } as QrCodePayload;
+  
+  // string = '{ "sender": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "to": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "amount": "0", "methodName": "SwapExactSrcForCrs", "parameters": [{ "label": "Token In Amount", "value": "12#1000000" }] }';
+  
   public privKey: string;
 
   public scTxDataForm: FormGroup;
@@ -91,13 +106,17 @@ export class ScTxPage {
       });
   }
 
+  jsonTxData() {
+    return JSON.stringify(this.txData);
+  }
+
   broadcastSignedMessage() {
     // TODO finish this
     this.navCtrl.push(ConfirmScPage, {
       toAddress: 'tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r',
       amount: 0,
       walletId: this.wallet.credentials.walletId,
-      data: "EXTRADATA",
+      scData: this.txData,
       // totalInputsAmount:
       //   this.totalAmount *
       //   this.currencyProvider.getPrecision(this.wallet.coin).unitToSatoshi,

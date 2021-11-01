@@ -163,6 +163,7 @@
     "superagent": "^5.1.0",
     "typescript": "^3.9.3",
     "buffer-compare": "1.1.1",
+    "calldataserializer": "0.1.0",
     "chart.js": "2.8.0",
     "cordova": "9.0.0",
     "cordova-android": "9.0.0",
