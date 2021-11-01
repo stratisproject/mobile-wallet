@@ -304,7 +304,10 @@ export class TxDetailsModal {
             : `https://${this.blockexplorerUrlTestnet}tx/DOGETEST/${btx.txid}`;
         break;
       case 'crs':
-        url = `https://chainz.cryptoid.info/cirrus/tx.dws?${btx.txid}`
+        url = 
+          this.wallet.credentials.network === 'livenet'
+            ? `https://chainz.cryptoid.info/cirrus/tx.dws?${btx.txid}`
+            : `https://chainz.cryptoid.info/cirrus-test/tx.dws?${btx.txid}`;
         break;
       default:
         url =
