@@ -66,6 +66,7 @@ export interface TransactionProposal {
     message: string;
     data?: string;
     gasLimit?: number;
+    script?: string; // HEX
   }>;
   inputs: any;
   fee: any;

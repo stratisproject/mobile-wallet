@@ -29,7 +29,7 @@ export class ScTxPage {
         value: "12#10000000"
       }
     ],
-    callback: "http://test.example.com"
+    callbackUrl: "http://test.example.com"
   } as QrCodePayload;
   
   // string = '{ "sender": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "to": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "amount": "0", "methodName": "SwapExactSrcForCrs", "parameters": [{ "label": "Token In Amount", "value": "12#1000000" }] }';

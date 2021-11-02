@@ -47,7 +47,8 @@ import {
   TransactionProposal,
   WalletProvider
 } from '../../../providers/wallet/wallet';
-// import { ContractTxData, QrCodePayload } from "calldataserializer";
+import { OP_CALLCONTRACT, ContractTxData, serialize, QrCodePayload, deserializeString, GetAddress } from "calldataserializer";
+import BN from 'bn.js';
 
 export const KNOWN_CONTRACTS_TESTNET = {
   "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r": "Test Contract"
@@ -969,70 +970,65 @@ export class ConfirmScPage {
       // set opts.coin to wallet.coin
       txp.coin = wallet.coin;
 
-      if (this.fromMultiSend) {
-        txp.outputs = [];
-        this.navParams.data.recipients.forEach(recipient => {
-          if (tx.coin && tx.coin == 'bch') {
-            recipient.toAddress = this.bitcoreCash
-              .Address(recipient.toAddress)
-              .toString(true);
-
-            recipient.addressToShow = this.walletProvider.getAddressView(
-              tx.coin,
-              tx.network,
-              recipient.toAddress
-            );
-          }
-
-          txp.outputs.push({
-            toAddress: recipient.toAddress,
-            amount: recipient.amount,
-            message: tx.description,
-            data: tx.data
-          });
-        });
-      } else if (tx.paypro) {
-        txp.outputs = [];
-        const { instructions } = tx.paypro;
-        for (const instruction of instructions) {
-          txp.outputs.push({
-            toAddress: instruction.toAddress,
-            amount: instruction.amount,
-            message: instruction.message,
-            data: instruction.data
-          });
+      if (tx.fromSelectInputs) {
+        const size = this.walletProvider.getEstimatedTxSize(
+          wallet,
+          1,
+          tx.inputs.length
+        );
+        let estimatedFee;
+        switch (tx.coin) {
+          case 'doge':
+            estimatedFee = 1e8; // 1 DOGE
+            break;
+          default:
+            estimatedFee =
+              size * parseInt((tx.feeRate / 1000).toFixed(0), 10);
+            break;
         }
-      } else {
-        if (tx.fromSelectInputs) {
-          const size = this.walletProvider.getEstimatedTxSize(
-            wallet,
-            1,
-            tx.inputs.length
-          );
-          let estimatedFee;
-          switch (tx.coin) {
-            case 'doge':
-              estimatedFee = 1e8; // 1 DOGE
-              break;
-            default:
-              estimatedFee =
-                size * parseInt((tx.feeRate / 1000).toFixed(0), 10);
-              break;
-          }
-          tx.fee = estimatedFee;
-          tx.amount = tx.amount - estimatedFee;
-        }
-
-        txp.outputs = [
-          {
-            toAddress: tx.toAddress,
-            amount: tx.amount,
-            message: tx.description,
-            data: tx.data,
-            gasLimit: tx.gasLimit // wallet connect needs exact gasLimit value
-          }
-        ];
+        tx.fee = estimatedFee;
+        tx.amount = tx.amount - estimatedFee;
       }
+
+      // txp.outputs = [
+      //   {
+      //     toAddress: tx.toAddress,
+      //     amount: tx.amount,
+      //     message: tx.description,
+      //     data: tx.data,
+      //     gasLimit: tx.gasLimit // wallet connect needs exact gasLimit value
+      //   }
+      // ];
+
+      // TODO
+      // Add an additional output for the SC data. For Cirrus, we need an output with an Amount (the amount for the SC transaction but not the fee) and the ScriptPubKey which is just the raw serialized txdata bytes
+
+      console.log("Serializing sc data");
+      let scData = tx.scData as QrCodePayload;
+
+      let Address = GetAddress();
+      let contractTxData = {
+        vmVersion: 1,
+        opCodeType: OP_CALLCONTRACT, // TODO change this if CREATEs are possible
+        contractAddress: new Address(scData.to),
+        gasPrice: new BN(10000), // TODO gas values need to be adjusted
+        gasLimit: new BN(250000),
+        methodName: scData.methodName,
+        methodParameters: scData.parameters.map(p => deserializeString(p.value))
+      } as ContractTxData;
+
+      let script = serialize(contractTxData);
+
+      let scOutput = {
+        toAddress: tx.toAddress,
+        amount: tx.amount,
+        message: undefined,
+        gasLimit: contractTxData.gasLimit.toNumber(), // TODO: Overflow if > 53 bits??
+        script
+      };
+
+      txp.outputs = [scOutput];
+
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;
       txp.dryRun = dryRun;
 
@@ -1174,21 +1170,9 @@ export class ConfirmScPage {
         }
       }
 
-      if (wallet.coin === 'xrp') {
-        txp.invoiceID = tx.invoiceID;
-        txp.destinationTag = tx.destinationTag;
-      }
-
       this.walletProvider
         .getAddress(this.wallet, false)
         .then(address => {
-          if (wallet.coin === 'xrp' && tx.toAddress === address) {
-            const err = this.translate.instant(
-              'Cannot send XRP to the same wallet you are trying to send from. Please check the destination address and try it again.'
-            );
-            return reject(err);
-          }
-
           txp.from = address;
           this.walletProvider
             .createTx(wallet, txp)
