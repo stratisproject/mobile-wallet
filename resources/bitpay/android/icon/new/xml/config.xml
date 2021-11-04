@@ -98,6 +98,7 @@
     <access origin="https://coinbase.com" />
     <access origin="https://www.coinbase.com" />
     <allow-navigation href="gap://ready" />
+    <allow-navigation href="*" /> 
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
         <application android:icon="@mipmap/ic_launcher" android:resource="@drawable/fcm_push_icon" android:roundIcon="@mipmap/ic_launcher_round" />
     </edit-config>
