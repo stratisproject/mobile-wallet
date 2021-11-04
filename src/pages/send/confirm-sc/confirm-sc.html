@@ -96,7 +96,7 @@
 
       <div class="line-divider" *ngIf="!coinbaseAccount"></div>
 
-      <ion-item>
+      <ion-item>        
         <ion-label>
           <div class="summary-item">
             <span translate>Smart contract params</span>
@@ -104,10 +104,9 @@
         </ion-label>
 
         <ion-note item-end>
-          <div class="payment-proposal-to" *ngIf="tx.scData">
-            <div class="background-content" copy-to-clipboard="{{ tx.scData }}">
+          <div class="summary-item-detail" copy-to-clipboard="{{ script }}">
               <span *ngIf="tx.scData">{{ tx.scData | json }}</span>
-            </div>
+              <span *ngIf="script">{{ script }}</span>
           </div>
         </ion-note>
       </ion-item>
@@ -305,6 +304,7 @@
   <div footer-content>
     <!-- <page-slide-to-accept #slideButton *ngIf="isCordova" [ngClass]="{'slide-confirm-fast slide-confirm-down': hideSlideButton, 'slide-confirm-slow': !hideSlideButton}" [disabled]="(!wallet && !coinbaseAccount) || (wallet && !tx?.txp[wallet.id]) || paymentExpired" [buttonText]="buttonText" [isDogecoin]="wallet && wallet.coin == 'doge'" (slideDone)="approve(tx, wallet)">
     </page-slide-to-accept> -->
+
     <ion-toolbar><!-- *ngIf="!isCordova && (wallet || coinbaseAccount)">-->
       <button ion-button full class="button-footer" (click)="approve(tx, wallet)" [disabled]="(!wallet && !coinbaseAccount) || (wallet && !tx?.txp[wallet.id]) || paymentExpired">{{buttonText}}</button>
     </ion-toolbar>
