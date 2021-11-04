@@ -115,6 +115,7 @@ export class ConfirmScPage {
 
   public mainTitle: string;
   public isSpeedUpTx: boolean;
+  script: string;
 
   // // Card flags for zen desk chat support
   // private isCardPurchase: boolean;
@@ -949,6 +950,25 @@ export class ConfirmScPage {
     return warningMsg.join('\n');
   }
 
+  private buildScript(scData: QrCodePayload) {
+    console.log("Serializing sc data");
+
+    let Address = GetAddress();
+    let contractTxData = {
+      vmVersion: 1,
+      opCodeType: OP_CALLCONTRACT, // TODO change this if CREATEs are possible
+      contractAddress: new Address(scData.to),
+      gasPrice: new BN(100), // TODO gas values need to be adjusted
+      gasLimit: new BN(250000),
+      methodName: scData.methodName,
+      methodParameters: scData.parameters.map(p => deserializeString(p.value))
+    } as ContractTxData;
+
+    let script = serialize(contractTxData);
+
+    return script;
+  }
+
   private getTxp(tx, wallet, dryRun: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
       // ToDo: use a credential's (or fc's) function for this
@@ -1006,24 +1026,16 @@ export class ConfirmScPage {
       console.log("Serializing sc data");
       let scData = tx.scData as QrCodePayload;
 
-      let Address = GetAddress();
-      let contractTxData = {
-        vmVersion: 1,
-        opCodeType: OP_CALLCONTRACT, // TODO change this if CREATEs are possible
-        contractAddress: new Address(scData.to),
-        gasPrice: new BN(10000), // TODO gas values need to be adjusted
-        gasLimit: new BN(250000),
-        methodName: scData.methodName,
-        methodParameters: scData.parameters.map(p => deserializeString(p.value))
-      } as ContractTxData;
 
-      let script = serialize(contractTxData);
+      let script = this.buildScript(scData);
 
+      this.script = script;
+      
       let scOutput = {
         toAddress: tx.toAddress,
         amount: tx.amount,
         message: undefined,
-        gasLimit: contractTxData.gasLimit.toNumber(), // TODO: Overflow if > 53 bits??
+        gasLimit: 250000, // TODO: Overflow if > 53 bits??
         script
       };
 
@@ -1032,22 +1044,24 @@ export class ConfirmScPage {
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;
       txp.dryRun = dryRun;
 
-      if (tx.sendMaxInfo) {
-        txp.inputs = tx.sendMaxInfo.inputs;
-        txp.fee = tx.sendMaxInfo.fee;
-      } else if (tx.speedUpTx) {
-        txp.inputs = [];
-        txp.inputs.push(tx.speedUpTxInfo.input);
-        txp.fee = tx.speedUpTxInfo.fee;
-        txp.excludeUnconfirmedUtxos = true;
-      } else if (tx.fromSelectInputs) {
-        txp.inputs = tx.inputs;
-        txp.fee = tx.fee;
-      } else {
-        if (this.usingCustomFee || this.usingMerchantFee) {
-          txp.feePerKb = tx.feeRate;
-        } else txp.feeLevel = tx.feeLevel;
-      }
+      // if (tx.sendMaxInfo) {
+      //   txp.inputs = tx.sendMaxInfo.inputs;
+      //   txp.fee = tx.sendMaxInfo.fee;
+      // } else if (tx.speedUpTx) {
+      //   txp.inputs = [];
+      //   txp.inputs.push(tx.speedUpTxInfo.input);
+      //   txp.fee = tx.speedUpTxInfo.fee;
+      //   txp.excludeUnconfirmedUtxos = true;
+      // } else if (tx.fromSelectInputs) {
+      //   txp.inputs = tx.inputs;
+      //   txp.fee = tx.fee;
+      // } else {
+      //   if (this.usingCustomFee || this.usingMerchantFee) {
+      //     txp.feePerKb = tx.feeRate;
+      //   } else txp.feeLevel = tx.feeLevel;
+      // }
+
+      txp.feePerKb = tx.feeRate; // HACK to ensure there's enough for SCs
 
       txp.message = tx.description;
 
