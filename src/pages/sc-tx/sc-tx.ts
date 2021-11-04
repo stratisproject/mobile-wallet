@@ -9,7 +9,7 @@ import { ConfigProvider } from '../../providers/config/config';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { KeyProvider } from '../../providers/key/key';
 import { ScanPage } from '../scan/scan';
-import { PlatformProvider } from '../../providers';
+import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ConfirmScPage } from '../send/confirm-sc/confirm-sc';
 import { QrCodePayload } from 'calldataserializer';
 
@@ -19,18 +19,26 @@ import { QrCodePayload } from 'calldataserializer';
 })
 export class ScTxPage {
   public wallet;
-  public txData = {
-    to: 'tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r',
-    methodName: "SwapExactSrcForCrs",
-    amount: "100",
+  public txData = JSON.stringify({
+    to: "tSE2mpV4vBi7tiLUUAhyLNN8FooD3bYrag",
+    methodName: "Approve",
+    amount: "0",
     parameters: [
       {
-        label: "Token In Amount",
-        value: "12#10000000"
+        label: "Address",
+        value: "9#tWBY7T75kB8jfwACbWX7jLjapSe7gPou6z"
+      },
+      {
+        label: "Current Amount",
+        value: "7#0"
+      },
+      {
+        label: "Amount",
+        value: "7#1"
       }
     ],
     callbackUrl: "http://test.example.com"
-  } as QrCodePayload;
+  } as QrCodePayload);
   
   // string = '{ "sender": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "to": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "amount": "0", "methodName": "SwapExactSrcForCrs", "parameters": [{ "label": "Token In Amount", "value": "12#1000000" }] }';
   
@@ -55,7 +63,8 @@ export class ScTxPage {
     // private translate: TranslateService,
     private bwcProvider: BwcProvider,
     private keyProvider: KeyProvider,
-    private platformProvider: PlatformProvider
+    private platformProvider: PlatformProvider,
+    private errorsProvider: ErrorsProvider
   ) {
     this.events.subscribe('Local/ScTx', this.updateScTxDataHandler);
 
@@ -69,10 +78,23 @@ export class ScTxPage {
 
   private updateScTxDataHandler: any = data => {
     this.txData = data.value;
-    this.processInput();
+    this.validateInput();
   };
 
-  private processInput() {
+  private validateInput() {
+    try {
+      JSON.parse(this.txData);
+    }
+    catch (e) {
+      this.errorsProvider.showDefaultError(
+        e,
+        "Unreadable scan",
+        () => {
+          this.logger.error("Scanned SC json was invalid")
+              this.navCtrl.pop();
+        }
+      );
+    }
   }
 
   public openScanner(): void {
@@ -111,12 +133,14 @@ export class ScTxPage {
   }
 
   broadcastSignedMessage() {
+    this.validateInput();
+    
     // TODO finish this
     this.navCtrl.push(ConfirmScPage, {
       toAddress: 'tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r',
       amount: 0,
       walletId: this.wallet.credentials.walletId,
-      scData: this.txData,
+      scData: JSON.parse(this.txData),
       // totalInputsAmount:
       //   this.totalAmount *
       //   this.currencyProvider.getPrecision(this.wallet.coin).unitToSatoshi,

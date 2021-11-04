@@ -51,7 +51,8 @@ import { OP_CALLCONTRACT, ContractTxData, serialize, QrCodePayload, deserializeS
 import BN from 'bn.js';
 
 export const KNOWN_CONTRACTS_TESTNET = {
-  "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r": "Test Contract"
+  "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r": "Test Contract",
+  "tSE2mpV4vBi7tiLUUAhyLNN8FooD3bYrag": "Test Token"
 };
 
 export const KNOWN_CONTRACTS_MAINNET = {

@@ -1,22 +1,21 @@
-<wide-header-page title="{{'Sign Message' | translate}}">
+<wide-header-page title="{{'Smart Contract Transaction' | translate}}">
   <div page-content>
     <ion-list class="settings-list bp-list">
       <div class="settings-explanation">
-        <div class="settings-heading" translate>Enter the smart contract transaction details to sign with the {{ walletName }} wallet's private key</div>
+        <div class="settings-heading" translate>Enter the smart contract transaction details</div>
         <div class="settings-description">
           {{description}}
         </div>
       </div>
         <ion-item>
           <ion-label stacked>{{'Smart Contract Data' | translate}}</ion-label>
-          {{ jsonTxData()}}
           <ion-textarea class="summary-item-detail" placeholder="{{'SC Tx JSON Data' | translate}}" 
           (ionBlur)="processInput()" 
-          (ngModel)="jsonTxData()" 
+          [(ngModel)]="txData" 
           name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
           <!-- <ion-input type="text" formControlName="walletName" [value]="scTxDataForm.value.txData" required></ion-input> -->
         </ion-item>
-        <ngx-qrcode *ngIf="txData" hide-toast="true" qrc-value="{{jsonTxData()}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
+        <!-- <ngx-qrcode *ngIf="txData" hide-toast="true" qrc-value="{{jsonTxData()}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode> -->
     </ion-list>
     <div class="settings-heading">{{ signedMessage }}</div>
 
