@@ -17,9 +17,6 @@
           <!-- <ion-input type="text" formControlName="walletName" [value]="scTxDataForm.value.txData" required></ion-input> -->
         </ion-item>
         <ngx-qrcode *ngIf="txData" hide-toast="true" qrc-value="{{jsonTxData()}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
-        <button ion-button class="button-standard" (click)="signMessage()">
-          {{'Sign' | translate}}
-        </button>
     </ion-list>
     <div class="settings-heading">{{ signedMessage }}</div>
 
