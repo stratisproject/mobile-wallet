@@ -112,6 +112,7 @@ export class ScanPage {
     this.fromEthMultisig = this.navParams.data.fromEthMultisig;
     this.fromConfirm = this.navParams.data.fromConfirm;
     this.fromWalletConnect = this.navParams.data.fromWalletConnect;
+    this.fromScTx = this.navParams.data.fromScTx;
 
     if (this.canGoBack && this.tabBarElement)
       this.tabBarElement.style.display = 'none';
