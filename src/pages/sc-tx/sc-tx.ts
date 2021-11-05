@@ -79,6 +79,7 @@ export class ScTxPage {
   private updateScTxDataHandler: any = data => {
     this.txData = data.value;
     this.validateInput();
+    this.broadcastSignedMessage();
   };
 
   private validateInput() {
@@ -134,13 +135,15 @@ export class ScTxPage {
 
   broadcastSignedMessage() {
     this.validateInput();
+
+    let data = JSON.parse(this.txData) as QrCodePayload;
     
     // TODO finish this
     this.navCtrl.push(ConfirmScPage, {
-      toAddress: 'tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r',
+      toAddress: data.to,
       amount: 0,
       walletId: this.wallet.credentials.walletId,
-      scData: JSON.parse(this.txData),
+      scData: data,
       // totalInputsAmount:
       //   this.totalAmount *
       //   this.currencyProvider.getPrecision(this.wallet.coin).unitToSatoshi,
