@@ -47,7 +47,7 @@ import {
   TransactionProposal,
   WalletProvider
 } from '../../../providers/wallet/wallet';
-import { OP_CALLCONTRACT, ContractTxData, serialize, QrCodePayload, deserializeString, GetAddress } from "calldataserializer";
+import { OP_CALLCONTRACT, ContractTxData, serialize, QrCodePayload, deserializeString, GetAddress, parseString, Prefix } from "calldataserializer";
 import BN from 'bn.js';
 
 export const KNOWN_CONTRACTS_TESTNET = {
@@ -466,6 +466,23 @@ export class ConfirmScPage {
         default:
           this.showErrorInfoSheet(err);
           break;
+      }
+    });
+  }
+
+  public get mappedParams() {
+    if (!this.tx.scData.parameters)
+      return [];
+
+    return this.tx.scData.parameters.map(p => {
+      let parsed = parseString(p.value);
+
+      let type = Prefix[+parsed.prefix];
+
+      return {
+        label: p.label,
+        type,
+        value: parsed.value
       }
     });
   }

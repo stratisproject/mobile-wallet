@@ -16,7 +16,7 @@
       <ion-item [class.warn]="!tx.name">
         <ion-label>
           <div class="summary-item">
-            <span *ngIf="tx.recipientType != 'coinbase'" translate>Sending to</span>
+            <span *ngIf="tx.recipientType != 'coinbase'" translate>Sending to contract</span>
             <span *ngIf="tx.recipientType == 'coinbase'" translate>Transfer to</span>
           </div>
         </ion-label>
@@ -94,19 +94,52 @@
         </ion-note>
       </ion-item>
 
-      <div class="line-divider" *ngIf="!coinbaseAccount"></div>
-
-      <ion-item>        
+      <ion-item *ngIf="tx.scData.methodName">        
         <ion-label>
           <div class="summary-item">
-            <span translate>Smart contract params</span>
+            <span translate>Method name</span>
           </div>
         </ion-label>
 
         <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ script }}">
-              <span *ngIf="tx.scData">{{ tx.scData | json }}</span>
-              <span *ngIf="script">{{ script }}</span>
+          <div class="summary-item-detail" copy-to-clipboard="{{ tx.scData.methodName }}">
+              <span *ngIf="tx.scData.methodName">{{ tx.scData.methodName }}</span>
+          </div>
+        </ion-note>
+      </ion-item>
+
+      <div class="line-divider" *ngIf="!coinbaseAccount"></div>
+
+      <ion-item class="sub-title">
+        <ion-label>
+          <div class="main-label" translate>SMART CONTRACT PARAMETERS</div>
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngFor="let p of mappedParams">        
+        <ion-label>
+          <div class="summary-item">
+            <span>{{ p.label }}</span><span class="square-border"><span>{{ p.type }}</span></span>
+          </div>
+        </ion-label>
+
+        <ion-note item-end>
+          <div class="summary-item-detail" copy-to-clipboard="{{ p.value }}">
+              <span>{{ p.value }}</span>
+          </div>
+        </ion-note>
+      </ion-item>
+
+      <ion-item *ngIf="tx.scData.callbackUrl">        
+        <ion-label>
+          <div class="summary-item">
+            <span translate>Callback URL</span>
+          </div>
+        </ion-label>
+
+        <ion-note item-end>
+          <div class="summary-item-detail" copy-to-clipboard="{{ tx.scData.callbackUrl }}">
+              <span *ngIf="tx.scData.callbackUrl">{{ tx.scData.callbackUrl }}</span>
           </div>
         </ion-note>
       </ion-item>
