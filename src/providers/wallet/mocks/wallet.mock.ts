@@ -231,7 +231,9 @@ export class WalletMock {
       excludeUnconfirmedUtxos: false,
       feePerKb: 100,
       feeLevel: 'normal',
-      dryRun: false
+      dryRun: false,
+      gasPrice: undefined,
+      gasLimit: undefined
     };
     return cb(null, txp);
   }

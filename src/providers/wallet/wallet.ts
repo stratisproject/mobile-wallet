@@ -88,6 +88,8 @@ export interface TransactionProposal {
   invoiceID?: string;
   multisigGnosisContractAddress?: string;
   multisigContractAddress?: string;
+  gasPrice: number;
+  gasLimit: number;
 }
 
 @Injectable()

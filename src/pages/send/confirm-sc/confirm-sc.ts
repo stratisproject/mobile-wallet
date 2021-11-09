@@ -1028,22 +1028,8 @@ export class ConfirmScPage {
         tx.amount = tx.amount - estimatedFee;
       }
 
-      // txp.outputs = [
-      //   {
-      //     toAddress: tx.toAddress,
-      //     amount: tx.amount,
-      //     message: tx.description,
-      //     data: tx.data,
-      //     gasLimit: tx.gasLimit // wallet connect needs exact gasLimit value
-      //   }
-      // ];
-
-      // TODO
-      // Add an additional output for the SC data. For Cirrus, we need an output with an Amount (the amount for the SC transaction but not the fee) and the ScriptPubKey which is just the raw serialized txdata bytes
-
       console.log("Serializing sc data");
       let scData = tx.scData as QrCodePayload;
-
 
       let script = this.buildScript(scData);
 
@@ -1062,24 +1048,27 @@ export class ConfirmScPage {
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;
       txp.dryRun = dryRun;
 
-      // if (tx.sendMaxInfo) {
-      //   txp.inputs = tx.sendMaxInfo.inputs;
-      //   txp.fee = tx.sendMaxInfo.fee;
-      // } else if (tx.speedUpTx) {
-      //   txp.inputs = [];
-      //   txp.inputs.push(tx.speedUpTxInfo.input);
-      //   txp.fee = tx.speedUpTxInfo.fee;
-      //   txp.excludeUnconfirmedUtxos = true;
-      // } else if (tx.fromSelectInputs) {
-      //   txp.inputs = tx.inputs;
-      //   txp.fee = tx.fee;
-      // } else {
-      //   if (this.usingCustomFee || this.usingMerchantFee) {
-      //     txp.feePerKb = tx.feeRate;
-      //   } else txp.feeLevel = tx.feeLevel;
-      // }
+      if (tx.sendMaxInfo) {
+        txp.inputs = tx.sendMaxInfo.inputs;
+        txp.fee = tx.sendMaxInfo.fee;
+      } else if (tx.speedUpTx) {
+        txp.inputs = [];
+        txp.inputs.push(tx.speedUpTxInfo.input);
+        txp.fee = tx.speedUpTxInfo.fee;
+        txp.excludeUnconfirmedUtxos = true;
+      } else if (tx.fromSelectInputs) {
+        txp.inputs = tx.inputs;
+        txp.fee = tx.fee;
+      } else {
+        if (this.usingCustomFee || this.usingMerchantFee) {
+          txp.feePerKb = tx.feeRate;
+        } else txp.feeLevel = tx.feeLevel;
+      }
 
-      txp.feePerKb = tx.feeRate; // HACK to ensure there's enough for SCs
+      // txp.feePerKb = tx.feeRate; // HACK to ensure there's enough for SCs
+
+      txp.gasPrice = 100;
+      txp.gasLimit = 250000;
 
       txp.message = tx.description;
 
