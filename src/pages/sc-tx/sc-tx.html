@@ -15,7 +15,7 @@
           name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
           <!-- <ion-input type="text" formControlName="walletName" [value]="scTxDataForm.value.txData" required></ion-input> -->
         </ion-item>
-        <!-- <ngx-qrcode *ngIf="txData" hide-toast="true" qrc-value="{{jsonTxData()}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode> -->
+        <ngx-qrcode *ngIf="txData" hide-toast="true" [qrc-value]="txData" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
     </ion-list>
     <div class="settings-heading">{{ signedMessage }}</div>
 
