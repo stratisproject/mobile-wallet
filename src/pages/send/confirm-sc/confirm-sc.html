@@ -197,6 +197,25 @@
         </ion-note>
       </button>
 
+      <button ion-item [attr.detail-none]="usingMerchantFee ? '' : null" *ngIf="!coinbaseAccount" (click)="chooseFeeLevel()" class="item-fee" [ngClass]="{'warn': wallet && tx.txp[wallet.id] && tx.txp[wallet.id].feeTooHigh, 'btn-opacity': usingMerchantFee}">
+        <ion-label>
+          <div class="summary-item">
+            <span *ngIf="!merchantFeeLabel" translate>Gas fee</span>
+          </div>
+        </ion-label>
+        <ion-note *ngIf="wallet && tx.txp[wallet.id]" item-end>
+          <div class="summary-item-detail">
+            {{ gasPrice }} sats/gas
+          </div>
+          <div class="summary-item-detail">
+            {{ gasLimit }} gas
+          </div>
+          <div class="summary-item-detail">
+            {{ gasPrice * gasLimit | satToUnit: getChain(tx.coin)}}
+          </div>
+        </ion-note>
+      </button>
+
       <div class="line-divider"></div>
 
       <button ion-item detail-none (click)="showWallets()" [ngClass]="{'not-clickable': fromWalletDetails || walletConnectRequestId}">

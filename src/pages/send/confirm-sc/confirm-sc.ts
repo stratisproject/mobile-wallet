@@ -118,6 +118,10 @@ export class ConfirmScPage {
   public isSpeedUpTx: boolean;
   script: string;
 
+  // Gas
+  gasPrice: number = 1; // gas price minimum
+  gasLimit: number = 250000; // gas limit maximum
+
   // // Card flags for zen desk chat support
   // private isCardPurchase: boolean;
   // private isHelpOpen: boolean = false;
@@ -976,8 +980,8 @@ export class ConfirmScPage {
       vmVersion: 1,
       opCodeType: OP_CALLCONTRACT, // TODO change this if CREATEs are possible
       contractAddress: new Address(scData.to),
-      gasPrice: new BN(100), // TODO gas values need to be adjusted
-      gasLimit: new BN(250000),
+      gasPrice: new BN(this.gasPrice),
+      gasLimit: new BN(this.gasLimit),
       methodName: scData.methodName,
       methodParameters: scData.parameters.map(p => deserializeString(p.value))
     } as ContractTxData;
@@ -1028,7 +1032,6 @@ export class ConfirmScPage {
         tx.amount = tx.amount - estimatedFee;
       }
 
-      console.log("Serializing sc data");
       let scData = tx.scData as QrCodePayload;
 
       let script = this.buildScript(scData);
@@ -1065,10 +1068,8 @@ export class ConfirmScPage {
         } else txp.feeLevel = tx.feeLevel;
       }
 
-      // txp.feePerKb = tx.feeRate; // HACK to ensure there's enough for SCs
-
-      txp.gasPrice = 100;
-      txp.gasLimit = 250000;
+      txp.gasPrice = this.gasPrice;
+      txp.gasLimit = this.gasLimit;
 
       txp.message = tx.description;
 
