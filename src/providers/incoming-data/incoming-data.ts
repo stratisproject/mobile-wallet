@@ -1179,7 +1179,7 @@ export class IncomingDataProvider {
     } else if (this.isValidCirrusAddress(data)) {
       return {
         data,
-        type: 'Cirrus Address',
+        type: 'CirrusAddress',
         title: this.translate.instant('Cirrus Address')
       };
     } else if (this.isValidBitPayInvoice(data)) {
