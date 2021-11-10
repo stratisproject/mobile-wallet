@@ -119,7 +119,7 @@ export class ConfirmScPage {
   script: string;
 
   // Gas
-  gasPrice: number = 1; // gas price minimum
+  gasPrice: number = 100; // gas price minimum
   gasLimit: number = 250000; // gas limit maximum
 
   // // Card flags for zen desk chat support
