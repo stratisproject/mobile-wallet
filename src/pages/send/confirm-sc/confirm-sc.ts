@@ -1591,33 +1591,8 @@ export class ConfirmScPage {
   private onChooseGasDismiss(data) {
     if (_.isEmpty(data)) return;
 
-    // TODO
-    // this.logger.debug(
-    //   'New gas level chosen:' + data.newFeeLevel + ' was:' + this.tx.feeLevel
-    // );
-    // this.usingCustomFee = data.newFeeLevel == 'custom' ? true : false;
-
-    // if (this.tx.feeLevel == data.newFeeLevel && !this.usingCustomFee) {
-    //   return;
-    // }
-
-    // this.tx.feeLevel = data.newFeeLevel;
-    // const feeOpts = this.feeProvider.getFeeOpts();
-    // this.tx.feeLevelName = feeOpts[this.tx.feeLevel];
-    // if (this.usingCustomFee)
-    //   this.tx.feeRate = parseInt(data.customFeePerKB, 10);
-
-    // this.updateTx(this.tx, this.wallet, {
-    //   clearCache: true,
-    //   dryRun: true
-    // }).catch(err => {
-    //   if (err.message && err.message.includes('Insufficient funds')) {
-    //     this.showErrorInfoSheet(
-    //       this.translate.instant('Not enough funds for fee')
-    //     );
-    //   }
-    //   this.logger.warn('Error updateTx', err);
-    // });
+    this.gasPrice = data.newGasPrice;
+    this.gasLimit = data.newGasLimit;
   }
 
   public chooseFeeLevel(): void {
