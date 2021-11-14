@@ -1,4 +1,5 @@
 import { ComponentRef, Injectable } from '@angular/core';
+import { ChooseGasComponent } from '../../components/choose-gas/choose-gas';
 import { ActionSheetParent } from '../../components/action-sheet/action-sheet-parent';
 import { ChooseFeeLevelComponent } from '../../components/choose-fee-level/choose-fee-level';
 import { EmailComponent } from '../../components/email-component/email-component';
@@ -101,6 +102,13 @@ export interface WalletTabOptionsParams {
   walletsGroups: any;
 }
 
+export interface ChooseGasParams {
+  network: string;
+  coin: Coin;
+  gasPrice: number;
+  gasLimit: number;
+}
+
 export interface ChooseFeeLevelParams {
   network: string;
   coin: Coin;
@@ -180,6 +188,16 @@ export class ActionSheetProvider {
   ): ChooseFeeLevelComponent {
     return this.setupSheet<ChooseFeeLevelComponent>(
       ChooseFeeLevelComponent,
+      null,
+      params
+    ).instance;
+  }
+
+  public createChooseGas(
+    params: ChooseGasParams
+  ): ChooseGasComponent {
+    return this.setupSheet<ChooseGasComponent>(
+      ChooseGasComponent,
       null,
       params
     ).instance;

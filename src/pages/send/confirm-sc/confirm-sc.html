@@ -197,7 +197,7 @@
         </ion-note>
       </button>
 
-      <button ion-item [attr.detail-none]="usingMerchantFee ? '' : null" *ngIf="!coinbaseAccount" (click)="chooseFeeLevel()" class="item-fee" [ngClass]="{'warn': wallet && tx.txp[wallet.id] && tx.txp[wallet.id].feeTooHigh, 'btn-opacity': usingMerchantFee}">
+      <button ion-item [attr.detail-none]="usingMerchantFee ? '' : null" (click)="chooseGas()" class="item-fee">
         <ion-label>
           <div class="summary-item">
             <span *ngIf="!merchantFeeLabel" translate>Gas fee</span>

@@ -1,5 +1,6 @@
 import { ActionSheetComponent } from './action-sheet/action-sheet';
 import { ChooseFeeLevelComponent } from './choose-fee-level/choose-fee-level';
+import { ChooseGasComponent } from './choose-gas/choose-gas';
 import { EmailComponent } from './email-component/email-component';
 import { EncryptPasswordComponent } from './encrypt-password/encrypt-password';
 import { IncomingDataMenuComponent } from './incoming-data-menu/incoming-data-menu';
@@ -23,6 +24,7 @@ export const ACTION_SHEET_COMPONENTS = [
   WalletSelectorComponent,
   WalletReceiveComponent,
   ChooseFeeLevelComponent,
+  ChooseGasComponent,
   EmailComponent,
   PhoneSheet,
   WalletTabOptionsComponent,

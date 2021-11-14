@@ -16,7 +16,7 @@ import { ScanPage } from '../../scan/scan';
 import { WalletDetailsPage } from '../../wallet-details/wallet-details';
 
 // Providers
-import { ActionSheetProvider } from '../../../providers/action-sheet/action-sheet';
+import { ActionSheetProvider, ChooseGasParams } from '../../../providers/action-sheet/action-sheet';
 import { AddressProvider } from '../../../providers/address/address';
 import { AnalyticsProvider } from '../../../providers/analytics/analytics';
 import { AppProvider } from '../../../providers/app/app';
@@ -1571,6 +1571,53 @@ export class ConfirmScPage {
         }
       }
     });
+  }
+
+  public chooseGas(): void {
+    const txObject = {
+      network: this.tx.network,
+      coin: this.tx.coin,
+      gasPrice: this.gasPrice,
+      gasLimit: this.gasLimit,    
+    } as ChooseGasParams;
+
+    const chooseGasAction = this.actionSheetProvider.createChooseGas(
+      txObject
+    );
+    chooseGasAction.present();
+    chooseGasAction.onDidDismiss(data => this.onChooseGasDismiss(data));
+  }
+
+  private onChooseGasDismiss(data) {
+    if (_.isEmpty(data)) return;
+
+    // TODO
+    // this.logger.debug(
+    //   'New gas level chosen:' + data.newFeeLevel + ' was:' + this.tx.feeLevel
+    // );
+    // this.usingCustomFee = data.newFeeLevel == 'custom' ? true : false;
+
+    // if (this.tx.feeLevel == data.newFeeLevel && !this.usingCustomFee) {
+    //   return;
+    // }
+
+    // this.tx.feeLevel = data.newFeeLevel;
+    // const feeOpts = this.feeProvider.getFeeOpts();
+    // this.tx.feeLevelName = feeOpts[this.tx.feeLevel];
+    // if (this.usingCustomFee)
+    //   this.tx.feeRate = parseInt(data.customFeePerKB, 10);
+
+    // this.updateTx(this.tx, this.wallet, {
+    //   clearCache: true,
+    //   dryRun: true
+    // }).catch(err => {
+    //   if (err.message && err.message.includes('Insufficient funds')) {
+    //     this.showErrorInfoSheet(
+    //       this.translate.instant('Not enough funds for fee')
+    //     );
+    //   }
+    //   this.logger.warn('Error updateTx', err);
+    // });
   }
 
   public chooseFeeLevel(): void {
