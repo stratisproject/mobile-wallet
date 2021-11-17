@@ -20,23 +20,10 @@ import { QrCodePayload } from 'calldataserializer';
 export class ScTxPage {
   public wallet;
   public txData = JSON.stringify({
-    to: "tSE2mpV4vBi7tiLUUAhyLNN8FooD3bYrag",
-    methodName: "Approve",
-    amount: "0",
-    parameters: [
-      {
-        label: "Address",
-        value: "9#tWBY7T75kB8jfwACbWX7jLjapSe7gPou6z"
-      },
-      {
-        label: "Current Amount",
-        value: "7#0"
-      },
-      {
-        label: "Amount",
-        value: "7#1"
-      }
-    ],
+    to: "tW9Q6r3MEzKAvjikwjj2AMQHpRKxk7wBas",
+    methodName: "Deposit",
+    amount: "50000000", // SATS
+    parameters: [],
     callbackUrl: "http://test.example.com"
   } as QrCodePayload);
   
@@ -141,7 +128,7 @@ export class ScTxPage {
     // TODO finish this
     this.navCtrl.push(ConfirmScPage, {
       toAddress: data.to,
-      amount: 0,
+      amount: data.amount,
       walletId: this.wallet.credentials.walletId,
       scData: data,
       // totalInputsAmount:

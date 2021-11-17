@@ -369,6 +369,15 @@
       <span sheet-button-text translate>GOT IT</span>
     </info-sheet-template>
 
+    <info-sheet-template *ngSwitchCase="'sc-total-amount'" type="info">
+      <span sheet-title-text>{{ 'Total' | translate }}</span>
+      <span sheet-text>
+        {{ 'The total amount is the amount being sent plus gas fees plus transaction fees.' | translate }}
+        <a class="label-tip-link" (click)="openInBrowser('https://support.bitpay.com/hc/en-us/articles/115003393863-What-are-bitcoin-miner-fees-')" translate>Read more</a>
+      </span>
+      <span sheet-button-text translate>GOT IT</span>
+    </info-sheet-template>
+
     <info-sheet-template *ngSwitchCase="'no-wallets-available'" type="info">
       <span sheet-title-text translate>No wallets available</span>
       <span sheet-text>

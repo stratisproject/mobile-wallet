@@ -798,7 +798,7 @@ export class ConfirmScPage {
 
   protected showTotalAmountSheet() {
     const totalAmountFeeInfoSheet = this.actionSheetProvider.createInfoSheet(
-      'total-amount'
+      'sc-total-amount'
     );
     totalAmountFeeInfoSheet.present();
   }
