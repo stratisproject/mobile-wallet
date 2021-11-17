@@ -19,13 +19,17 @@ import { QrCodePayload } from 'calldataserializer';
 })
 export class ScTxPage {
   public wallet;
-  public txData = JSON.stringify({
+  public txData = Buffer.from(JSON.stringify({
     to: "tW9Q6r3MEzKAvjikwjj2AMQHpRKxk7wBas",
-    methodName: "Deposit",
-    amount: "50000000", // SATS
+    methodName: "Withdraw",
+    amount: "0", // SATS
     parameters: [],
-    callbackUrl: "http://test.example.com"
-  } as QrCodePayload);
+    callbackUrl: "http://test.example.com/😀/this is a-test?param=123&param2=test"
+  } as QrCodePayload)).toString('base64');
+
+  public get txDataString() {
+    return Buffer.from(this.txData, 'base64').toString('utf8');
+  }
   
   // string = '{ "sender": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "to": "tJyppxPeKs9rbsidSi3pqCYitkdGYjo57r", "amount": "0", "methodName": "SwapExactSrcForCrs", "parameters": [{ "label": "Token In Amount", "value": "12#1000000" }] }';
   
@@ -71,7 +75,7 @@ export class ScTxPage {
 
   private validateInput() {
     try {
-      JSON.parse(this.txData);
+      JSON.parse(this.txDataString);
     }
     catch (e) {
       this.errorsProvider.showDefaultError(
@@ -123,7 +127,7 @@ export class ScTxPage {
   broadcastSignedMessage() {
     this.validateInput();
 
-    let data = JSON.parse(this.txData) as QrCodePayload;
+    let data = JSON.parse(this.txDataString) as QrCodePayload;
     
     // TODO finish this
     this.navCtrl.push(ConfirmScPage, {
