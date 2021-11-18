@@ -234,6 +234,7 @@ export class WalletMock {
       dryRun: false,
       gasPrice: undefined,
       gasLimit: undefined
+      contractData: undefined
     };
     return cb(null, txp);
   }

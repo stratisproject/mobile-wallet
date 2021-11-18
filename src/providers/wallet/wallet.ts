@@ -91,7 +91,7 @@ export interface TransactionProposal {
   multisigContractAddress?: string;
   gasPrice: number;
   gasLimit: number;
-  contractData: QrCodePayload;
+  contractData?: QrCodePayload;
 }
 
 @Injectable()
