@@ -27,7 +27,7 @@ export class ScTxPage {
 
   public txDataString: string = JSON.stringify({
     to: "tW9Q6r3MEzKAvjikwjj2AMQHpRKxk7wBas",
-    methodName: "Deposit",
+    method: "Deposit",
     amount: "50000000", // SATS
     parameters: [],
     callbackUrl: "http://test.example.com/😀/this is a-test?param=123&param2=test"

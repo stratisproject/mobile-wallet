@@ -982,7 +982,7 @@ export class ConfirmScPage {
       contractAddress: new Address(scData.to),
       gasPrice: new BN(this.gasPrice),
       gasLimit: new BN(this.gasLimit),
-      methodName: scData.methodName,
+      methodName: scData.method,
       methodParameters: scData.parameters.map(p => deserializeString(p.value))
     } as ContractTxData;
 
