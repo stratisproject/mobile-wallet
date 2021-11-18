@@ -94,7 +94,7 @@
         </ion-note>
       </ion-item>
 
-      <ion-item *ngIf="tx.scData.methodName">        
+      <ion-item *ngIf="tx.scData.method">        
         <ion-label>
           <div class="summary-item">
             <span translate>Method name</span>
@@ -102,8 +102,8 @@
         </ion-label>
 
         <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ tx.scData.methodName }}">
-              <span *ngIf="tx.scData.methodName">{{ tx.scData.methodName }}</span>
+          <div class="summary-item-detail" copy-to-clipboard="{{ tx.scData.method }}">
+              <span *ngIf="tx.scData.method">{{ tx.scData.method }}</span>
           </div>
         </ion-note>
       </ion-item>
@@ -130,7 +130,7 @@
         </ion-note>
       </ion-item>
 
-      <ion-item *ngIf="tx.scData.callbackUrl">        
+      <ion-item *ngIf="tx.scData.callback">        
         <ion-label>
           <div class="summary-item">
             <span translate>Callback URL</span>
@@ -138,8 +138,8 @@
         </ion-label>
 
         <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ tx.scData.callbackUrl }}">
-              <span *ngIf="tx.scData.callbackUrl">{{ tx.scData.callbackUrl }}</span>
+          <div class="summary-item-detail" copy-to-clipboard="{{ tx.scData.callback }}">
+              <span *ngIf="tx.scData.callback">{{ tx.scData.callback }}</span>
           </div>
         </ion-note>
       </ion-item>
