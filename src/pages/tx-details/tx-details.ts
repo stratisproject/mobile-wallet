@@ -242,6 +242,8 @@ export class TxDetailsModal {
             this.title = this.translate.instant('Received');
           if (this.btx.action == 'moved')
             this.title = this.translate.instant('Sent to self');
+          if (this.btx.contractData)
+            this.title = this.translate.instant('Sent to contract');
         }
 
         this.updateMemo();

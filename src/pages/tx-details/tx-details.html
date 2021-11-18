@@ -20,6 +20,9 @@
           <div class="sending-label" *ngIf="btx.amount === 0 && wallet.coin === 'eth'">
             <span>{{'Interaction with contract' | translate}}</span>
           </div>
+          <div class="sending-label" *ngIf="btx.contractData">
+            <span>{{'Interaction with contract' | translate}}</span>
+          </div>
         </div>
       </ion-item>
 
@@ -127,6 +130,70 @@
           </span>
         </ion-note>
       </ion-item>
+
+      <ng-container *ngIf="btx.contractData">
+        <div class="line-divider"></div>
+        <ion-item class="sub-title">
+          <ion-label>
+            <div class="main-label" translate>CONTRACT DATA</div>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="btx.contractData.method">        
+          <ion-label>
+            <div class="summary-item">
+              <span translate>Method name</span>
+            </div>
+          </ion-label>
+  
+          <ion-note item-end>
+            <div class="summary-item-detail" copy-to-clipboard="{{ btx.contractData.method }}">
+                <span>{{ btx.contractData.method }}</span>
+            </div>
+          </ion-note>
+        </ion-item>
+ 
+        <ion-item *ngIf="btx.contractData.callback">        
+          <ion-label>
+            <div class="summary-item">
+              <span translate>Callback URL</span>
+            </div>
+          </ion-label>
+  
+          <ion-note item-end>
+            <div class="summary-item-detail" copy-to-clipboard="{{ btx.contractData.callback }}">
+                <span>{{ btx.contractData.callback }}</span>
+            </div>
+          </ion-note>
+        </ion-item>
+
+        <ion-item *ngIf="btx.gasPrice">        
+          <ion-label>
+            <div class="summary-item">
+              <span translate>Gas Price</span>
+            </div>
+          </ion-label>
+  
+          <ion-note item-end>
+            <div class="summary-item-detail" copy-to-clipboard="{{ btx.gasPrice }}">
+                <span>{{ btx.gasPrice }}</span>
+            </div>
+          </ion-note>
+        </ion-item>
+        <ion-item *ngIf="btx.gasLimit">        
+          <ion-label>
+            <div class="summary-item">
+              <span translate>Gas Limit</span>
+            </div>
+          </ion-label>
+  
+          <ion-note item-end>
+            <div class="summary-item-detail" copy-to-clipboard="{{ btx.gasLimit }}">
+                <span>{{ btx.gasLimit }}</span>
+            </div>
+          </ion-note>
+        </ion-item>
+      </ng-container>
+
 
       <!-- <div *ngIf="!btx.confirmations || btx.confirmations == 0" class="unconfirmed-message">
         <a class="positive" (click)="openExternalLink('https://support.bitpay.com/hc/en-us/articles/360025484512-Missing-transactions-Why-is-my-transaction-unconfirmed-')">
