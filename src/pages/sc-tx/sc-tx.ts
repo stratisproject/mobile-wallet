@@ -26,11 +26,11 @@ export class ScTxPage {
   }
 
   public txDataString: string = JSON.stringify({
-    to: "tW9Q6r3MEzKAvjikwjj2AMQHpRKxk7wBas",
+    to: "tCzkmt5BPJVQHqtygbboc9qhLxbGGAruHQ",
     method: "Deposit",
     amount: "50000000", // SATS
     parameters: [],
-    callback: "http://test.example.com/😀/this is a-test?param=123&param2=test"
+    callback: "https://enjrxoquzz7e.x.pipedream.net/"
   } as QrCodePayload);
    
   public privKey: string;
