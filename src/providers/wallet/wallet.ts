@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { QrCodePayload } from 'calldataserializer';
 import { Events } from 'ionic-angular';
 import * as _ from 'lodash';
 import encoding from 'text-encoding';
@@ -90,6 +91,7 @@ export interface TransactionProposal {
   multisigContractAddress?: string;
   gasPrice: number;
   gasLimit: number;
+  contractData: QrCodePayload;
 }
 
 @Injectable()

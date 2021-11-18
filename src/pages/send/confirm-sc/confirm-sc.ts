@@ -1051,6 +1051,8 @@ export class ConfirmScPage {
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;
       txp.dryRun = dryRun;
 
+      txp.contractData = scData;
+
       if (tx.sendMaxInfo) {
         txp.inputs = tx.sendMaxInfo.inputs;
         txp.fee = tx.sendMaxInfo.fee;
