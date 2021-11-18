@@ -30,7 +30,7 @@ export class ScTxPage {
     method: "Deposit",
     amount: "50000000", // SATS
     parameters: [],
-    callbackUrl: "http://test.example.com/😀/this is a-test?param=123&param2=test"
+    callback: "http://test.example.com/😀/this is a-test?param=123&param2=test"
   } as QrCodePayload);
    
   public privKey: string;
