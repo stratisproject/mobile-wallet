@@ -294,7 +294,7 @@
               </span>
             </div>
 
-            <div class="action" *ngIf="tx.confirmations > 0 && tx.action == 'sent' && !(tx.amount === 0 && wallet?.coin === 'eth')">
+            <div class="action" *ngIf="tx.confirmations > 0 && tx.action == 'sent' && !(tx.amount === 0 && wallet?.coin === 'eth') && !tx.contractData">
               <span *ngIf="(tx.message && (tx.note && !tx.note.body)) && (!addressbook || !tx.outputs[0] || !addressbook[tx.outputs[0].address]) && (!tx.customData || !tx.customData.toWalletName)" translate>Sent</span>
               <span *ngIf="!tx.message && (!tx.note || (tx.note && !tx.note.body)) && (!addressbook || !tx.outputs[0] || !addressbook[tx.outputs[0].address]) && (!tx.customData || !tx.customData.toWalletName)">{{'Sent'
                     | translate}}</span>
@@ -309,6 +309,10 @@
             </div>
 
             <div class="action" *ngIf="tx.amount === 0 && wallet?.coin === 'eth'">
+              <span>{{'Interaction with contract' | translate}}</span>
+            </div>
+
+            <div class="action" *ngIf="tx.contractData != null">
               <span>{{'Interaction with contract' | translate}}</span>
             </div>
 
