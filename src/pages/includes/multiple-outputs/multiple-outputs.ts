@@ -54,6 +54,10 @@ export class MultipleOutputsPage {
       );
       output.addressToShow =
         addressToShow == 'false' ? 'Unparsed address' : addressToShow;
+
+      if (this.isContractTransaction()) {
+          output.addressToShow = this.tx.contractData.to;       
+      }
     });
 
     this.contact();
@@ -65,6 +69,10 @@ export class MultipleOutputsPage {
 
   get misunderstoodOutputsMsg() {
     return this._misunderstoodOutputsMsg;
+  }
+
+  private isContractTransaction() {
+    return !this.tx.hasMultiplesOutputs && this.tx.contractData;
   }
 
   viewOnBlockchain(): void {
