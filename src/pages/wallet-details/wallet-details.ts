@@ -751,19 +751,45 @@ export class WalletDetailsPage {
   }
 
   private signMessage(): void {
-    console.log("Signing message");
-    this.walletProvider.getAddress(this.wallet, false).then(_ => {
-      this.navCtrl.push(SignMessagePage, {
-        privKey: null,
-        walletName: this.wallet.name,
-        // toAddress: addr,
-        walletId: this.wallet.credentials.walletId,
-        // recipientType: 'wallet',
-        // color: this.wallet.color,
-        // coin: this.wallet.coin,
-        // nextPage: 'CustomAmountPage',
-        // network: this.wallet.network
+    this.walletProvider.getAddress(this.wallet, false).then(address => {
+
+      if (this.wallet.coin == 'crs') {
+          // On Cirrus we want the first child (address 0) of the first child (change/non-change).
+
+          const changeNum = 0; // Not change
+          const addressIndex = 0; // Always the first address on Cirrus
+          const path = `m/${changeNum}/${addressIndex}`;
+
+          this.navCtrl.push(SignMessagePage, {
+            privKey: null,
+            walletName: this.wallet.name,
+            address: {
+              address,
+              path
+            },
+            walletId: this.wallet.credentials.walletId,
+          });
+      }
+      else {
+
+      this.walletProvider.getMainAddresses(this.wallet, null).then(addresses => {
+
+        // For other coins we need the full path of the address and the only way to get this is by quering all addresses and then finding the last one.
+        let thisAddress = _.find(addresses, a => a.address === address);
+  
+        if (thisAddress == null) {
+          // TODO show error
+          return;
+        }
+
+        this.navCtrl.push(SignMessagePage, {
+          privKey: null,
+          walletName: this.wallet.name,
+          thisAddress,
+          walletId: this.wallet.credentials.walletId,
+        });
       });
+      }
     });
   }
 

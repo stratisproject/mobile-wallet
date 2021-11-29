@@ -115,7 +115,8 @@ export class ScTxPage {
       .handleEncryptedWallet(this.wallet.keyId)
       .then((password: string) => {
         const keys = this.keyProvider.get(this.wallet.keyId, password);
-        this.xPrivKey = keys.xPrivKey; // xPrivKey is HD priv key        
+        this.xPrivKey = keys.xPrivKey; // xPrivKey is HD priv key  
+        this.xPrivKey = this.keyProvider.getKey(this.wallet.credentials.keyId);      
       })
       .catch(err => {
         // TODO handle this properly
@@ -159,7 +160,7 @@ export class ScTxPage {
     // const changeNum = 0; // Not change
     // const addressIndex = 0; // Always the first address on Cirrus
     // const path = `m/${changeNum}/${addressIndex}`;
-    const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(0).privateKey;
+    const privKey = new bitcore.PrivateKey(this.xPrivKey);
 
     // Two ways to do this but this one requires modifying message...
     // let signedMessage1 = bcMessage.sign(privKey);

@@ -26,6 +26,7 @@ export class SignMessagePage {
   private config;
   signedMessage: any;
   xPrivKey: any;
+  public address: any;
 
   constructor(
     private profileProvider: ProfileProvider,
@@ -38,7 +39,7 @@ export class SignMessagePage {
     private replaceParametersProvider: ReplaceParametersProvider,
     private translate: TranslateService,
     private bwcProvider: BwcProvider,
-    private keyProvider: KeyProvider
+    private keyProvider: KeyProvider,
   ) {
     this.walletName = this.navParams.data.walletName;
 
@@ -56,6 +57,7 @@ export class SignMessagePage {
 
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
+    this.address = this.navParams.data.address;
     this.config = this.configProvider.get();
     let alias =
       this.config.aliasFor &&
@@ -74,8 +76,8 @@ export class SignMessagePage {
     this.keyProvider
       .handleEncryptedWallet(this.wallet.keyId)
       .then((password: string) => {
-        const keys = this.keyProvider.get(this.wallet.keyId, password);
-        this.xPrivKey = keys.xPrivKey; // xPrivKey is HD priv key        
+        const key = this.keyProvider.get(this.wallet.keyId, password);
+        this.xPrivKey = key.xPrivKey; 
       })
       .catch(err => {
         // TODO handle this properly
@@ -85,29 +87,26 @@ export class SignMessagePage {
   }
 
   signMessage() {
-    // TODO get bitcore conditionally based on wallet.coin???
     let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
     let message = this.walletNameForm.value.walletName;
     let bcMessage = new bitcore.Message(message);
 
-    // const changeNum = 0; // Not change
-    // const addressIndex = 0; // Always the first address on Cirrus
-    // const path = `m/${changeNum}/${addressIndex}`;
-    const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(0).privateKey;
+    const signMessage = (path: string) => {
+      const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(this.wallet.credentials.rootPath).deriveChild(path).privateKey;
 
-    // Two ways to do this but this one requires modifying message...
-    // let signedMessage1 = bcMessage.sign(privKey);
+      let ecdsa = bitcore.crypto.ECDSA().set({
+        hashbuf: bcMessage.magicHash(),
+        privkey: privKey
+      });    
+      ecdsa.sign()
+      ecdsa.calci();
+      
+      let sig = ecdsa.sig;
+      let sigBytes = sig.toCompact();
+      this.signedMessage = sigBytes.toString('base64');
+    }
 
-    let ecdsa = bitcore.crypto.ECDSA().set({
-      hashbuf: bcMessage.magicHash(),
-      privkey: privKey
-    });    
-    ecdsa.sign()
-    ecdsa.calci();
-    
-    let sig = ecdsa.sig;
-    let sigBytes = sig.toCompact();
-    this.signedMessage = sigBytes.toString('base64');
+    signMessage(this.address.path);
   };
 
   public save(): void {
