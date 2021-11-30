@@ -46,6 +46,7 @@ import { SearchTxModalPage } from './search-tx-modal/search-tx-modal';
 import { SignMessagePage } from '../sign-message/sign-message';
 import { WalletBalanceModal } from './wallet-balance/wallet-balance';
 import { ScTxPage } from '../sc-tx/sc-tx';
+import { AuthScanPage } from '../auth-scan/auth-scan';
 
 const HISTORY_SHOW_LIMIT = 10;
 const MIN_UPDATE_TIME = 2000;
@@ -749,6 +750,27 @@ export class WalletDetailsPage {
       this.socialSharing.share(addr);
     });
   }
+
+  private authScan(): void {
+    this.walletProvider.getAddress(this.wallet, false).then(address => {
+      // On Cirrus we want the first child (address 0) of the first child (change/non-change).
+
+      const changeNum = 0; // Not change
+      const addressIndex = 0; // Always the first address on Cirrus
+      const path = `m/${changeNum}/${addressIndex}`;
+
+      this.navCtrl.push(AuthScanPage, {
+        privKey: null,
+        walletName: this.wallet.name,
+        address: {
+          address,
+          path
+        },
+        walletId: this.wallet.credentials.walletId,
+      });
+    });
+  }
+
 
   private signMessage(): void {
     this.walletProvider.getAddress(this.wallet, false).then(address => {

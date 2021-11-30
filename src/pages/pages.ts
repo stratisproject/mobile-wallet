@@ -156,6 +156,7 @@ import { GIFT_CARD_PAGES } from './integrations/gift-cards/gift-cards';
 import { MerchantPage } from './merchant/merchant';
 import { SignMessagePage } from './sign-message/sign-message';
 import { ScTxPage } from './sc-tx/sc-tx';
+import { AuthScanPage } from './auth-scan/auth-scan';
 
 export const PAGES = [
   AddPage,
@@ -278,5 +279,6 @@ export const PAGES = [
   // Phases: card pages
   PhaseOneCardIntro,
   SignMessagePage,
+  AuthScanPage,
   ScTxPage
 ];
