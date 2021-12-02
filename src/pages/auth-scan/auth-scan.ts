@@ -12,6 +12,7 @@ import { ReplaceParametersProvider } from '../../providers/replace-parameters/re
 import { KeyProvider } from '../../providers/key/key';
 import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ScanPage } from '../scan/scan';
+import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
 
 @Component({
   selector: 'page-auth-scan',
@@ -103,8 +104,12 @@ export class AuthScanPage {
   handleAuth(message: string) {
     let messageObject = this.parseInput(message);
     
-    if(message == null)
+    if(messageObject == null)
       return;
+
+    this.navCtrl.push(ConfirmAuthPage, {
+      message: messageObject
+    });
   }
 
   private parseInput(message: string) {

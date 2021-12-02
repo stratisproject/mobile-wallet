@@ -723,6 +723,7 @@ export class WalletDetailsPage {
       if (option == 'request-amount') this.requestSpecificAmount();
       if (option == 'share-address') this.shareAddress();
       if (option == 'sign-message') this.signMessage();
+      if (option == 'auth-scan') this.authScan();
       if (option == 'sc-tx') this.scTx();
     });
   }
