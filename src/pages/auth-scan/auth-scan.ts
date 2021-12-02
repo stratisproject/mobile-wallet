@@ -13,7 +13,19 @@ import { KeyProvider } from '../../providers/key/key';
 import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ScanPage } from '../scan/scan';
 import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
+import { Url } from 'url';
 
+export interface AuthData {
+  url: Url,
+  expiry: Date,
+  messageToSign: string,
+  callbackUrl: string
+}
+
+/*
+Opens the scanner, reads a QR and passes the raw data to the confirmation page.
+
+*/
 @Component({
   selector: 'page-auth-scan',
   templateUrl: 'auth-scan.html'
@@ -48,7 +60,7 @@ export class AuthScanPage {
   ) {
     this.events.subscribe('Local/AuthScan', this.handleAuth);
 
-    this.walletName = this.navParams.data.walletName;
+    this.walletName = "sid:api.example.com/auth?uid=4606287adc774829ab643816a021efbf&exp=1647216000";
 
     this.walletNameForm = this.formBuilder.group({
       walletName: [
@@ -59,7 +71,7 @@ export class AuthScanPage {
   }
 
   ionViewDidLoad() {
-    this.logger.info('Loaded: SignMessagePage');
+    this.logger.info('Loaded: AuthScanPage');
 
     if(this.platformProvider.isCordova) {
       this.openScanner();
@@ -101,27 +113,36 @@ export class AuthScanPage {
     this.navCtrl.push(ScanPage, { fromAuthScan: true }, { animate: false });
   }
 
-  handleAuth(message: string) {
-    let messageObject = this.parseInput(message);
+  handleAuth(data: string) {
+    let loginData = this.parseInput(data);
     
-    if(messageObject == null)
+    if(loginData == null)
       return;
 
     this.navCtrl.push(ConfirmAuthPage, {
-      message: messageObject
+      message: loginData,
+      walletId: this.navParams.data.walletId
     });
+  }
+
+  sign() {
+    this.handleAuth(this.walletNameForm.value.walletName);
   }
 
   private parseInput(message: string) {
     try {
-      return JSON.parse(message);
+      let url = new URL(message);
+
+      console.log(url);
+      let parsed = this.parseUrl(url);
+      console.log(parsed);
     }
     catch (e) {
       this.errorsProvider.showDefaultError(
         e,
         "Unreadable scan",
         () => {
-          this.logger.error("Scanned auth json was invalid")
+          this.logger.error("Scanned auth URI was invalid")
               this.navCtrl.pop();
         }
       );
@@ -129,9 +150,22 @@ export class AuthScanPage {
     }
   }
 
+  private parseUrl(url: URL): AuthData {
+    let exp = url.searchParams.get("exp");
+    let expiry = new Date(+exp* 1000); // Expiry is unix time, JS date is scaled by 1000 
+    
+    return {
+      url,
+      expiry,
+      messageToSign: url.href.replace(url.protocol, ""),
+      callbackUrl: url.href.replace(url.protocol, "https://")
+    } as AuthData;
+  }
+
   signMessage() {
     let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
     let message = this.walletNameForm.value.walletName;
+    this.parseInput(message);
     let bcMessage = new bitcore.Message(message);
 
     const signMessage = (path: string) => {
@@ -151,19 +185,4 @@ export class AuthScanPage {
 
     signMessage(this.address.path);
   };
-
-  public save(): void {
-    let opts = {
-      aliasFor: {}
-    };
-    opts.aliasFor[
-      this.wallet.credentials.walletId
-    ] = this.walletNameForm.value.walletName;
-    this.configProvider.set(opts);
-    this.events.publish('Local/ConfigUpdate', {
-      walletId: this.wallet.credentials.walletId
-    });
-    this.profileProvider.setOrderedWalletsByGroup();
-    this.navCtrl.pop();
-  }
 }

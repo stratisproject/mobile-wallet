@@ -1,8 +1,8 @@
-<wide-header-page title="{{'Sign Message' | translate}}">
+<wide-header-page title="{{'Login QR Code Scan' | translate}}">
   <div page-content>
     <ion-list class="settings-list bp-list">
       <div class="settings-explanation">
-        <div class="settings-heading" translate>Enter the message to sign with the {{ walletName }} wallet's private key</div>
+        <div class="settings-heading" translate>Enter the login QR code data</div>
         <div class="settings-description">
           {{description}}
         </div>
@@ -18,12 +18,10 @@
           <ion-label stacked>{{'Message' | translate}}</ion-label>
           <ion-input type="text" formControlName="walletName" [value]="walletNameForm.value.walletName" required></ion-input>
         </ion-item>
-        <button ion-button class="button-standard" (click)="signMessage()" [disabled]="!walletNameForm.valid">
+        <button ion-button class="button-standard" (click)="sign()" [disabled]="!walletNameForm.valid">
           {{'Sign' | translate}}
         </button>
       </form>
     </ion-list>
-    <div class="settings-heading">{{ signedMessage }}</div>
-
   </div>
 </wide-header-page>

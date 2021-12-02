@@ -762,7 +762,6 @@ export class WalletDetailsPage {
 
       this.navCtrl.push(AuthScanPage, {
         privKey: null,
-        walletName: this.wallet.name,
         address: {
           address,
           path
