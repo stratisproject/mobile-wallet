@@ -82,12 +82,9 @@ export class AuthScanPage {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
     this.config = this.configProvider.get();
-    let alias =
-      this.config.aliasFor &&
-      this.config.aliasFor[this.wallet.credentials.walletId];
-    this.walletNameForm.value.walletName = alias
-      ? alias
-      : this.wallet.credentials.walletName;
+
+    this.walletNameForm.value.walletName = this.walletName;
+
     this.walletName = this.wallet.credentials.walletName;
     this.description = this.replaceParametersProvider.replace(
       this.translate.instant(
