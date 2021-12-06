@@ -41,6 +41,7 @@ import {
 } from '../../../providers/wallet/wallet';
 import { parseDomain, ParseResultType } from "parse-domain";
 import { Url } from 'url';
+import { FinishModalPage } from '../../../pages/finish/finish';
 
 export const KNOWN_URL_DOMAINS = [
   "example.com",
@@ -170,11 +171,18 @@ export class ConfirmAuthPage {
     this.mainTitle = this.translate.instant('Confirm Authorization Message Signing');
   }
 
-  signAndBroadcastLogin() {
+  async signAndBroadcastLogin() {
     let signedMessage = this.signMessage(this.message.messageToSign);
 
     console.log(this.message.messageToSign);
     console.log(signedMessage);
+
+    try {
+      await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, signedMessage} );
+      await this.openFinishModal();
+    } catch {
+      await this.openFinishErrorModal();
+    }
   }
 
   signMessage(message: string): string {
@@ -198,4 +206,52 @@ export class ConfirmAuthPage {
 
     return signMessage(this.signingAddress.path);
   };
+
+
+  private async openFinishModal() {
+    let params: {
+      finishText: string;
+      finishComment?: string;
+      autoDismiss?: boolean;
+      coin: string;
+    } = {
+      finishText: "Login message signed and broadcast!",
+      autoDismiss: false,
+      coin: this.coin
+    };
+
+    const modal = this.modalCtrl.create(FinishModalPage, params, {
+      showBackdrop: true,
+      enableBackdropDismiss: false,
+      cssClass: 'finish-modal'
+    });
+
+    await modal.present();
+
+    this.navCtrl.popToRoot();
+  }
+
+  private async openFinishErrorModal() {
+    let params: {
+      finishText: string;
+      finishComment?: string;
+      autoDismiss?: boolean;
+      coin: string;
+      cssClass: string;
+    } = {
+      finishText: "Error broadcasting login message, please try again.",
+      autoDismiss: false,
+      coin: this.coin,
+      cssClass: 'danger'
+    };
+
+    const modal = this.modalCtrl.create(FinishModalPage, params, {
+      showBackdrop: true,
+      enableBackdropDismiss: false
+    });
+
+    await modal.present();
+
+    this.navCtrl.popToRoot();
+  }
 }

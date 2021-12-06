@@ -1,14 +1,10 @@
-import { BwcProvider } from '../../providers/bwc/bwc';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { Events, NavController, NavParams } from 'ionic-angular';
 import { Logger } from '../../providers/logger/logger';
 
 // providers
-import { ConfigProvider } from '../../providers/config/config';
 import { ProfileProvider } from '../../providers/profile/profile';
-import { ReplaceParametersProvider } from '../../providers/replace-parameters/replace-parameters';
 import { KeyProvider } from '../../providers/key/key';
 import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ScanPage } from '../scan/scan';

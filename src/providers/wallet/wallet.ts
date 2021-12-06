@@ -1920,4 +1920,29 @@ export class WalletProvider {
       });
     });
   }
+
+  public callbackAuthURL(wallet, opts: { callbackUrl: string, signedMessage: string }): Promise<any> {
+    return wallet.callbackAuthURL(opts);
+    // return new Promise((resolve, reject) => {
+    //   if (_.isEmpty(opts.callbackUrl) || _.isEmpty(opts.signedMessage))
+    //     return reject('MISSING_PARAMETER');
+
+    //   , (err, broadcastedTxp, memo) => {
+    //     if (err) {
+    //       if (_.isArrayBuffer(err)) {
+    //         const enc = new encoding.TextDecoder();
+    //         err = enc.decode(err);
+    //         this.removeTx(wallet, txp);
+    //         return reject(err);
+    //       } else {
+    //         return reject(err);
+    //       }
+    //     }
+
+    //     this.logger.info('Transaction broadcasted: ', broadcastedTxp.txid);
+    //     if (memo) this.logger.info('Memo: ', memo);
+    //     return resolve(broadcastedTxp);
+    //   });
+    // });
+  }
 }
