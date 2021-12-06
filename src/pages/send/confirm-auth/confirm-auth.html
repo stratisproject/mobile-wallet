@@ -17,7 +17,7 @@
 
         <ion-note item-end>
           <div class="summary-item-detail" copy-to-clipboard="{{ message.expiry }}">
-              <span *ngIf="message.expiry">{{ message.expiry }}</span>
+              <span *ngIf="message.expiry">{{ message.expiry }} {{ message?.expired() }}</span>
           </div>
         </ion-note>
       </ion-item>
@@ -74,7 +74,7 @@
     </page-slide-to-accept> -->
 
     <ion-toolbar><!-- *ngIf="!isCordova && (wallet || coinbaseAccount)">-->
-      <button ion-button full class="button-footer" (click)="approve(tx, wallet)" [disabled]="(!wallet && !coinbaseAccount) || (wallet && !tx?.txp[wallet.id]) || paymentExpired">Log In</button>
+      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="message?.expired()">Sign & Log In</button>
     </ion-toolbar>
   </div>
 </wide-header-page>

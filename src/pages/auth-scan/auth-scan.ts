@@ -15,11 +15,22 @@ import { ScanPage } from '../scan/scan';
 import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
 import { Url } from 'url';
 
-export interface AuthData {
-  url: Url,
-  expiry: Date,
-  messageToSign: string,
-  callbackUrl: string
+export class AuthData {
+  // public url: Url;
+  // public expiry: Date;
+  // public messageToSign: string;
+  // public callbackUrl: string;
+
+  // 5 mins
+  private EXPIRY_DURATION = 5*60*1000;
+
+  constructor(public url: Url, public expiry: Date, public messageToSign: string, public callbackUrl: string) {
+
+  }
+  expired() {
+    let now = new Date();
+    return (this.expiry.valueOf() - now.valueOf()) > this.EXPIRY_DURATION;
+  }
 }
 
 /*
@@ -38,7 +49,6 @@ export class AuthScanPage {
   public walletNameForm: FormGroup;
   public description: string;
 
-  private config;
   signedMessage: any;
   xPrivKey: any;
   public address: any;
@@ -81,7 +91,7 @@ export class AuthScanPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
-    this.config = this.configProvider.get();
+    // this.config = this.configProvider.get();
 
     this.walletNameForm.value.walletName = this.walletName;
 
@@ -116,9 +126,12 @@ export class AuthScanPage {
     if(loginData == null)
       return;
 
+    console.log("Pushing auth page");
     this.navCtrl.push(ConfirmAuthPage, {
       message: loginData,
-      walletId: this.navParams.data.walletId
+      walletId: this.navParams.data.walletId,
+      signingAddress: this.address.address,
+      expired: loginData
     });
   }
 
@@ -133,6 +146,8 @@ export class AuthScanPage {
       console.log(url);
       let parsed = this.parseUrl(url);
       console.log(parsed);
+
+      return parsed;
     }
     catch (e) {
       this.errorsProvider.showDefaultError(
@@ -151,12 +166,12 @@ export class AuthScanPage {
     let exp = url.searchParams.get("exp");
     let expiry = new Date(+exp* 1000); // Expiry is unix time, JS date is scaled by 1000 
     
-    return {
+    return new AuthData(
       url,
       expiry,
-      messageToSign: url.href.replace(url.protocol, ""),
-      callbackUrl: url.href.replace(url.protocol, "https://")
-    } as AuthData;
+      url.href.replace(url.protocol, ""),
+      url.href.replace(url.protocol, "https://")
+    );
   }
 
   signMessage() {

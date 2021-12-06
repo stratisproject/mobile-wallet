@@ -8,6 +8,7 @@ import {
   NavParams
 } from 'ionic-angular';
 import * as _ from 'lodash';
+import { AuthData } from 'src/pages/auth-scan/auth-scan';
 import { KeyProvider } from '../../../providers';
 
 // Providers
@@ -59,9 +60,10 @@ export class ConfirmAuthPage {
   isOpenSelector: boolean;
   coin: any;
   mainTitle: any;
-  message: string;
+  message: AuthData;
   xPrivKey: string;
   signingAddress: string;
+  expired: any;
 
   constructor(
     protected addressProvider: AddressProvider,
@@ -111,7 +113,7 @@ export class ConfirmAuthPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.message = this.navParams.data.message;
-    this.signingAddress = "";
+    this.signingAddress = this.navParams.data.signingAddress;
 
     this.keyProvider
     .handleEncryptedWallet(this.wallet.keyId)
@@ -142,5 +144,9 @@ export class ConfirmAuthPage {
 
   private setTitle(): void {
     this.mainTitle = this.translate.instant('Sign Authorization Message');
+  }
+
+  signAndBroadcastLogin() {
+
   }
 }
