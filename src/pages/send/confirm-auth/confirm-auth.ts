@@ -8,7 +8,7 @@ import {
   NavParams
 } from 'ionic-angular';
 import * as _ from 'lodash';
-import { AuthData } from 'src/pages/auth-scan/auth-scan';
+import { AuthData } from '../../../pages/auth-scan/auth-scan';
 import { KeyProvider } from '../../../providers';
 
 // Providers
@@ -20,7 +20,6 @@ import { BwcErrorProvider } from '../../../providers/bwc-error/bwc-error';
 import { BwcProvider } from '../../../providers/bwc/bwc';
 import { ClipboardProvider } from '../../../providers/clipboard/clipboard';
 import { CoinbaseProvider } from '../../../providers/coinbase/coinbase';
-import { ConfigProvider } from '../../../providers/config/config';
 import { CurrencyProvider } from '../../../providers/currency/currency';
 import { ErrorsProvider } from '../../../providers/errors/errors';
 import { ExternalLinkProvider } from '../../../providers/external-link/external-link';
@@ -40,8 +39,11 @@ import { TxFormatProvider } from '../../../providers/tx-format/tx-format';
 import {
   WalletProvider
 } from '../../../providers/wallet/wallet';
+import { parseDomain, ParseResultType, ParseResult, ParseResultListed } from "parse-domain";
+import { Url } from 'url';
 
 export const KNOWN_URL_DOMAINS = [
+  "example.com",
   "opdex.com"
 ];
 
@@ -63,7 +65,7 @@ export class ConfirmAuthPage {
   message: AuthData;
   xPrivKey: string;
   signingAddress: string;
-  expired: any;
+  knownHostname: boolean;
 
   constructor(
     protected addressProvider: AddressProvider,
@@ -72,7 +74,6 @@ export class ConfirmAuthPage {
     protected actionSheetProvider: ActionSheetProvider,
     protected bwcErrorProvider: BwcErrorProvider,
     protected bwcProvider: BwcProvider,
-    protected configProvider: ConfigProvider,
     protected currencyProvider: CurrencyProvider,
     protected errorsProvider: ErrorsProvider,
     protected externalLinkProvider: ExternalLinkProvider,
@@ -115,6 +116,12 @@ export class ConfirmAuthPage {
     this.message = this.navParams.data.message;
     this.signingAddress = this.navParams.data.signingAddress;
 
+    // If it's invalid we can't use it at all for some reason.
+    let callbackHostname = this.getHostName(this.message.callbackUrl);
+    this.knownHostname = callbackHostname != null 
+      ? KNOWN_URL_DOMAINS.indexOf(callbackHostname) !== -1
+      : false;
+
     this.keyProvider
     .handleEncryptedWallet(this.wallet.keyId)
     .then((password: string) => {
@@ -126,6 +133,23 @@ export class ConfirmAuthPage {
       console.log(err);
       this.navCtrl.pop();
     });
+  }
+
+  getHostName(callbackUrl: Url): string {
+    let parsedDomain = parseDomain(callbackUrl.hostname);
+
+    switch (parsedDomain.type) {
+      case ParseResultType.Listed:
+        return [parsedDomain.domain, ...parsedDomain.topLevelDomains].join(".");
+      case ParseResultType.NotListed:
+      case ParseResultType.Ip:
+        case ParseResultType.Reserved:
+        return parsedDomain.hostname;    
+      case ParseResultType.Invalid:
+      default:
+        return null;
+    }
+
   }
 
   ionViewWillLeave() {
@@ -143,7 +167,7 @@ export class ConfirmAuthPage {
   }
 
   private setTitle(): void {
-    this.mainTitle = this.translate.instant('Sign Authorization Message');
+    this.mainTitle = this.translate.instant('Confirm Authorization Message Signing');
   }
 
   signAndBroadcastLogin() {

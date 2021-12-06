@@ -24,9 +24,14 @@ export class AuthData {
   // 5 mins
   private EXPIRY_DURATION = 5*60*1000;
 
-  constructor(public url: Url, public expiry: Date, public messageToSign: string, public callbackUrl: string) {
+  public messageToSign: string;
+  public callbackUrl: Url;
 
+  constructor(public uri: Url, public expiry: Date) {
+      this.messageToSign = uri.href.replace(uri.protocol, "");
+      this.callbackUrl = new URL(uri.href.replace(uri.protocol, "https://"));
   }
+
   expired() {
     let now = new Date();
     return (this.expiry.valueOf() - now.valueOf()) > this.EXPIRY_DURATION;
@@ -57,7 +62,6 @@ export class AuthScanPage {
     private profileProvider: ProfileProvider,
     private navCtrl: NavController,
     private navParams: NavParams,
-    private configProvider: ConfigProvider,
     private formBuilder: FormBuilder,
     private events: Events,
     private logger: Logger,
@@ -168,9 +172,7 @@ export class AuthScanPage {
     
     return new AuthData(
       url,
-      expiry,
-      url.href.replace(url.protocol, ""),
-      url.href.replace(url.protocol, "https://")
+      expiry)
     );
   }
 

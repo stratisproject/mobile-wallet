@@ -8,7 +8,7 @@
         </ion-label>
       </ion-item>
 
-      <ion-item>        
+      <ion-item [style.background-color]="message?.expired() ? 'red' : 'auto'">        
         <ion-label>
           <div class="summary-item">
             <span translate>Expiry</span>
@@ -22,7 +22,7 @@
         </ion-note>
       </ion-item>
 
-      <ion-item>        
+      <ion-item [style.background-color]="knownHostname? 'green' : 'red'">        
         <ion-label>
           <div class="summary-item">
             <span translate>Callback URL</span>
@@ -31,7 +31,8 @@
 
         <ion-note item-end>
           <div class="summary-item-detail" copy-to-clipboard="{{ message.callbackUrl }}">
-              <span *ngIf="message.url">{{ message.callbackUrl }}</span>
+              <ion-icon *ngIf="!knownHostname" name="warning"></ion-icon>
+              <span *ngIf="message.callbackUrl">{{ message.callbackUrl.href }}</span>
           </div>
         </ion-note>
       </ion-item>
@@ -45,7 +46,7 @@
 
         <ion-note item-end>
           <div class="summary-item-detail" copy-to-clipboard="{{ message.messageToSign }}">
-              <span *ngIf="message.url">{{ message.messageToSign }}</span>
+              <span *ngIf="message.messageToSign">{{ message.messageToSign }}</span>
           </div>
         </ion-note>
       </ion-item>
@@ -74,7 +75,7 @@
     </page-slide-to-accept> -->
 
     <ion-toolbar><!-- *ngIf="!isCordova && (wallet || coinbaseAccount)">-->
-      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="message?.expired()">Sign & Log In</button>
+      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="message?.expired()">Sign & Callback</button>
     </ion-toolbar>
   </div>
 </wide-header-page>
