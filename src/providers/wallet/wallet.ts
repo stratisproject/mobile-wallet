@@ -1921,7 +1921,7 @@ export class WalletProvider {
     });
   }
 
-  public callbackAuthURL(wallet, opts: { callbackUrl: string, signedMessage: string }): Promise<any> {
+  public callbackAuthURL(wallet, opts: { callbackUrl: string, publicKey: string, signature: string }): Promise<any> {
     return wallet.callbackAuthURL(opts);
     // return new Promise((resolve, reject) => {
     //   if (_.isEmpty(opts.callbackUrl) || _.isEmpty(opts.signedMessage))

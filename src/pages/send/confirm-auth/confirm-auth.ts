@@ -178,7 +178,7 @@ export class ConfirmAuthPage {
     console.log(signedMessage);
 
     try {
-      await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, signedMessage} );
+      await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, publicKey: this.signingAddress.address, signature: signedMessage} );
       await this.openFinishModal();
     } catch {
       await this.openFinishErrorModal();
