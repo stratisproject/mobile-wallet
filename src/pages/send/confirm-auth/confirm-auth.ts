@@ -39,7 +39,7 @@ import { TxFormatProvider } from '../../../providers/tx-format/tx-format';
 import {
   WalletProvider
 } from '../../../providers/wallet/wallet';
-import { parseDomain, ParseResultType, ParseResult, ParseResultListed } from "parse-domain";
+import { parseDomain, ParseResultType } from "parse-domain";
 import { Url } from 'url';
 
 export const KNOWN_URL_DOMAINS = [
@@ -64,7 +64,7 @@ export class ConfirmAuthPage {
   mainTitle: any;
   message: AuthData;
   xPrivKey: string;
-  signingAddress: string;
+  signingAddress: any;
   knownHostname: boolean;
 
   constructor(
@@ -171,6 +171,31 @@ export class ConfirmAuthPage {
   }
 
   signAndBroadcastLogin() {
+    let signedMessage = this.signMessage(this.message.messageToSign);
 
+    console.log(this.message.messageToSign);
+    console.log(signedMessage);
   }
+
+  signMessage(message: string): string {
+    let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
+    let bcMessage = new bitcore.Message(message);
+
+    const signMessage = (path: string) => {
+      const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(this.wallet.credentials.rootPath).deriveChild(path).privateKey;
+
+      let ecdsa = bitcore.crypto.ECDSA().set({
+        hashbuf: bcMessage.magicHash(),
+        privkey: privKey
+      });    
+      ecdsa.sign()
+      ecdsa.calci();
+      
+      let sig = ecdsa.sig;
+      let sigBytes = sig.toCompact();
+      return sigBytes.toString('base64');
+    }
+
+    return signMessage(this.signingAddress.path);
+  };
 }

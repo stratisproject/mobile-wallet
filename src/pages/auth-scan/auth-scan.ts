@@ -67,14 +67,13 @@ export class AuthScanPage {
     private logger: Logger,
     private replaceParametersProvider: ReplaceParametersProvider,
     private translate: TranslateService,
-    private bwcProvider: BwcProvider,
     private keyProvider: KeyProvider,
     private platformProvider: PlatformProvider,
     private errorsProvider: ErrorsProvider
   ) {
     this.events.subscribe('Local/AuthScan', this.handleAuth);
 
-    this.walletName = "sid:api.example.com/auth?uid=4606287adc774829ab643816a021efbf&exp=1647216000";
+    this.walletName = "sid:api.example.com/auth?uid=4606287adc774829ab643816a021efbf&exp=1638850562";
 
     this.walletNameForm = this.formBuilder.group({
       walletName: [
@@ -134,7 +133,7 @@ export class AuthScanPage {
     this.navCtrl.push(ConfirmAuthPage, {
       message: loginData,
       walletId: this.navParams.data.walletId,
-      signingAddress: this.address.address,
+      signingAddress: this.address,
       expired: loginData
     });
   }
@@ -172,31 +171,6 @@ export class AuthScanPage {
     
     return new AuthData(
       url,
-      expiry)
-    );
+      expiry);
   }
-
-  signMessage() {
-    let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
-    let message = this.walletNameForm.value.walletName;
-    this.parseInput(message);
-    let bcMessage = new bitcore.Message(message);
-
-    const signMessage = (path: string) => {
-      const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(this.wallet.credentials.rootPath).deriveChild(path).privateKey;
-
-      let ecdsa = bitcore.crypto.ECDSA().set({
-        hashbuf: bcMessage.magicHash(),
-        privkey: privKey
-      });    
-      ecdsa.sign()
-      ecdsa.calci();
-      
-      let sig = ecdsa.sig;
-      let sigBytes = sig.toCompact();
-      this.signedMessage = sigBytes.toString('base64');
-    }
-
-    signMessage(this.address.path);
-  };
 }

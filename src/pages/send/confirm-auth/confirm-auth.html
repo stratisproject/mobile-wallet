@@ -59,8 +59,8 @@
         </ion-label>
 
         <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ signingAddress }}">
-              <span *ngIf="signingAddress">{{ signingAddress }}</span>
+          <div class="summary-item-detail" copy-to-clipboard="{{ signingAddress.address }}">
+              <span *ngIf="signingAddress">{{ signingAddress.address }}</span>
           </div>
         </ion-note>
       </ion-item>
