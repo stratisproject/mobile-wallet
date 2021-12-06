@@ -48,10 +48,10 @@ Opens the scanner, reads a QR and passes the raw data to the confirmation page.
 })
 export class AuthScanPage {
   public wallet;
-  public walletName: string;
+  public authData: string;
   public privKey: string;
 
-  public walletNameForm: FormGroup;
+  public authDataForm: FormGroup;
   public description: string;
 
   signedMessage: any;
@@ -65,18 +65,16 @@ export class AuthScanPage {
     private formBuilder: FormBuilder,
     private events: Events,
     private logger: Logger,
-    private replaceParametersProvider: ReplaceParametersProvider,
-    private translate: TranslateService,
     private keyProvider: KeyProvider,
     private platformProvider: PlatformProvider,
     private errorsProvider: ErrorsProvider
   ) {
     this.events.subscribe('Local/AuthScan', this.handleAuth);
 
-    this.walletName = "sid:api.example.com/auth?uid=4606287adc774829ab643816a021efbf&exp=1638850562";
+    this.authData = "sid:api.example.com/auth?uid=4606287adc774829ab643816a021efbf&exp=1638850562";
 
-    this.walletNameForm = this.formBuilder.group({
-      walletName: [
+    this.authDataForm = this.formBuilder.group({
+      authData: [
         '',
         Validators.compose([Validators.minLength(1), Validators.required])
       ]
@@ -94,17 +92,7 @@ export class AuthScanPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
-    // this.config = this.configProvider.get();
-
-    this.walletNameForm.value.walletName = this.walletName;
-
-    this.walletName = this.wallet.credentials.walletName;
-    this.description = this.replaceParametersProvider.replace(
-      this.translate.instant(
-        'When this wallet was created, it was called "{{walletName}}". You can change the name displayed on this device below.'
-      ),
-      { walletName: this.walletName }
-    );
+    this.authDataForm.value.authData = this.authData;
 
     this.keyProvider
       .handleEncryptedWallet(this.wallet.keyId)
@@ -139,18 +127,14 @@ export class AuthScanPage {
   }
 
   sign() {
-    this.handleAuth(this.walletNameForm.value.walletName);
+    this.handleAuth(this.authDataForm.value.authData);
   }
 
   private parseInput(message: string) {
     try {
       let url = new URL(message);
 
-      console.log(url);
-      let parsed = this.parseUrl(url);
-      console.log(parsed);
-
-      return parsed;
+      return this.parseUrl(url);
     }
     catch (e) {
       this.errorsProvider.showDefaultError(

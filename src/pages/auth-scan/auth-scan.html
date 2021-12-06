@@ -13,12 +13,12 @@
           {{ address?.address }}
         </ion-note>
       </ion-item>
-      <form [formGroup]="walletNameForm">
+      <form [formGroup]="authDataForm">
         <ion-item>
           <ion-label stacked>{{'Message' | translate}}</ion-label>
-          <ion-input type="text" formControlName="walletName" [value]="walletNameForm.value.walletName" required></ion-input>
+          <ion-input type="text" formControlName="authData" [value]="authDataForm.value.authData" required></ion-input>
         </ion-item>
-        <button ion-button class="button-standard" (click)="sign()" [disabled]="!walletNameForm.valid">
+        <button ion-button class="button-standard" (click)="sign()" [disabled]="!authDataForm.valid">
           {{'Sign' | translate}}
         </button>
       </form>
