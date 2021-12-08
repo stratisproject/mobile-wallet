@@ -149,8 +149,9 @@ export class NotificationsPage {
   }
 
   public updateTopic(enabled, topic) {
-    if (enabled) this.pushProvider.subscribeToTopic(topic);
-    else this.pushProvider.unsubscribeFromTopic(topic);
+    console.log(topic);
+    if (enabled) this.pushProvider.subscribeToTopic();
+    else this.pushProvider.unsubscribeFromTopic();
   }
 
   public emailNotificationsChange() {

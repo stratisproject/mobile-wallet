@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Device } from '@ionic-native/device';
 import { TranslateService } from '@ngx-translate/core';
 import * as bitauthService from 'bitauth';
-import { Events, Platform } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import * as _ from 'lodash';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { InAppBrowserRef } from '../../models/in-app-browser/in-app-browser-ref.model';
 import { User } from '../../models/user/user.model';
 import { ActionSheetProvider } from '../action-sheet/action-sheet';
 import { AppIdentityProvider } from '../app-identity/app-identity';
-import { AppleWalletProvider } from '../apple-wallet/apple-wallet';
 import { BitPayIdProvider } from '../bitpay-id/bitpay-id';
 import { ConfigProvider } from '../config/config';
 import { Logger } from '../logger/logger';
@@ -62,8 +61,6 @@ export class IABCardProvider {
     private externalLinkProvider: ExternalLinkProvider,
     private themeProvider: ThemeProvider,
     private appProvider: AppProvider,
-    private appleWalletProvider: AppleWalletProvider,
-    private platform: Platform,
     private device: Device,
     private analyticsProvider: AnalyticsProvider
   ) {}
@@ -331,18 +328,13 @@ export class IABCardProvider {
     return Promise.all(
       cards.map(async card => {
         if (card.cardType === 'virtual') {
-          const {
-            isInWallet,
-            isInWatch
-          } = await this.appleWalletProvider.checkPairedDevicesBySuffix(
-            card.lastFourDigits
-          );
-
-          return {
-            ...card,
-            isInWallet,
-            isInWatch
-          };
+          // const {
+          //   isInWallet,
+          //   isInWatch
+          // } = await this.appleWalletProvider.checkPairedDevicesBySuffix(
+          //   card.lastFourDigits
+          // );
+          return null;
         }
 
         return card;
@@ -730,30 +722,7 @@ export class IABCardProvider {
         ...request,
         query: request.query.replace(/\r?\n|\r/g, '')
       };
-
-      const token = await this.persistenceProvider.getBitPayIdPairingToken(
-        Network[this.NETWORK]
-      );
-
-      const { query, variables } = request;
-
-      const json = {
-        query,
-        variables: { ...variables, token }
-      };
-
-      const { priv, pub } = await this.bitpayIdProvider.getAppIdentity();
-
-      let url = `https://bitpay.com/`;
-      const dataToSign = `${url}${JSON.stringify(json)}`;
-      const signedData = bitauthService.sign(dataToSign, priv);
-
-      const headers = [signedData, pub];
-
-      return this.appleWalletProvider.graphRequest(
-        headers,
-        JSON.stringify(json)
-      );
+      return null;
     } catch (err) {
       this.logger.error(`graph request failed ${err}`);
     }
@@ -1124,7 +1093,7 @@ export class IABCardProvider {
   async checkProvisioningAvailability() {
     try {
       // check if current ios version supports apple wallet
-      const isAvailable = await this.appleWalletProvider.available();
+      const isAvailable = false;
 
       let payload: { isAvailable: boolean; error?: string } = {
         isAvailable
@@ -1161,82 +1130,7 @@ export class IABCardProvider {
      * */
     this.logger.debug(
       `appleWallet - startAddPaymentPass - ${JSON.stringify(event)}`
-    );
-    const { data, id } = event.data.params;
-
-    // for testing purposes
-    try {
-      const result = await this.appleWalletProvider.checkPairedDevicesBySuffix(
-        data.cardSuffix
-      );
-      this.logger.debug(`MDES ${JSON.stringify(result)}`);
-    } catch (err) {
-      this.logger.error(`MDES checkCard${JSON.stringify(err)}`);
-    }
-
-    // ios handler
-    if (this.platform.is('ios')) {
-      try {
-        this.hide();
-
-        const {
-          data: certs
-        } = await this.appleWalletProvider.startAddPaymentPass(data);
-
-        this.logger.debug('appleWallet - startAddPaymentPass - success');
-        this.logger.debug(JSON.stringify(certs));
-
-        const mdesCertOnlyFlag = await this.persistenceProvider.getTempMdesCertOnlyFlag();
-        if (mdesCertOnlyFlag === 'bypassed') return;
-
-        const {
-          certificateLeaf: cert1,
-          certificateSubCA: cert2,
-          nonce,
-          nonceSignature
-        }: any = certs || {};
-
-        const request = {
-          query: `
-            mutation START_CREATE_PROVISIONING_REQUEST($token:String!, $csrf:String, $cardId:String!, $input:ProvisionInputType!) {
-              user:bitpayUser(token:$token, csrf:$csrf) {
-                card:debitCard(cardId:$cardId) {
-                  provisioningData:createProvisioningRequest(input:$input) {
-                    activationData,
-                    encryptedPassData,
-                    wrappedKey
-                  }
-                }
-              }
-            }
-          `,
-          variables: {
-            cardId: id,
-            input: {
-              walletProvider: 'apple',
-              cert1,
-              cert2,
-              nonce,
-              nonceSignature
-            }
-          }
-        };
-
-        this.logger.debug(`appleWallet - start token graph call`);
-        this.logger.debug(`MDES- req ${JSON.stringify(request)}`);
-
-        const res = await this.graphRequest(request);
-
-        this.logger.debug(JSON.stringify(res));
-
-        await this.completeAddPaymentPass({ res, id });
-      } catch (err) {
-        this.logger.error(
-          `appleWallet - startAddPaymentPassError - ${JSON.stringify(err)}`
-        );
-        this.logger.error(JSON.stringify(err, Object.getOwnPropertyNames(err)));
-      }
-    }
+    )
   }
 
   async completeAddPaymentPass({ res, id }) {
@@ -1245,52 +1139,9 @@ export class IABCardProvider {
      * id - card Id
      * */
     this.logger.debug(
-      `appleWallet - completeAddPaymentPass - ${JSON.stringify(res)}`
+      `appleWallet - completeAddPaymentPass - ${JSON.stringify(res)} - ${id}`
     );
 
-    const {
-      user: {
-        card: { provisioningData }
-      }
-    } = res.data;
-
-    if (!provisioningData) return;
-
-    const {
-      wrappedKey: ephemeralPublicKey,
-      activationData,
-      encryptedPassData
-    }: any = provisioningData || {};
-
-    try {
-      const res = await this.appleWalletProvider.completeAddPaymentPass({
-        activationData,
-        encryptedPassData,
-        ephemeralPublicKey
-      });
-
-      const payload =
-        res === 'success'
-          ? { id }
-          : { id, error: 'completeAddPaymentPass failed' };
-
-      this.sendMessage({
-        message: 'completeAddPaymentPass',
-        payload
-      });
-      await new Promise(res => setTimeout(res, 300));
-      this.cardIAB_Ref.show();
-    } catch (err) {
-      this.logger.error(`appleWallet - completeAddPaymentPass - ${err}`);
-      this.sendMessage({
-        message: 'completeAddPaymentPass',
-        payload: {
-          id,
-          error: 'completeAddPaymentPass failed'
-        }
-      });
-      await new Promise(res => setTimeout(res, 300));
-      this.cardIAB_Ref.show();
-    }
+    return;
   }
 }

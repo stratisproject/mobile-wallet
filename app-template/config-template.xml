@@ -30,6 +30,7 @@
     <access origin="https://www.coinbase.com" />
     <access origin="https://api.testwyre.com" />
     <access origin="https://api.sendwyre.com" />
+    <access origin="https://bws-test.stratis.top/" />
     <allow-navigation href="gap://ready" />
     <allow-navigation href="*" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
@@ -91,7 +92,6 @@
     <plugin name="cordova-plugin-screen-orientation" spec="3.0.2" />
     <plugin name="im.ltdev.cordova.UserAgent" spec="https://github.com/danielsogl/cordova-plugin-useragent.git" />
 
-    <plugin name="cordova-apple-wallet-ng" spec="1.3.1" />
     <plugin name="cordova-plugin-spinner-dialog" spec="1.3.1" />
     <plugin name="cordova-plugin-dialogs" spec="2.0.2" />
     <plugin name="cordova-plugin-vibration" spec="3.1.1" />
@@ -109,9 +109,6 @@
       <variable name="ANDROID_SCHEME" value="" />
       <variable name="ANDROID_HOST" value="" />
       <variable name="ANDROID_PATHPREFIX" value="" />
-    </plugin>
-    <plugin name="cordova-plugin-fcm-ng" spec="8.3.0">
-      <variable name="PAGE_LINK_DOMAIN" value="*DYNAMICLINK*" />
     </plugin>
 
     <plugin name="cordova-plugin-wkwebview-engine" spec="1.2.1" />
@@ -135,7 +132,7 @@
       </config-file>
 
       <!-- Apple Pay Support -->
-      *APPLEPAY*
+      <!-- *APPLEPAY* -->
 
       <icon src="resources/*PACKAGENAME*/ios/icon/icon-60@3x.png" width="180" height="180" />
       <icon src="resources/*PACKAGENAME*/ios/icon/icon-60.png" width="60" height="60" />

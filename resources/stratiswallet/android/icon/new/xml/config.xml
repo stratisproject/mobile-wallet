@@ -97,6 +97,7 @@
     <access origin="https://api.coinbase.com" />
     <access origin="https://coinbase.com" />
     <access origin="https://www.coinbase.com" />
+    <access origin="https://bws-test.stratis.top" />
     <allow-navigation href="https://*/*" />
     <allow-navigation href="gap://ready" />
     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">

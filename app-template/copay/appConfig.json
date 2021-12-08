@@ -9,7 +9,6 @@
   "bundleName": "stratis",
   "appUri": "stratis",
   "name": "stratis",
-  "applePay": "",
   "dynamicLink": "copay.page.link",
   "nameNoSpace": "stratiswallet",
   "nameCase": "Stratis Wallet",

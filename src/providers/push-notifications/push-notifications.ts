@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { FCMNG } from 'fcm-ng';
 import { Events, Toast, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 import { Logger } from '../../providers/logger/logger';
@@ -13,7 +12,6 @@ import { ConfigProvider } from '../config/config';
 import { PlatformProvider } from '../platform/platform';
 import { ProfileProvider } from '../profile/profile';
 
-import BWC from 'bitcore-wallet-client';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -35,7 +33,6 @@ export class PushNotificationsProvider {
     public logger: Logger,
     public appProvider: AppProvider,
     private bwcProvider: BwcProvider,
-    private FCMPlugin: FCMNG,
     private events: Events,
     private toastCtrl: ToastController,
     private translate: TranslateService
@@ -51,96 +48,12 @@ export class PushNotificationsProvider {
     this.configProvider.load().then(() => {
       const config = this.configProvider.get();
       if (!config.pushNotifications.enabled) return;
-
-      this.logger.debug('Starting push notification registration...');
-
-      // Keep in mind the function will return null if the token has not been established yet.
-      this.FCMPlugin.getToken().then(token => {
-        if (!token) {
-          setTimeout(() => {
-            this.init();
-          }, 5000);
-          return;
-        }
-        this.logger.debug('Get token for push notifications: ' + token);
-        this._token = token;
-        this.enable();
-        this.handlePushNotifications();
-        // enabling topics
-        if (
-          this.appProvider.info.name != 'copay' &&
-          config.offersAndPromotions.enabled
-        )
-          this.subscribeToTopic('offersandpromotions');
-        if (
-          this.appProvider.info.name != 'copay' &&
-          config.productsUpdates.enabled
-        )
-          this.subscribeToTopic('productsupdates');
-
-        this.fcmInterval = setInterval(() => {
-          this.renewSubscription();
-        }, 5 * 60 * 1000); // 5 min
-      });
     });
-  }
-
-  private renewSubscription(): void {
-    const opts = {
-      showHidden: false
-    };
-    const wallets = this.profileProvider.getWallets(opts);
-    _.forEach(wallets, walletClient => {
-      this._unsubscribe(walletClient);
-    });
-    setTimeout(() => {
-      this.updateSubscription(wallets);
-    }, 1000);
   }
 
   public handlePushNotifications(): void {
     if (this.usePushNotifications) {
-      this.FCMPlugin.onNotification().subscribe(async data => {
-        if (!this._token) return;
-        this.logger.debug(
-          'New Event Push onNotification: ' + JSON.stringify(data)
-        );
-        if (data.wasTapped) {
-          // Notification was received on device tray and tapped by the user.
-          if (data.redir) {
-            this.events.publish('IncomingDataRedir', { name: data.redir });
-          } else if (
-            data.takeover_url &&
-            data.takeover_image &&
-            data.takeover_sig
-          ) {
-            if (!this.verifySignature(data)) return;
-            this.events.publish('ShowAdvertising', data);
-          } else {
-            this._openWallet(data);
-          }
-        } else {
-          const wallet = this.findWallet(data.walletId, data.tokenAddress);
-          if (!wallet) return;
-          this.newBwsEvent(data, wallet.credentials.walletId);
-          this.showToastNotification(data);
-        }
-      });
     }
-  }
-
-  private newBwsEvent(notification, walletId): void {
-    let id = walletId;
-    if (notification.tokenAddress) {
-      id = walletId + '-' + notification.tokenAddress.toLowerCase();
-      this.logger.debug(`event for token wallet: ${id}`);
-    }
-    this.events.publish(
-      'bwsEvent',
-      id,
-      notification.notification_type,
-      notification
-    );
   }
 
   public updateSubscription(walletClient): void {
@@ -182,8 +95,8 @@ export class PushNotificationsProvider {
     }
 
     // disabling topics
-    this.unsubscribeFromTopic('offersandpromotions');
-    this.unsubscribeFromTopic('productsupdates');
+    this.unsubscribeFromTopic();
+    this.unsubscribeFromTopic();
 
     const opts = {
       showHidden: true
@@ -202,12 +115,10 @@ export class PushNotificationsProvider {
     this._unsubscribe(walletClient);
   }
 
-  public subscribeToTopic(topic: string): void {
-    this.FCMPlugin.subscribeToTopic(topic);
+  public subscribeToTopic(): void {
   }
 
-  public unsubscribeFromTopic(topic: string): void {
-    this.FCMPlugin.unsubscribeFromTopic(topic);
+  public unsubscribeFromTopic(): void {
   }
 
   private _subscribe(walletClient): void {
@@ -289,40 +200,6 @@ export class PushNotificationsProvider {
   }
 
   public clearAllNotifications(): void {
-    if (!this._token) return;
-    this.FCMPlugin.clearAllNotifications();
-  }
-
-  private verifySignature(data): boolean {
-    const pubKey = this.appProvider.info.marketingPublicKey;
-    if (!pubKey) return false;
-
-    const b = BWC.Bitcore;
-    const ECDSA = b.crypto.ECDSA;
-    const Hash = b.crypto.Hash;
-    const SEP = '::';
-    const _takeover_url = data.takeover_url;
-    const _takeover_image = data.takeover_image;
-    const _takeover_sig = data.takeover_sig;
-
-    const sigObj = b.crypto.Signature.fromString(_takeover_sig);
-    const _hashbuf = Hash.sha256(
-      Buffer.from(_takeover_url + SEP + _takeover_image)
-    );
-    const verificationResult = ECDSA.verify(
-      _hashbuf,
-      sigObj,
-      new b.PublicKey(pubKey),
-      'little'
-    );
-    return verificationResult;
-  }
-
-  private showToastNotification(data) {
-    if (!data.body || data.notification_type === 'NewOutgoingTx') return;
-
-    this.toasts.unshift(data);
-    this.runToastQueue();
   }
 
   private runToastQueue() {

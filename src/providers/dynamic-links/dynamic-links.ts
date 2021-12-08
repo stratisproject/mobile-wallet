@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { FCMNG } from 'fcm-ng';
 import { Events } from 'ionic-angular';
 
 import { IncomingDataProvider } from '../incoming-data/incoming-data';
 import { Logger } from '../logger/logger';
-import { PersistenceProvider } from '../persistence/persistence';
 import { PlatformProvider } from '../platform/platform';
 
 @Injectable()
@@ -12,10 +10,8 @@ export class DynamicLinksProvider {
   constructor(
     private logger: Logger,
     private events: Events,
-    private FCMPlugin: FCMNG,
     private incomingDataProvider: IncomingDataProvider,
-    private platformProvider: PlatformProvider,
-    private persistenceProvider: PersistenceProvider
+    private platformProvider: PlatformProvider
   ) {
     this.logger.debug('DynamicLinksProvider initialized');
   }
@@ -30,21 +26,15 @@ export class DynamicLinksProvider {
   }
 
   private getDynamicLink(): Promise<any> {
-    return new Promise(resolve => {
-      this.FCMPlugin.getDynamicLink().subscribe(data => {
-        if (data && data.deepLink && data.newInstall)
-          this.persistenceProvider.setDynamicLink(data.deepLink);
-        resolve(data);
-      });
-    });
+    return null;
   }
 
   private onDynamicLink(): Promise<any> {
-    return this.FCMPlugin.onDynamicLink();
+    return null;
   }
 
-  createDynamicLink(params: any): Promise<any> {
-    return this.FCMPlugin.createDynamicLink(params);
+  createDynamicLink(): Promise<any> {
+    return null;
   }
 
   processDeepLink(deepLink: string) {
