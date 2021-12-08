@@ -64,7 +64,6 @@ export class ConfirmAuthPage {
   coin: any;
   mainTitle: any;
   message: AuthData;
-  xPrivKey: string;
   signingAddress: any;
   knownHostname: boolean;
 
@@ -122,18 +121,6 @@ export class ConfirmAuthPage {
     this.knownHostname = callbackHostname != null 
       ? KNOWN_URL_DOMAINS.indexOf(callbackHostname) !== -1
       : false;
-
-    this.keyProvider
-    .handleEncryptedWallet(this.wallet.keyId)
-    .then((password: string) => {
-      const key = this.keyProvider.get(this.wallet.keyId, password);
-      this.xPrivKey = key.xPrivKey; 
-    })
-    .catch(err => {
-      // TODO handle this properly
-      console.log(err);
-      this.navCtrl.pop();
-    });
   }
 
   getHostName(callbackUrl: Url): string {
@@ -172,10 +159,27 @@ export class ConfirmAuthPage {
   }
 
   async signAndBroadcastLogin() {
-    let signedMessage = this.signMessage(this.message.messageToSign);
 
-    console.log(this.message.messageToSign);
-    console.log(signedMessage);
+    let xPrivKey;
+
+    try {
+      let password = await this.keyProvider.handleEncryptedWallet(this.wallet.keyId);
+      const key = this.keyProvider.get(this.wallet.keyId, password);
+      xPrivKey = key.xPrivKey;
+    }
+    catch(err){
+      if (err && err.message != 'PASSWORD_CANCELLED') {
+        if (err.message == 'WRONG_PASSWORD') {
+          this.errorsProvider.showWrongEncryptPasswordError();
+        } else {
+          let title = this.translate.instant('Could not decrypt wallet');
+          this.showErrorInfoSheet(this.bwcErrorProvider.msg(err), title);
+        }
+      }
+      return;
+    };
+
+    let signedMessage = this.signMessage(this.message.messageToSign, xPrivKey);
 
     try {
       await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, publicKey: this.signingAddress.address, signature: signedMessage} );
@@ -185,12 +189,12 @@ export class ConfirmAuthPage {
     }
   }
 
-  signMessage(message: string): string {
+  signMessage(message: string, xPrivKey: string): string {
     let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
     let bcMessage = new bitcore.Message(message);
 
     const signMessage = (path: string) => {
-      const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(this.wallet.credentials.rootPath).deriveChild(path).privateKey;
+      const privKey = new bitcore.HDPrivateKey(xPrivKey).deriveChild(this.wallet.credentials.rootPath).deriveChild(path).privateKey;
 
       let ecdsa = bitcore.crypto.ECDSA().set({
         hashbuf: bcMessage.magicHash(),
@@ -253,5 +257,14 @@ export class ConfirmAuthPage {
     await modal.present();
 
     this.navCtrl.popToRoot();
+  }
+
+  private showErrorInfoSheet(
+    err: Error | string,
+    infoSheetTitle: string
+  ): void {
+    if (!err) return;
+    this.logger.error('Could not get keys:', err);
+    this.errorsProvider.showDefaultError(err, infoSheetTitle);
   }
 }

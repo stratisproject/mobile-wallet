@@ -5,7 +5,6 @@ import { Logger } from '../../providers/logger/logger';
 
 // providers
 import { ProfileProvider } from '../../providers/profile/profile';
-import { KeyProvider } from '../../providers/key/key';
 import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ScanPage } from '../scan/scan';
 import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
