@@ -75,7 +75,7 @@
     </page-slide-to-accept> -->
 
     <ion-toolbar><!-- *ngIf="!isCordova && (wallet || coinbaseAccount)">-->
-      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="message?.expired()">Sign & Callback</button>
+      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="message?.expired() || broadcasting">Sign & Callback</button>
     </ion-toolbar>
   </div>
 </wide-header-page>

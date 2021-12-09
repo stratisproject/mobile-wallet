@@ -66,6 +66,7 @@ export class ConfirmAuthPage {
   message: AuthData;
   signingAddress: any;
   knownHostname: boolean;
+  broadcasting: boolean;
 
   constructor(
     protected addressProvider: AddressProvider,
@@ -182,9 +183,13 @@ export class ConfirmAuthPage {
     let signedMessage = this.signMessage(this.message.messageToSign, xPrivKey);
 
     try {
+      this.broadcasting = true;
       await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, publicKey: this.signingAddress.address, signature: signedMessage} );
+      this.broadcasting = false;
+      
       await this.openFinishModal();
     } catch {
+      this.broadcasting = false;
       await this.openFinishErrorModal();
     }
   }
