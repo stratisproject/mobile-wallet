@@ -20,7 +20,7 @@ export class ScTxPage {
 
   // Base64 encoded tx data
   public get txData() {
-     return Buffer.from(this.txDataString).toString('base64');
+     return this.txDataString;
   }
 
   public txDataString: string = JSON.stringify({
@@ -65,7 +65,7 @@ export class ScTxPage {
   }
 
   private updateScTxDataHandler: any = data => {
-    this.txDataString = this.base64ToString(data.value);
+    this.txDataString = data.value;
     this.validateInput();
     this.broadcastSignedMessage();
   };
