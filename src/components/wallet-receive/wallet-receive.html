@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="qr-container" *ngIf="wallet && wallet?.isComplete() && !wallet?.needsBackup" [ngClass]="{'blur': bchAddrFormat === 'legacy' && !disclaimerAccepted}">
-      <div class="prompt-user" *ngIf="newAddressError && !address">
+      <div class="prompt-user" *ngIf="newAddressError && !qrAddress">
         <div class="title-icon larger-icon">
           <img src="assets/img/ghost-straight-face.svg" />
         </div>
@@ -51,11 +51,11 @@
           {{'Generate New Address' | translate}}
         </button>
       </div>
-      <bp-qr-code *ngIf="address && !newAddressError  && !useLegacyQrCode" class="card qr-card" copy-to-clipboard="{{ address }}" contents="{{ address }}" mask-x-to-y-ratio="1">
+      <bp-qr-code *ngIf="qrAddress && !newAddressError  && !useLegacyQrCode" class="card qr-card" copy-to-clipboard="{{ qrAddress }}" contents="{{ qrAddress }}" mask-x-to-y-ratio="1">
         <img [ngClass]="{'testnet': wallet.network === 'testnet', 'background_xrp': wallet.coin === 'xrp'}" src="assets/img/currencies/{{ wallet.coin }}.svg" slot="icon" />
       </bp-qr-code>
-      <div *ngIf="address && useLegacyQrCode" class="card qr-card" copy-to-clipboard="{{ address }}">
-        <ngx-qrcode hide-toast="true" qrc-value="{{ address }}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
+      <div *ngIf="qrAddress && useLegacyQrCode" class="card qr-card" copy-to-clipboard="{{ qrAddress }}">
+        <ngx-qrcode hide-toast="true" qrc-value="{{ qrAddress }}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
       </div>
     </div>
     <div class="line-divider"></div>
