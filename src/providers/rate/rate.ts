@@ -34,7 +34,6 @@ export class RateProvider {
   private rateServiceUrl = {} as CoinsMap<string>;
 
   private bwsURL: string;
-  private ratesApiUrl: string;
   private ratesCache: any;
 
   constructor(
@@ -49,17 +48,10 @@ export class RateProvider {
       this.rateServiceUrl[coin] = env.ratesAPI[coin];
       this.rates[coin] = { USD: 1 };
       this.ratesAvailable[coin] = false;
-      this.http.get<any>('https://stratrates.stratisplatform.com/api/rates')
-        .pipe(take(1))
-        .subscribe(response => {
-          const rate = response.find(r => r.code.toUpperCase() === 'USD');
-          this.rates['strax']['USD'] = rate.rate;
-        });
     }
 
     const defaults = this.configProvider.getDefaults();
     this.bwsURL = defaults.bws.url;
-    this.ratesApiUrl = 'https://stratrates.stratisplatform.com/api/rates';
     this.ratesCache = {
       1: [],
       7: [],
@@ -72,57 +64,65 @@ export class RateProvider {
     this.rates[chain][code] = rate;
   }
 
-  public updateRates(chain?: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (chain) {
-        this.getCoin(chain)
-          .then(dataCoin => {
-            _.each(dataCoin, currency => {
-              if (currency && currency.code && currency.rate) {
-                this.rates[chain][currency.code] = currency.rate;
-              }
-            });
-            resolve();
-          })
-          .catch(errorCoin => {
-            this.logger.error(errorCoin);
-            reject(errorCoin);
-          });
-      } else {
-        this.getRates()
-          .then(res => {
-            _.map(res, (rates, coin) => {
-              const coinRates = {};
-              _.each(rates, r => {
-                if (r.code && r.rate) {
-                  const rate = { [r.code]: r.rate };
-                  Object.assign(coinRates, rate);
-                }
+  public async updateRates(chain?: string): Promise<any> {
+    if (chain) {
+      if (!this.currencyProvider.getRatesApi()[chain]) return;
 
-                // set alternative currency list
-                if (r.code && r.name) {
-                  this.alternatives[r.code] = { name: r.name };
-                }
-              });
-              this.rates[coin] = !_.isEmpty(coinRates) ? coinRates : { USD: 1 };
-              this.ratesAvailable[coin] = true;
-            });
-            resolve();
-          })
-          .catch(err => {
-            this.logger.error(err);
-            reject(err);
-          });
+      try {
+        let dataCoin = await this.getCoin(chain);
+          
+        _.each(dataCoin, currency => {
+          if (currency && currency.code && currency.rate) {
+            this.rates[chain][currency.code] = currency.rate;
+          }
+        });
+
+        return;
+      } catch(errorCoin) {
+          this.logger.error(errorCoin);
+          return;
       }
-    });
+    } else {
+      // Update all rates
+      let res = await this.getRates();
+
+      _.map(res, (rates, coin) => {
+        const coinRates = {};
+        _.each(rates, r => {
+          if (r.code && r.rate) {
+            const rate = { [r.code]: r.rate };
+            Object.assign(coinRates, rate);
+          }
+
+          // set alternative currency list
+          if (r.code && r.name) {
+            this.alternatives[r.code] = { name: r.name };
+          }
+        });
+        this.rates[coin] = !_.isEmpty(coinRates)
+          ? coinRates
+          : null;
+        this.ratesAvailable[coin] = true;
+      });
+    }
   }
 
-  public getRates(): Promise<any> {
-    return new Promise(resolve => {
-      this.http.get(`${this.bwsURL}/v3/fiatrates/`).subscribe(res => {
-        resolve(res);
-      });
-    });
+  // Gets all the rates from the server and puts them into a map.
+  public async getRates(): Promise<any> {
+    let rates = {};
+
+    for (const coin of this.currencyProvider.getAvailableCoins()) {
+      let ratesUrl = this.currencyProvider.getRatesApi()[coin];
+
+      try {
+        rates[coin] = await this.getCurrentRate(ratesUrl);
+      }
+      catch(err) {
+        this.logger.error(err);
+      }
+    }
+
+    return rates;
   }
 
   public getCoin(chain: string): Promise<any> {
@@ -282,9 +282,7 @@ export class RateProvider {
     return this.ratesCache[dateRange].data;
   }
 
-  public getCurrentRate(): Observable<[{ code: string, rate: string, name: string }]> {
-    const req = this.http.get<any>(this.ratesApiUrl);
-
-    return req;
+  public getCurrentRate(ratesApiUrl: string): Promise<[{ code: string, rate: string, name: string }]> {
+    return this.http.get<any>(ratesApiUrl).toPromise();
   }
 }
