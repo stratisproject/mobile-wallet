@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Events, NavController } from 'ionic-angular';
+import _ from 'lodash';
 import { take } from 'rxjs/operators';
 import { PricePage } from '../../pages/home/price-page/price-page';
 import { ConfigProvider, CurrencyProvider, Logger } from '../../providers';
@@ -68,22 +69,20 @@ export class ExchangeRates {
     this.setIsoCode();
 
     try {
-      this.rateProvider.getCurrentRate()
-      .pipe(take(1))
-      .subscribe(response => {
+      this.rateProvider.getRates()
+      .then(response => {
         this.logger.error('Loaded');
-        // _.forEach(this.coins, (_, index) => {
-          const rate = response.find(r => r.code.toUpperCase() === this.fiatIsoCode.toUpperCase());
-          this.coins[0].currentPrice = response.find(r => r.code.toUpperCase() === this.fiatIsoCode.toUpperCase()).rate;
-          this.coins[0].totalBalanceChangeAmount = 0;
-          this.coins[0].totalBalanceChange = 0;
-          this.rateProvider.setRate('strax', this.fiatIsoCode.toUpperCase(), +rate.rate);
-        // }
-        // );
-        // err => {
-        //   this.coins[0].currentPrice = err;
-        //   this.logger.error('Error getting rates:', err);
-        // };
+        _.forEach(this.coins, (coin, index) => {
+          const rate = response[coin.unitCode].find(r => r.code.toUpperCase() === this.fiatIsoCode.toUpperCase());
+          this.coins[index].currentPrice = rate.rate;
+          this.coins[index].totalBalanceChangeAmount = 0;
+          this.coins[index].totalBalanceChange = 0;
+          this.rateProvider.setRate(coin.unitCode, this.fiatIsoCode.toUpperCase(), +rate.rate);
+        }
+        );
+        err => {          
+          this.logger.error('Error getting rates:', err);
+        };
       },
       err => this.logger.error(JSON.stringify(err)));
     } catch(err) {
