@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import * as moment from 'moment';
-import { Observable } from 'rxjs/Observable';
-import { take } from 'rxjs/operators';
 import env from '../../environments';
 import { ConfigProvider } from '../../providers/config/config';
 import { CoinsMap, CurrencyProvider } from '../../providers/currency/currency';
@@ -24,6 +21,7 @@ export enum DateRanges {
 
 export interface HistoricalRates {
   strax: ExchangeRate[];
+  crs: ExchangeRate[];
 }
 
 @Injectable()
@@ -259,9 +257,6 @@ export class RateProvider {
     fiatIsoCode: string,
     dateRange: DateRanges = DateRanges.Day
   ): Promise<HistoricalRates> {
-    const firstDateTs =
-      moment().subtract(dateRange, 'days').startOf('hour').unix() * 1000;
-
     const now = Date.now();
     if (
       _.isEmpty(this.ratesCache[dateRange].data) ||
@@ -271,12 +266,21 @@ export class RateProvider {
         `Refreshing Exchange rates for ${fiatIsoCode} period ${dateRange}`
       );
 
-      // This pulls ALL coins in one query
-      const req = this.http.get<ExchangeRate[]>(
-        `${this.bwsURL}/v2/fiatrates/${fiatIsoCode}?ts=${firstDateTs}`
-      );
-
-      this.ratesCache[dateRange].data = req.first().toPromise();
+      // Get the rates object into the expected format
+      const req = this.getRates()
+      .then(rate => {
+        return {
+          strax: [{
+            rate: rate['strax']?.find(i => i.code == fiatIsoCode)?.rate,
+            ts: now
+          }] as ExchangeRate[],
+          crs: [{
+            rate: rate['crs']?.find(i => i.code == fiatIsoCode)?.rate,
+            ts: now
+          }] as ExchangeRate[]
+        } as HistoricalRates;
+      });
+      this.ratesCache[dateRange].data = req;
       this.ratesCache[dateRange].expiration = now + EXPIRATION_TIME_MS;
     }
     return this.ratesCache[dateRange].data;
