@@ -60,10 +60,6 @@ export class ScTxPage {
     });
   }
 
-  private base64ToString(base64Data: string): string {
-    return Buffer.from(base64Data, 'base64').toString('utf8');
-  }
-
   private updateScTxDataHandler: any = data => {
     this.txDataString = data.value;
     this.validateInput();
