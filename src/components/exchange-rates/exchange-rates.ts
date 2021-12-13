@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Events, NavController } from 'ionic-angular';
 import _ from 'lodash';
-import { take } from 'rxjs/operators';
 import { PricePage } from '../../pages/home/price-page/price-page';
 import { ConfigProvider, CurrencyProvider, Logger } from '../../providers';
 import { Coin } from '../../providers/currency/currency';
