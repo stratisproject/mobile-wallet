@@ -64,24 +64,52 @@ export class ScTxPage {
     this.logger.info('ScTx: updateScTxDataHandler called');
     this.logger.info(data);
     this.txDataString = data.value;
-    this.validateInput();
-    this.broadcastSignedMessage();
+    if(this.validateInput()) {
+      this.broadcastSignedMessage();
+    }
   };
+
+  private instanceOfQrCodeParameters(parameters: []) {
+    return Array.isArray(parameters) && parameters.every(p => this.instanceOfQrCodeParameter(p));
+  }
+
+  private instanceOfQrCodeParameter(data: any) {
+    return 'label' in data
+      && 'value' in data;
+  }
+
+  private instanceOfQrCodePayload(data: any) {
+    return 'to' in data
+      && 'amount' in data
+      && 'method' in data
+      && 'parameters' in data
+      && 'callback' in data
+      && this.instanceOfQrCodeParameters(data.parameters);
+  }
 
   private validateInput() {
     try {
-      JSON.parse(this.txDataString);
+      let result = JSON.parse(this.txDataString);
+
+      if(!this.instanceOfQrCodePayload(result)) {
+        throw new Error("Not a correctly formatted QR code");
+      }
+
+      return true;
     }
     catch (e) {
       this.errorsProvider.showDefaultError(
         e,
         "Unreadable scan",
         () => {
-          this.logger.error("Scanned SC json was invalid")
-              this.navCtrl.pop();
+          this.logger.error("Scanned SC json was invalid");
         }
       );
+
+      return false;
     }
+
+    return false;
   }
 
   public openScanner(): void {
@@ -105,7 +133,10 @@ export class ScTxPage {
   }
 
   broadcastSignedMessage() {
-    this.validateInput();
+
+    if (!this.validateInput()) {
+      return;
+    }
 
     let data = JSON.parse(this.txDataString) as QrCodePayload;
     
