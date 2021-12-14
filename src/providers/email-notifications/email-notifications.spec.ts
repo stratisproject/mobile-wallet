@@ -14,7 +14,7 @@ describe('Provider: Email Notifications Provider', () => {
 
   let opts = {
     enabled: true,
-    email: 'test@bitpay.com'
+    email: 'support@stratisplatform.com'
   };
 
   beforeEach(() => {
@@ -69,7 +69,7 @@ describe('Provider: Email Notifications Provider', () => {
     it('should return email', () => {
       emailNotificationsProvider.updateEmail(opts);
       expect(emailNotificationsProvider.getEmailIfEnabled()).toEqual(
-        'test@bitpay.com'
+        'support@stratisplatform.com'
       );
     });
   });

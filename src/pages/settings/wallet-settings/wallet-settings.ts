@@ -109,7 +109,7 @@ export class WalletSettingsPage {
 
   public openSupportEncryptPassword(): void {
     const url =
-      'https://support.bitpay.com/hc/en-us/articles/360000244506-What-Does-a-Spending-Password-Do-';
+      'https://stratisplatform.com/';
     const optIn = true;
     const title = null;
     const message = this.translate.instant('Read more in our support page');

@@ -224,7 +224,7 @@ export class ConfirmPage {
           .then(back => {
             if (!back) {
               const url =
-                'https://support.bitpay.com/hc/en-us/articles/115004671663';
+                'https://stratisplatform.com/';
               this.externalLinkProvider.open(url);
             }
             this.navCtrl.pop();
@@ -482,7 +482,7 @@ export class ConfirmPage {
       this.paymentTimeControl(this.tx.paypro.expires);
       this.tx.paypro.host = new URL(this.tx.payProUrl).host;
       this.tx.paypro.invoiceId = this.tx.payProUrl.replace(
-        'https://bitpay.com/i/',
+        'https://stratisplatform.com/',
         ''
       );
       this.tx.minerFee = this.navParams.data.minerFee;

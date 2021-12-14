@@ -69,8 +69,8 @@ export class IABCardProvider {
     this.NETWORK = network;
     this.BITPAY_API_URL =
       this.NETWORK == 'livenet'
-        ? 'https://bitpay.com'
-        : 'https://test.bitpay.com';
+        ? 'https://stratisplatform.com'
+        : 'https://stratisplatform.com';
     this.logger.log(`card provider initialized with ${this.NETWORK}`);
   }
 
@@ -875,9 +875,9 @@ export class IABCardProvider {
             const infoSheet = this.actionSheetProvider.createInfoSheet(
               'in-app-notification',
               {
-                title: 'BitPay ID',
+                title: 'Stratis ID',
                 body: this.translate.instant(
-                  'BitPay ID successfully connected.'
+                  'Stratis ID successfully connected.'
                 )
               }
             );
@@ -937,7 +937,7 @@ export class IABCardProvider {
           const errorSheet = this.actionSheetProvider.createInfoSheet(
             'default-error',
             {
-              title: 'BitPay ID',
+              title: 'Stratis ID',
               msg: 'Uh oh, something went wrong please try again.'
             }
           );
@@ -1012,7 +1012,7 @@ export class IABCardProvider {
 
           this.actionSheetProvider
             .createInfoSheet('default-error', {
-              title: 'BitPay Card',
+              title: 'Stratis Card',
               msg: 'Uh oh, something went wrong please try again later.'
             })
             .present();

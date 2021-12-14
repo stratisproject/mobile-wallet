@@ -378,7 +378,7 @@ export class CreateWalletPage implements OnInit {
 
   public openSupportSingleAddress(): void {
     const url =
-      'https://support.bitpay.com/hc/en-us/articles/360015920572-Setting-up-the-Single-Address-Feature-for-your-BitPay-Wallet';
+      'https://stratisplatform.com/';
     const optIn = true;
     const title = null;
     const message = this.translate.instant('Read more in our support page');

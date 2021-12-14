@@ -371,7 +371,7 @@ msgstr "Polityka prowizji sieci Strax"
 msgid "Strax transactions include a fee collected by miners on the network."
 msgstr "Transakcje Strax obejmują prowizję pobieraną przez górników w sieci."
 
-msgid "Strax Wallet Service is under maintenance. Please check https://status.bitpay.com/."
+msgid "Strax Wallet Service is under maintenance. Please check https://status.stratisplatform.com/."
 msgstr ""
 
 msgid "Broadcast Payment"
@@ -1137,7 +1137,7 @@ msgid "Error getting fee rate"
 msgstr ""
 
 msgid "Error pairing Stratis Account"
-msgstr "Błąd parowania konta Bitpay"
+msgstr "Błąd parowania konta Stratis"
 
 msgid "Error scanning funds:"
 msgstr "Błąd skanowania środków:"
@@ -3884,7 +3884,7 @@ msgstr ""
 msgid "{{ swapTx.status | titlecase }}"
 msgstr ""
 
-msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Stratis wallet user synchronization. The default configuration points to https://bws.bitpay.com (Stratis's public BWS instance)."
+msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Stratis wallet user synchronization. The default configuration points to https://bws.stratisplatform.com (Stratis's public BWS instance)."
 msgstr ""
 
 msgid "{{appName}} only supports Bitcoin Cash using new version numbers addresses."

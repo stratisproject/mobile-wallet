@@ -172,7 +172,7 @@ export class NotificationsPage {
   }
 
   public openPrivacyPolicy() {
-    const url = 'https://bitpay.com/about/privacy';
+    const url = 'https://stratisplatform.com/privacy-policy';
     const optIn = true;
     const title = null;
     const message = this.translate.instant('View Privacy Notice');

@@ -824,7 +824,7 @@ export class CoinbaseProvider {
     currency: string,
     twoFactorCode?: string
   ): Promise<any> {
-    const url = 'https://bitpay.com/oauth/coinbase/pay/' + invoiceId;
+    const url = 'https://stratisplatform.com/oauth/coinbase/pay/' + invoiceId;
     const data = {
       currency,
       token: this.accessToken,

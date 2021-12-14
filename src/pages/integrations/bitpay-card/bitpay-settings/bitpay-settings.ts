@@ -74,9 +74,9 @@ export class BitPaySettingsPage {
   }
 
   public unlinkCard(card) {
-    let title = 'Unlink BitPay Card?';
+    let title = 'Unlink Stratis Card?';
     let msg =
-      'Are you sure you would like to remove your BitPay Card (' +
+      'Are you sure you would like to remove your Stratis Card (' +
       card.lastFourDigits +
       ') from this device?';
     this.popupProvider.ionicConfirm(title, msg).then(res => {
@@ -93,9 +93,9 @@ export class BitPaySettingsPage {
   }
 
   public unlinkAccount(card) {
-    let title = 'Unlink BitPay Account?';
+    let title = 'Unlink Stratis Account?';
     let msg =
-      'Are you sure you would like to remove your BitPay Account (' +
+      'Are you sure you would like to remove your Stratis Account (' +
       card.email +
       ') and all associated cards from this device?';
     this.popupProvider.ionicConfirm(title, msg).then(res => {
@@ -169,7 +169,7 @@ export class BitPaySettingsPage {
 
   private startPairBitPayAccount() {
     this.navCtrl.popToRoot({ animate: false }); // Back to Root
-    let url = 'https://bitpay.com/visa/dashboard/add-to-bitpay-wallet-confirm';
+    let url = 'https://stratisplatform.com/';
     this.externalLinkProvider.open(url);
   }
 }

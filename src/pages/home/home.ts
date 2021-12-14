@@ -339,7 +339,7 @@ export class HomePage {
         ),
         app: 'bitpay',
         linkText: this.translate.instant('View Directory'),
-        link: 'https://bitpay.com/directory/?hideGiftCards=true',
+        link: 'https://stratisplatform.com/',
         imgSrc: 'assets/img/icon-merch-dir.svg',
         isTesting: false,
         dismissible: true
@@ -858,7 +858,7 @@ export class HomePage {
 
   public openCountryBannedLink(): void {
     const url =
-      "https://github.com/bitpay/copay/wiki/Why-can't-I-use-BitPay's-services-in-my-country%3F";
+      "https://stratisplatform.com/";
     this.externalLinkProvider.open(url);
   }
 

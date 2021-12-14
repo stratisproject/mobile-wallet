@@ -37,7 +37,7 @@ export class EmailComponent extends ActionSheetParent {
   }
 
   public openPolicy() {
-    let url = 'https://bitpay.com/about/privacy';
+    let url = 'https://stratisplatform.com/';
     this.externalLinkProvider.open(url);
   }
 }

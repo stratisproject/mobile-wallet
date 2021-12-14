@@ -371,8 +371,8 @@ msgstr "Transactiekostenbeleid Strax-netwerk"
 msgid "Strax transactions include a fee collected by miners on the network."
 msgstr "Strax transacties bevatten transactiekosten betaald aan de miners in het netwerk."
 
-msgid "Strax Wallet Service is under maintenance. Please check https://status.bitpay.com/."
-msgstr "Strax Wallet Service is in onderhoud. Check: https://status.bitpay.com/."
+msgid "Strax Wallet Service is under maintenance. Please check https://status.stratisplatform.com/."
+msgstr "Strax Wallet Service is in onderhoud. Check: https://status.stratisplatform.com/."
 
 msgid "Broadcast Payment"
 msgstr "Betaling Verzenden"
@@ -3884,8 +3884,8 @@ msgstr ""
 msgid "{{ swapTx.status | titlecase }}"
 msgstr ""
 
-msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Stratis wallet user synchronization. The default configuration points to https://bws.bitpay.com (Stratis's public BWS instance)."
-msgstr "{{appName}} is afhankelijk van Bitcore Wallet Service (BWS) voor blockchain-informatie, netwerken en stratis wallet user-synchronisatie. De standaardconfiguratie verwijst naar https://bws.bitpay.com (Stratis's publieke BWS)."
+msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Stratis wallet user synchronization. The default configuration points to https://bws.stratisplatform.com (Stratis's public BWS instance)."
+msgstr "{{appName}} is afhankelijk van Bitcore Wallet Service (BWS) voor blockchain-informatie, netwerken en stratis wallet user-synchronisatie. De standaardconfiguratie verwijst naar https://bws.stratisplatform.com (Stratis's publieke BWS)."
 
 msgid "{{appName}} only supports Bitcoin Cash using new version numbers addresses."
 msgstr "{{appName}} ondersteunt alleen Bitcoin Cash met nieuwe versienummeradressen."

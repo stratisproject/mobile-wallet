@@ -17,7 +17,7 @@ describe('DownloadProvider', () => {
     it('should download logs', () => {
       const logs =
         'Session Logs.\nBe careful, this could contain sensitive private data\n\n';
-      const filename = 'BitPay-logs 2019-05-23T18:10:20.140Z.txt';
+      const filename = 'Stratis-logs 2019-05-23T18:10:20.140Z.txt';
       let blobMock = new Blob([''], { type: 'text/html' });
       blobMock['name'] = 'filename';
       blobMock['body'] = logs;

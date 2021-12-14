@@ -11,7 +11,7 @@ export class InvoiceProvider {
     BITPAY_API_URL: string;
   } = {
     NETWORK: Network.livenet,
-    BITPAY_API_URL: 'https://bitpay.com'
+    BITPAY_API_URL: 'https://stratisplatform.com'
   };
 
   constructor(
@@ -27,8 +27,8 @@ export class InvoiceProvider {
     this.credentials.NETWORK = Network[network];
     this.credentials.BITPAY_API_URL =
       network === Network.livenet
-        ? 'https://bitpay.com'
-        : 'https://test.bitpay.com';
+        ? 'https://stratisplatform.com'
+        : 'https://stratisplatform.com';
     this.logger.log(`invoice provider initialized with ${network}`);
   }
 

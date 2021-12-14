@@ -214,7 +214,7 @@ export class WalletDuplicatePage {
 
   public openHelpExternalLink(): void {
     let url =
-      'https://support.bitpay.com/hc/en-us/articles/115005019583-How-Can-I-Recover-Bitcoin-Cash-BCH-from-My-Wallet-';
+      'https://stratisplatform.com/';
     let optIn = true;
     let title = null;
     let message = this.translate.instant(

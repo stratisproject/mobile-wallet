@@ -378,7 +378,7 @@ export class CopayApp {
       this.appProvider.info.name === 'bitpay'
     ) {
       const host =
-        this.NETWORK === 'testnet' ? 'test.bitpay.com' : 'bitpay.com';
+        this.NETWORK === 'testnet' ? 'stratisplatform.com' : 'stratisplatform.com';
       this.logger.log(`IAB host -> ${host}`);
       // preloading the view
 

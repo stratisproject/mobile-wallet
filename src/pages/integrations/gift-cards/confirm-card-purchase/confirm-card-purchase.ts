@@ -299,12 +299,12 @@ export class ConfirmCardPurchasePage extends ConfirmPage {
     switch (urlKey) {
       case 'networkCost':
         url =
-          'https://support.bitpay.com/hc/en-us/articles/115002990803-Why-Am-I-Being-Charged-an-Additional-Network-Cost-on-My-BitPay-Invoice-';
+          'https://stratisplatform.com/';
         title = this.translate.instant('Network Cost');
         break;
       case 'minerFee':
         url =
-          'https://support.bitpay.com/hc/en-us/articles/115003393863-What-are-bitcoin-miner-fees-Why-are-miner-fees-so-high-';
+          'https://stratisplatform.com/';
         title = this.translate.instant('Miner Fee');
         break;
     }

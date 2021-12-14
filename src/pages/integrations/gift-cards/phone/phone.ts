@@ -94,7 +94,7 @@ export class PhonePage {
   }
 
   public openPolicy() {
-    let url = 'https://bitpay.com/about/privacy';
+    let url = 'https://stratisplatform.com/privacy-policy';
     this.externalLinkProvider.open(url);
   }
 

@@ -69,11 +69,11 @@
     <feature name="Keyboard">
         <param name="android-package" onload="true" value="io.ionic.keyboard.IonicKeyboard" />
     </feature>
-    <name>BitPay</name>
+    <name>Stratis</name>
     <description>
       Secure Bitcoin Wallet
     </description>
-    <author email="support@bitpay.com" href="https://bitpay.com">
+    <author email="support@stratisplatform.com" href="https://stratisplatform.com">
         BitPay Inc.
     </author>
     <content src="index.html" />

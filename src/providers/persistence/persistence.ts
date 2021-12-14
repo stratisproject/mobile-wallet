@@ -542,7 +542,7 @@ export class PersistenceProvider {
       allAccounts[data.email] = account;
 
       this.logger.info(
-        'Storing BitPay accounts with new account:' + data.email
+        'Storing Strais accounts with new account:' + data.email
       );
       return this.storage.set(Keys.BITPAY_ACCOUNTS_V2(network), allAccounts);
     });

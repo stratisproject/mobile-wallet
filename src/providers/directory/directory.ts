@@ -78,7 +78,7 @@ export const getDirectIntegrations = (
   Object.keys(res).map(name => ({ ...res[name], name }));
 
 export async function fetchDirectIntegrations(): Promise<DirectIntegration[]> {
-  return fetch(`https://bitpay.com/merchant-directory/integrations`)
+  return fetch(`https://stratisplatform.com/`)
     .then(res => res.json())
     .then((merchantMap: DirectIntegrationMap) =>
       getDirectIntegrations(merchantMap)
@@ -103,7 +103,7 @@ export function convertObjectsToArrays(directory: DirectoryRawData): Directory {
 
 export async function fetchDirectory(): Promise<Directory> {
   const directory = await fetch(
-    `https://bitpay.com/merchant-directory/directory`
+    `https://stratisplatform.com/`
   ).then(res => res.json());
   const newDirectory: Directory = convertObjectsToArrays(directory);
   return newDirectory;

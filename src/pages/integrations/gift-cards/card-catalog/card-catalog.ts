@@ -206,7 +206,7 @@ export class CardCatalogPage extends WideHeaderPage {
 
   public launchExtension() {
     this.externalLinkProvider.open(
-      'https://bitpay.com/extension/?launchExtension=true'
+      'https://stratisplatform.com/'
     );
   }
 

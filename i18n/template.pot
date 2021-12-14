@@ -430,7 +430,7 @@ msgstr ""
 
 msgid ""
 "Strax Wallet Service is under maintenance. Please check "
-"https://status.bitpay.com/."
+"https://status.stratisplatform.com/."
 msgstr ""
 
 msgid "Broadcast Payment"
@@ -4264,7 +4264,7 @@ msgstr ""
 msgid ""
 "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain "
 "information, networking and Stratis wallet user synchronization. The default "
-"configuration points to https://bws.bitpay.com (Stratis's public BWS "
+"configuration points to https://bws.stratisplatform.com (Stratis's public BWS "
 "instance)."
 msgstr ""
 

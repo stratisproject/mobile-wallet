@@ -24,7 +24,7 @@ export class MinerFeeWarningComponent extends ActionSheetParent {
 
   public openExternalLink(): void {
     const url =
-      'https://support.bitpay.com/hc/en-us/articles/115004439366-Why-is-my-recommended-bitcoin-miner-fee-so-high-';
+      'https://stratisplatform.com/';
     this.externalLinkProvider.open(url);
   }
 }

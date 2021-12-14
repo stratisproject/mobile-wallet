@@ -142,12 +142,12 @@ export class CardPhasesProvider {
   private otherCardCountries = ['AU', 'MX', 'CA'];
   constructor(private http: HttpClient) {}
   public getSession() {
-    const url = 'https://bitpay.com/visa-api/session';
+    const url = 'https://stratisplatform.com/visa-api/session';
     return this.http.get(url);
   }
 
   public notify(email, country) {
-    const url = 'https://bitpay.com/api/v2';
+    const url = 'https://stratisplatform.com/api/v2';
     let httpHeaders = new HttpHeaders();
     httpHeaders = httpHeaders.set(
       'Content-Type',

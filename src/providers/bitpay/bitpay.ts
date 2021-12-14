@@ -23,8 +23,8 @@ export class BitPayProvider {
     this.NETWORK = network;
     this.BITPAY_API_URL =
       this.NETWORK == 'livenet'
-        ? 'https://bitpay.com'
-        : 'https://test.bitpay.com';
+        ? 'https://stratisplatform.com'
+        : 'https://stratisplatform.com';
     this.logger.log(`bitpay provider initialized with ${this.NETWORK}`);
   }
 

@@ -37,7 +37,7 @@ describe('PurchasedCardsPage', () => {
         currency: 'USD',
         date: Date.now() / 1000,
         invoiceId: '1',
-        invoiceUrl: 'https://bitpay.com/i/iNvOiceId',
+        invoiceUrl: 'https://stratisplatform.com/',
         name: 'Amazon.com',
         status: 'SUCCESS',
         uuid: 'uuid'

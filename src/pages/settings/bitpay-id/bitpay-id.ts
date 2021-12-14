@@ -83,9 +83,9 @@ export class BitPayIdPage {
               const infoSheet = this.actionSheetProvider.createInfoSheet(
                 'in-app-notification',
                 {
-                  title: 'BitPay ID',
+                  title: 'Stratis ID',
                   body: this.translate.instant(
-                    'BitPay ID successfully disconnected.'
+                    'Stratis ID successfully disconnected.'
                   )
                 }
               );

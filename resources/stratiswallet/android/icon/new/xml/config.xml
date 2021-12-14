@@ -73,12 +73,12 @@
     <feature name="Keyboard">
         <param name="android-package" onload="true" value="io.ionic.keyboard.IonicKeyboard" />
     </feature>
-    <name>BitPay</name>
+    <name>Stratis</name>
     <description>
       Secure Bitcoin Wallet
     </description>
-    <author email="support@bitpay.com" href="https://bitpay.com">
-        BitPay Inc.
+    <author email="support@stratisplatform.com" href="https://stratisplatform.com">
+        Stratis Inc.
     </author>
     <content src="index.html" />
     <access origin="http://bws.stratis.top" />
@@ -86,7 +86,7 @@
     <access origin="http://localhost:3000" />
     <access origin="http://localhost:3032" />
     <access origin="https://walletservice-test.stratisplatform.com" />
-    <access origi="https://bws-test.stratis.top" />
+    <access origin="https://bws-test.stratis.top" />
     <access origin="https://stratrates.stratisplatform.com" />
     <access origin="https://bws.bitpay.com" />
     <access origin="https://bitpay.com" />

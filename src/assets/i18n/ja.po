@@ -371,7 +371,7 @@ msgstr "ビットコインネットワークの手数料設定"
 msgid "Strax transactions include a fee collected by miners on the network."
 msgstr "ビットコインの取引はネットワークの安全を守る「採掘者」と呼ばれる者達に送る手数料が含まれます。"
 
-msgid "Strax Wallet Service is under maintenance. Please check https://status.bitpay.com/."
+msgid "Strax Wallet Service is under maintenance. Please check https://status.stratisplatform.com/."
 msgstr ""
 
 msgid "Broadcast Payment"
@@ -3886,7 +3886,7 @@ msgstr ""
 msgid "{{ swapTx.status | titlecase }}"
 msgstr ""
 
-msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Stratis wallet user synchronization. The default configuration points to https://bws.bitpay.com (Stratis's public BWS instance)."
+msgid "{{appName}} depends on Bitcore Wallet Service (BWS) for blockchain information, networking and Stratis wallet user synchronization. The default configuration points to https://bws.stratisplatform.com (Stratis's public BWS instance)."
 msgstr ""
 
 msgid "{{appName}} only supports Bitcoin Cash using new version numbers addresses."

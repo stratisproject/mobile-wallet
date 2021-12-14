@@ -118,7 +118,7 @@ export class HomeGiftCards implements OnInit {
 
   public launchExtension() {
     this.externalLinkProvider.open(
-      'https://bitpay.com/extension/?launchExtension=true'
+      'https://stratisplatform.com/'
     );
   }
 

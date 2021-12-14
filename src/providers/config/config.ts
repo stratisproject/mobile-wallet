@@ -181,23 +181,23 @@ export class ConfigProvider {
       },
       download: {
         bitpay: {
-          url: 'https://bitpay.com/wallet'
+          url: 'https://stratisplatform.com/'
         },
         copay: {
-          url: 'https://copay.io/#download'
+          url: 'https://stratisplatform.com/'
         }
       },
 
       rateApp: {
         bitpay: {
           ios:
-            'https://itunes.apple.com/app/bitpay-secure-bitcoin-wallet/id1149581638',
+            'https://itunes.apple.com/app/stratiswallet-secure-bitcoin-wallet/id1149581638',
           android:
             'https://play.google.com/store/apps/details?id=com.stratis.live',
           wp: ''
         },
         copay: {
-          ios: 'https://itunes.apple.com/app/copay-bitcoin-wallet/id951330296',
+          ios: 'https://itunes.apple.com/app/strais-bitcoin-wallet/id951330296',
           android:
             'https://play.google.com/store/apps/details?id=com.stratis.live',
           wp: ''

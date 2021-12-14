@@ -56,7 +56,7 @@ export class BitPayCardIntroPage {
         otp: this.navParams.data.otp
       };
       let pairingReason = this.translate.instant(
-        'add your BitPay Visa card(s)'
+        'add your Stratis Visa card(s)'
       );
       this.bitPayAccountProvider.pair(
         pairData,
