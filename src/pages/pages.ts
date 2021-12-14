@@ -282,5 +282,6 @@ export const PAGES = [
   PhaseOneCardIntro,
   SignMessagePage,
   AuthScanPage,
+  ConfirmAuthPage,
   ScTxPage
 ];
