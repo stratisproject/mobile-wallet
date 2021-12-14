@@ -9,6 +9,7 @@ import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ScanPage } from '../scan/scan';
 import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
 import { Url } from 'url';
+import _ from 'lodash';
 
 export class AuthData {
   // public url: Url;
@@ -81,15 +82,15 @@ export class AuthScanPage {
     this.logger.info('Loaded: AuthScanPage');
     let isCordova = this.platformProvider.isCordova;
     this.isDebugModeNoScanner = !isCordova;
-
-    this.events.subscribe('Local/AuthScan', this.handleAuth);
-
+    
     if(isCordova) {
       this.openScanner();
     }
   }
 
   ionViewWillEnter() {
+    this.events.subscribe('Local/AuthScan', this.handleAuth);
+
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
   }
@@ -105,27 +106,33 @@ export class AuthScanPage {
   private handleAuth: any = (data: { value: string }) => {
     this.logger.info('AuthScan: handleAuth called');
 
-    let loginData = this.parseInput(data.value);
-    
-    if (loginData == null) {
-      this.logger.error("Scanned auth URI was invalid")
-      this.logger.error(data.value);
-      return;
-    }
+    _.debounce(() => {
 
-    this.logger.info('Auth data scanned successfully');
-    this.logger.info(data.value);
+      this.logger.info('AuthScan: debounced handleAuth called');
 
-    this.navCtrl.push(ConfirmAuthPage, {
-      message: loginData,
-      walletId: this.navParams.data.walletId,
-      signingAddress: this.address,
-      expired: loginData
-    });
+      let loginData = this.parseInput(data.value);
+      
+      if (loginData == null) {
+        this.logger.error("Scanned auth URI was invalid")
+        this.logger.error(data.value);
+        return;
+      }
+
+      this.logger.info('Auth data scanned successfully');
+      this.logger.info(data.value);
+
+      this.navCtrl.push(ConfirmAuthPage, {
+        message: loginData,
+        walletId: this.navParams.data.walletId,
+        signingAddress: this.address,
+        expired: loginData
+      });
+    }, 500);
+
   }
 
   sign() {
-    this.handleAuth(this.authDataForm.value.authData);
+    this.events.publish('Local/AuthScan', { value: this.authDataForm.value.authData });
   }
 
   private parseInput(message: string) {

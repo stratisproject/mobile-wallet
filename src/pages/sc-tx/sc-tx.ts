@@ -10,6 +10,7 @@ import { ScanPage } from '../scan/scan';
 import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ConfirmScPage } from '../send/confirm-sc/confirm-sc';
 import { QrCodePayload } from 'calldataserializer';
+import _ from 'lodash';
 
 @Component({
   selector: 'page-sc-tx',
@@ -50,8 +51,6 @@ export class ScTxPage {
     private platformProvider: PlatformProvider,
     private errorsProvider: ErrorsProvider
   ) {
-    this.events.subscribe('Local/ScTx', this.updateScTxDataHandler);
-
     this.scTxDataForm = this.formBuilder.group({
       txData: [
         '',
@@ -62,11 +61,29 @@ export class ScTxPage {
 
   private updateScTxDataHandler: any = (data: { value: string }) => {
     this.logger.info('ScTx: updateScTxDataHandler called');
-    this.logger.info(data);
-    this.txDataString = data.value;
-    if(this.validateInput()) {
-      this.broadcastSignedMessage();
-    }
+
+    // The scanner is buggy and can return multiple times, so we debounce the output.
+    _.debounce(() => {
+      this.logger.info('ScTx: debounced updateScTxDataHandler called');
+
+      this.logger.info(data);
+      this.txDataString = data.value;
+
+      if(this.validateInput()) { 
+        let qrcodeData = JSON.parse(data.value) as QrCodePayload;
+        
+        // TODO finish this
+        this.navCtrl.push(ConfirmScPage, {
+          toAddress: qrcodeData.to,
+          amount: qrcodeData.amount,
+          walletId: this.wallet.credentials.walletId,
+          scData: qrcodeData,
+          coin: this.wallet.coin,
+          network: this.wallet.network,
+          useSendMax: false,
+        });
+      }
+    }, 500)
   };
 
   private instanceOfQrCodeParameters(parameters: []) {
@@ -124,8 +141,14 @@ export class ScTxPage {
   }
 
   ionViewWillEnter() {
+    this.events.subscribe('Local/ScTx', this.updateScTxDataHandler);
+
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.config = this.configProvider.get();
+  }
+
+  ionViewWillLeave() {
+    this.events.unsubscribe('Local/ScTx', this.updateScTxDataHandler);
   }
 
   jsonTxData() {
@@ -133,22 +156,6 @@ export class ScTxPage {
   }
 
   broadcastSignedMessage() {
-
-    if (!this.validateInput()) {
-      return;
-    }
-
-    let data = JSON.parse(this.txDataString) as QrCodePayload;
-    
-    // TODO finish this
-    this.navCtrl.push(ConfirmScPage, {
-      toAddress: data.to,
-      amount: data.amount,
-      walletId: this.wallet.credentials.walletId,
-      scData: data,
-      coin: this.wallet.coin,
-      network: this.wallet.network,
-      useSendMax: false,
-    });
+    this.events.publish('Local/ScTx', { value: this.txDataString });
   }
 }
