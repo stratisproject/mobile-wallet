@@ -61,6 +61,8 @@ export class ScTxPage {
   }
 
   private updateScTxDataHandler: any = data => {
+    this.logger.info('ScTx: updateScTxDataHandler called');
+    this.logger.info(data);
     this.txDataString = data.value;
     this.validateInput();
     this.broadcastSignedMessage();

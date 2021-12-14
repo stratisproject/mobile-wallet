@@ -53,11 +53,11 @@ Opens the scanner, reads a QR and passes the raw data to the confirmation page.
 })
 export class AuthScanPage {
   public wallet;
-  public authData: string;
 
   public authDataForm: FormGroup;
   public description: string;
   public address: any;
+  isDebugModeNoScanner: boolean;
 
   constructor(
     private profileProvider: ProfileProvider,
@@ -71,8 +71,6 @@ export class AuthScanPage {
   ) {
     this.events.subscribe('Local/AuthScan', this.handleAuth);
 
-    this.authData = "sid:enjrxoquzz7e.x.pipedream.net/auth?uid=4606287adc774829ab643816a021efbf&exp=" + (new Date().valueOf() / 10000);
-
     this.authDataForm = this.formBuilder.group({
       authData: [
         '',
@@ -83,8 +81,10 @@ export class AuthScanPage {
 
   ionViewDidLoad() {
     this.logger.info('Loaded: AuthScanPage');
+    let isCordova = this.platformProvider.isCordova;
+    this.isDebugModeNoScanner = !isCordova;
 
-    if(this.platformProvider.isCordova) {
+    if(isCordova) {
       this.openScanner();
     }
   }
@@ -92,7 +92,6 @@ export class AuthScanPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
-    this.authDataForm.value.authData = this.authData;
   }
   
   public openScanner(): void {
@@ -100,12 +99,20 @@ export class AuthScanPage {
   }
 
   handleAuth(data: string) {
+    this.logger.info('AuthScan: handleAuth called');
+
     let loginData = this.parseInput(data);
     
-    if(loginData == null)
+    if(loginData == null) {
+      this.logger.error("Scanned auth URI was invalid")
+      this.logger.error(data);
+      this.navCtrl.pop();
       return;
+    }
 
-    console.log("Pushing auth page");
+    this.logger.info('Auth data scanned successfully');
+    this.logger.info(data);
+
     this.navCtrl.push(ConfirmAuthPage, {
       message: loginData,
       walletId: this.navParams.data.walletId,
@@ -125,21 +132,12 @@ export class AuthScanPage {
       return this.parseUrl(url);
     }
     catch (e) {
-      this.errorsProvider.showDefaultError(
-        e,
-        "Unreadable scan",
-        () => {
-          this.logger.error("Scanned auth URI was invalid")
-              this.navCtrl.pop();
-        }
-      );
+      this.errorsProvider.showDefaultError(e, "Unreadable scan");
       return null;
     }
   }
 
-  private parseUrl(url: URL): AuthData {
-   
-    return new AuthData(
-      url);
+  private parseUrl(url: URL): AuthData {   
+    return new AuthData(url);
   }
 }

@@ -2,26 +2,25 @@
   <div page-content>
     <ion-list class="settings-list bp-list">
       <div class="settings-explanation">
-        <div class="settings-heading" translate>Enter the login QR code data</div>
-        <div class="settings-description">
-          {{description}}
-        </div>
+        <div class="settings-heading" translate>Opening scanner...</div>
       </div>
-      <ion-item>
-        Signing address:
-        <ion-note item-end>
-          {{ address?.address }}
-        </ion-note>
-      </ion-item>
-      <form [formGroup]="authDataForm">
+      <ng-container *ngIf="isDebugModeNoScanner">
         <ion-item>
-          <ion-label stacked>{{'Message' | translate}}</ion-label>
-          <ion-input type="text" formControlName="authData" [value]="authDataForm.value.authData" required></ion-input>
+          Signing address:
+          <ion-note item-end>
+            {{ address?.address }}
+          </ion-note>
         </ion-item>
-        <button ion-button class="button-standard" (click)="sign()" [disabled]="!authDataForm.valid">
-          {{'Sign' | translate}}
-        </button>
-      </form>
+        <form [formGroup]="authDataForm">
+          <ion-item>
+            <ion-label stacked>{{'Message' | translate}}</ion-label>
+            <ion-input type="text" formControlName="authData" [value]="authDataForm.value.authData" required></ion-input>
+          </ion-item>
+          <button ion-button class="button-standard" (click)="sign()" [disabled]="!authDataForm.valid">
+            {{'Sign' | translate}}
+          </button>
+        </form>
+      </ng-container>
     </ion-list>
   </div>
 </wide-header-page>
