@@ -98,20 +98,20 @@ export class AuthScanPage {
     this.navCtrl.push(ScanPage, { fromAuthScan: true }, { animate: false });
   }
 
-  handleAuth(data: string) {
+  handleAuth(data: { value: string }) {
     this.logger.info('AuthScan: handleAuth called');
 
-    let loginData = this.parseInput(data);
+    let loginData = this.parseInput(data.value);
     
-    if(loginData == null) {
+    if (loginData == null) {
       this.logger.error("Scanned auth URI was invalid")
-      this.logger.error(data);
+      this.logger.error(data.value);
       this.navCtrl.pop();
       return;
     }
 
     this.logger.info('Auth data scanned successfully');
-    this.logger.info(data);
+    this.logger.info(data.value);
 
     this.navCtrl.push(ConfirmAuthPage, {
       message: loginData,

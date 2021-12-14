@@ -260,6 +260,8 @@ export class ScanPage {
     } else if (this.fromScTx) {
       this.events.publish('Local/ScTx', { value: contents });
     } else if (this.fromAuthScan) {
+      this.logger.info("Publishing Local/AuthScan event from scanner");
+      this.logger.info(contents);
       this.events.publish('Local/AuthScan', { value: contents });
     } else {
       this.navCtrl.parent.select(1); // Workaround to avoid keep camera active
