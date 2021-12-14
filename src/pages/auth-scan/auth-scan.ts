@@ -105,7 +105,6 @@ export class AuthScanPage {
 
   private handleAuth: any = data => {
     this.logger.info('AuthScan: handleAuth called');
-    this.logger.info('AuthScan: debounced handleAuth called');
     this.logger.info(data);
 
     // let loginData = this.parseInput(data.value);
