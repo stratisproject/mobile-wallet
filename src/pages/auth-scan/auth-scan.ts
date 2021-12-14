@@ -21,13 +21,23 @@ export class AuthData {
 
   public messageToSign: string;
   public callbackUrl: Url;
+  public expiry?: Date;
 
-  constructor(public uri: Url, public expiry: Date) {
+  constructor(public uri: URL) {
       this.messageToSign = uri.href.replace(uri.protocol, "");
       this.callbackUrl = new URL(uri.href.replace(uri.protocol, "https://"));
+
+      let exp = uri.searchParams.get("exp");
+      let expInt = parseInt(exp, 10);
+      if (!isNaN(expInt)) {
+        this.expiry = new Date(expInt* 1000); // Expiry is unix time, JS date is scaled by 1000 
+      }
   }
 
   expired() {
+    if (this.expiry == null)
+      return false;
+
     let now = new Date();
     return (this.expiry.valueOf() - now.valueOf()) > this.EXPIRY_DURATION;
   }
@@ -128,11 +138,8 @@ export class AuthScanPage {
   }
 
   private parseUrl(url: URL): AuthData {
-    let exp = url.searchParams.get("exp");
-    let expiry = new Date(+exp* 1000); // Expiry is unix time, JS date is scaled by 1000 
-    
+   
     return new AuthData(
-      url,
-      expiry);
+      url);
   }
 }
