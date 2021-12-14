@@ -60,7 +60,7 @@ export class ScTxPage {
     });
   }
 
-  private updateScTxDataHandler(data: { value: string }) {
+  private updateScTxDataHandler: any = (data: { value: string }) => {
     this.logger.info('ScTx: updateScTxDataHandler called');
     this.logger.info(data);
     this.txDataString = data.value;

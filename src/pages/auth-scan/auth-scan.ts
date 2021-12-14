@@ -102,7 +102,7 @@ export class AuthScanPage {
     this.navCtrl.push(ScanPage, { fromAuthScan: true }, { animate: false });
   }
 
-  handleAuth(data: { value: string }) {
+  private handleAuth: any = (data: { value: string }) => {
     this.logger.info('AuthScan: handleAuth called');
 
     let loginData = this.parseInput(data.value);
