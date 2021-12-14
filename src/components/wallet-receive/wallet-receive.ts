@@ -103,17 +103,18 @@ export class WalletReceiveComponent extends ActionSheetParent {
         this.newAddressError = false;
         this.loading = false;
         if (!addr) return;
-        const address = this.walletProvider.getAddressView(
+        const qrAddress = this.walletProvider.getAddressView(
           this.wallet.coin,
           this.wallet.network,
           addr
         );
-        if (this.address && this.address != address) {
+        if (this.address && this.address != addr) {
           this.playAnimation = true;
         }
-        if (this.wallet.coin === 'bch') this.bchCashAddress = address;
+        if (this.wallet.coin === 'bch') this.bchCashAddress = addr;
 
-        this.updateQrAddress(address, newAddr);
+        this.address = addr;
+        this.updateQrAddress(qrAddress, newAddr);
       })
       .catch(err => {
         this.logger.warn('Retrying to create new adress:' + ++this.retryCount);
@@ -146,7 +147,7 @@ export class WalletReceiveComponent extends ActionSheetParent {
     if (newAddr) {
       await Observable.timer(400).toPromise();
     }
-    this.address = address;
+    this.qrAddress = address;
 
     await Observable.timer(200).toPromise();
     this.playAnimation = false;

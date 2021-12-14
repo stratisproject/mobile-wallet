@@ -5,7 +5,6 @@ import { Logger } from '../../providers/logger/logger';
 
 // providers
 import { ProfileProvider } from '../../providers/profile/profile';
-import { KeyProvider } from '../../providers/key/key';
 import { ErrorsProvider, PlatformProvider } from '../../providers';
 import { ScanPage } from '../scan/scan';
 import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
@@ -45,13 +44,9 @@ Opens the scanner, reads a QR and passes the raw data to the confirmation page.
 export class AuthScanPage {
   public wallet;
   public authData: string;
-  public privKey: string;
 
   public authDataForm: FormGroup;
   public description: string;
-
-  signedMessage: any;
-  xPrivKey: any;
   public address: any;
 
   constructor(
@@ -61,13 +56,12 @@ export class AuthScanPage {
     private formBuilder: FormBuilder,
     private events: Events,
     private logger: Logger,
-    private keyProvider: KeyProvider,
     private platformProvider: PlatformProvider,
     private errorsProvider: ErrorsProvider
   ) {
     this.events.subscribe('Local/AuthScan', this.handleAuth);
 
-    this.authData = "sid:api.example.com/auth?uid=4606287adc774829ab643816a021efbf&exp=1638850562";
+    this.authData = "sid:enjrxoquzz7e.x.pipedream.net/auth?uid=4606287adc774829ab643816a021efbf&exp=" + (new Date().valueOf() / 10000);
 
     this.authDataForm = this.formBuilder.group({
       authData: [
@@ -89,18 +83,6 @@ export class AuthScanPage {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
     this.authDataForm.value.authData = this.authData;
-
-    this.keyProvider
-      .handleEncryptedWallet(this.wallet.keyId)
-      .then((password: string) => {
-        const key = this.keyProvider.get(this.wallet.keyId, password);
-        this.xPrivKey = key.xPrivKey; 
-      })
-      .catch(err => {
-        // TODO handle this properly
-        console.log(err);
-        this.navCtrl.pop();
-      });
   }
   
   public openScanner(): void {
