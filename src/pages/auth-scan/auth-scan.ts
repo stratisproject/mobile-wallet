@@ -69,8 +69,6 @@ export class AuthScanPage {
     private platformProvider: PlatformProvider,
     private errorsProvider: ErrorsProvider
   ) {
-    this.events.subscribe('Local/AuthScan', this.handleAuth);
-
     this.authDataForm = this.formBuilder.group({
       authData: [
         '',
@@ -84,6 +82,8 @@ export class AuthScanPage {
     let isCordova = this.platformProvider.isCordova;
     this.isDebugModeNoScanner = !isCordova;
 
+    this.events.subscribe('Local/AuthScan', this.handleAuth);
+
     if(isCordova) {
       this.openScanner();
     }
@@ -92,6 +92,10 @@ export class AuthScanPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
+  }
+
+  ionViewWillLeave() {
+    this.events.unsubscribe('Local/AuthScan', this.handleAuth);
   }
   
   public openScanner(): void {
