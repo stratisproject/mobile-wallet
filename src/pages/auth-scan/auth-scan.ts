@@ -106,7 +106,6 @@ export class AuthScanPage {
     if (loginData == null) {
       this.logger.error("Scanned auth URI was invalid")
       this.logger.error(data.value);
-      this.navCtrl.pop();
       return;
     }
 
