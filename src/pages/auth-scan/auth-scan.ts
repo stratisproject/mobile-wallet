@@ -76,6 +76,8 @@ export class AuthScanPage {
         Validators.compose([Validators.minLength(1), Validators.required])
       ]
     });
+
+    this.events.subscribe('Local/AuthScan', this.handleAuth);
   }
 
   ionViewDidLoad() {
@@ -89,8 +91,6 @@ export class AuthScanPage {
   }
 
   ionViewWillEnter() {
-    this.events.subscribe('Local/AuthScan', this.handleAuth);
-
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.address = this.navParams.data.address;
   }
@@ -100,35 +100,31 @@ export class AuthScanPage {
   }
   
   public openScanner(): void {
-    this.navCtrl.push(ScanPage, { fromAuthScan: true }, { animate: false });
+    this.navCtrl.push(ScanPage, { fromAuthScan: true });
   }
 
-  private handleAuth: any = (data: { value: string }) => {
+  private handleAuth: any = data => {
     this.logger.info('AuthScan: handleAuth called');
+    this.logger.info('AuthScan: debounced handleAuth called');
+    this.logger.info(data);
 
-    _.debounce(() => {
+    // let loginData = this.parseInput(data.value);
+    
+    // if (loginData == null) {
+    //   this.logger.error("Scanned auth URI was invalid")
+    //   this.logger.error(data.value);
+    //   return;
+    // }
 
-      this.logger.info('AuthScan: debounced handleAuth called');
+    // this.logger.info('Auth data scanned successfully');
+    // this.logger.info(data.value);
 
-      let loginData = this.parseInput(data.value);
-      
-      if (loginData == null) {
-        this.logger.error("Scanned auth URI was invalid")
-        this.logger.error(data.value);
-        return;
-      }
-
-      this.logger.info('Auth data scanned successfully');
-      this.logger.info(data.value);
-
-      this.navCtrl.push(ConfirmAuthPage, {
-        message: loginData,
-        walletId: this.navParams.data.walletId,
-        signingAddress: this.address,
-        expired: loginData
-      });
-    }, 500);
-
+    // this.navCtrl.push(ConfirmAuthPage, {
+    //   message: loginData,
+    //   walletId: this.navParams.data.walletId,
+    //   signingAddress: this.address,
+    //   expired: loginData
+    // });
   }
 
   sign() {
