@@ -9,60 +9,23 @@
       </ion-item>
 
       <ion-item [style.background-color]="message?.expired() ? 'red' : 'auto'">        
-        <ion-label>
-          <div class="summary-item">
-            <span translate>Expiry</span>
-          </div>
-        </ion-label>
-
-        <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ message.expiry }}">
-              <span *ngIf="message.expiry">{{ message.expiry }}</span>
-          </div>
-        </ion-note>
+        <ion-label stacked><span translate>Expiry</span> <ion-icon *ngIf="message?.expired()" name="warning"></ion-icon></ion-label>
+        <ion-textarea copy-to-clipboard="{{ message.expiry }}" readonly=true [value]="message.expiry" style="overflow:hidden;resize:none;"></ion-textarea>
       </ion-item>
 
-      <ion-item [style.background-color]="knownHostname? 'green' : 'red'">        
-        <ion-label>
-          <div class="summary-item">
-            <span translate>Callback URL</span>
-          </div>
-        </ion-label>
-
-        <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ message.callbackUrl }}">
-              <ion-icon *ngIf="!knownHostname" name="warning"></ion-icon>
-              <span *ngIf="message.callbackUrl">{{ message.callbackUrl.href }}</span>
-          </div>
-        </ion-note>
+      <ion-item [style.background-color]="knownHostname? 'green' : 'red'" text-wrap>        
+        <ion-label stacked><span translate>Callback URL</span> <ion-icon *ngIf="!knownHostname" name="warning"></ion-icon></ion-label>
+        <ion-textarea disabled rows=3 copy-to-clipboard="{{ message.callbackUrl.href }}" readonly=true [value]="message.callbackUrl.href" style="height: 60px;"></ion-textarea>
       </ion-item>
 
       <ion-item>        
-        <ion-label>
-          <div class="summary-item">
-            <span translate>Message to sign</span>
-          </div>
-        </ion-label>
-
-        <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ message.messageToSign }}">
-              <span *ngIf="message.messageToSign">{{ message.messageToSign }}</span>
-          </div>
-        </ion-note>
+        <ion-label stacked><span translate>Message to sign</span></ion-label>
+        <ion-textarea disabled rows=3 copy-to-clipboard="{{ message.messageToSign }}" type="text" readonly=true [value]="message.messageToSign" style="height: 60px;"></ion-textarea>
       </ion-item>
 
       <ion-item>        
-        <ion-label>
-          <div class="summary-item">
-            <span translate>Signing address</span>
-          </div>
-        </ion-label>
-
-        <ion-note item-end>
-          <div class="summary-item-detail" copy-to-clipboard="{{ signingAddress.address }}">
-              <span *ngIf="signingAddress">{{ signingAddress.address }}</span>
-          </div>
-        </ion-note>
+        <ion-label stacked><span translate>Signing address</span></ion-label>
+        <ion-textarea disabled rows=3 copy-to-clipboard="{{ signingAddress.address }}" readonly=true [value]="signingAddress.address" style="height: 60px;"></ion-textarea>
       </ion-item>
 
       <div class="line-divider"></div>
@@ -70,12 +33,9 @@
     </ion-list>
   </div>
 
-  <div footer-content>
-    <!-- <page-slide-to-accept #slideButton *ngIf="isCordova" [ngClass]="{'slide-confirm-fast slide-confirm-down': hideSlideButton, 'slide-confirm-slow': !hideSlideButton}" [disabled]="(!wallet && !coinbaseAccount) || (wallet && !tx?.txp[wallet.id]) || paymentExpired" [buttonText]="buttonText" [isDogecoin]="wallet && wallet.coin == 'doge'" (slideDone)="approve(tx, wallet)">
-    </page-slide-to-accept> -->
-
-    <ion-toolbar><!-- *ngIf="!isCordova && (wallet || coinbaseAccount)">-->
-      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="message?.expired() || broadcasting">Sign & Callback</button>
+  <div footer-content>    
+    <ion-toolbar>
+      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="broadcasting">Sign & Callback</button>
     </ion-toolbar>
   </div>
 </wide-header-page>

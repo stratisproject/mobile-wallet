@@ -157,7 +157,7 @@ export class ConfirmAuthPage {
   }
 
   private setTitle(): void {
-    this.mainTitle = this.translate.instant('Confirm Authorization Message Signing');
+    this.mainTitle = this.translate.instant('Confirm Login Message');
   }
 
   async signAndBroadcastLogin() {
