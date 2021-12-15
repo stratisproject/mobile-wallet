@@ -107,16 +107,12 @@ export class AuthScanNewPage {
     try {
       let url = new URL(message);
 
-      return this.parseUrl(url);
+      return new AuthData(url);
     }
     catch (e) {
       this.errorsProvider.showDefaultError(e, "Unreadable scan");
       return null;
     }
-  }
-
-  private parseUrl(url: URL): AuthData {   
-    return new AuthData(url);
   }
 
   public openScanner(): void {
