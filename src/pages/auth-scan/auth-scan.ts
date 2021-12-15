@@ -25,6 +25,9 @@ export class AuthData {
   public expiry?: Date;
 
   constructor(public uri: URL) {
+      if (uri.protocol !== "sid:")
+        throw new Error("Only sid: protocols are supported in auth URLs");
+
       this.messageToSign = uri.href.replace(uri.protocol, "");
       this.callbackUrl = new URL(uri.href.replace(uri.protocol, "https://"));
 
