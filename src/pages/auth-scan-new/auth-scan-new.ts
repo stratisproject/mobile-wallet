@@ -4,7 +4,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { Events, NavController, NavParams } from 'ionic-angular';
-import { ErrorsProvider } from '../../providers';
+import { ErrorsProvider, PlatformProvider } from '../../providers';
 
 // providers
 import { AppProvider } from '../../providers/app/app';
@@ -33,7 +33,8 @@ export class AuthScanNewPage {
     private formBuilder: FormBuilder,
     private logger: Logger,
     private navParams: NavParams,
-    private errorsProvider: ErrorsProvider
+    private errorsProvider: ErrorsProvider,
+    private platformProvider: PlatformProvider
   ) {
     this.addressBookAdd = this.formBuilder.group({
       name: [
@@ -49,7 +50,8 @@ export class AuthScanNewPage {
     this.logger.info('Loaded: AuthScanNew');
 
     console.log("Can go back: " + this.navCtrl.canGoBack());
-    this.openScanner();
+    if(this.platformProvider.isCordova)
+      this.openScanner();
   }
 
   ngOnDestroy() {
@@ -76,15 +78,31 @@ export class AuthScanNewPage {
 
     this.logger.info('Auth data scanned successfully');
     this.logger.info(data.value);
+    this.logger.info(loginData);
+    this.logger.info(this.navParams.data);
 
+    this.goToConfirm(loginData);
+  };
+
+  private goToConfirm(loginData: AuthData) {
     this.navCtrl.push(ConfirmAuthPage, {
       message: loginData,
       walletId: this.navParams.data.walletId,
-      signingAddress: this.navParams.data.address,
-      expired: loginData
+      signingAddress: this.navParams.data.signingAddress
     });
-  };
+  }
   
+  private confirm() {
+    let loginData = this.parseInput(this.addressBookAdd.controls['name'].value);
+    
+    if (loginData == null) {
+      this.logger.error("Scanned auth URI was invalid")
+      return;
+    }
+
+    this.goToConfirm(loginData);
+  }
+
   private parseInput(message: string) {
     try {
       let url = new URL(message);
@@ -100,6 +118,7 @@ export class AuthScanNewPage {
   private parseUrl(url: URL): AuthData {   
     return new AuthData(url);
   }
+
   public openScanner(): void {
     this.navCtrl.push(ScanPage, { fromAuthScan: true });
   }

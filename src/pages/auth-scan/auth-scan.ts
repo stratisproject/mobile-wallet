@@ -86,7 +86,7 @@ export class AuthScanPage {
     this.isDebugModeNoScanner = !isCordova;
     
     console.log("Can go back: " + this.navCtrl.canGoBack());
-    
+
     if(isCordova) {
       this.openScanner();
     }
