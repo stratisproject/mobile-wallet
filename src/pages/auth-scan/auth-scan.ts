@@ -40,7 +40,7 @@ export class AuthData {
       return false;
 
     let now = new Date();
-    return (this.expiry.valueOf() - now.valueOf()) > this.EXPIRY_DURATION;
+    return (this.expiry.valueOf() - now.valueOf()) < this.EXPIRY_DURATION;
   }
 }
 
