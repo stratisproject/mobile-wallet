@@ -48,6 +48,7 @@ export class AuthScanNewPage {
   ionViewDidLoad() {
     this.logger.info('Loaded: AuthScanNew');
 
+    console.log("Can go back: " + this.navCtrl.canGoBack());
     this.openScanner();
   }
 
@@ -65,7 +66,7 @@ export class AuthScanNewPage {
       data.value
     );
 
-        let loginData = this.parseInput(data.value);
+    let loginData = this.parseInput(data.value);
     
     if (loginData == null) {
       this.logger.error("Scanned auth URI was invalid")
@@ -83,6 +84,7 @@ export class AuthScanNewPage {
       expired: loginData
     });
   };
+  
   private parseInput(message: string) {
     try {
       let url = new URL(message);

@@ -238,6 +238,7 @@ export class ScanPage {
 
   private handleSuccessfulScan(contents: string): void {
     if (this.canGoBack) this.navCtrl.pop({ animate: false });
+    console.log("Can go back: " + this.canGoBack);
 
     if (this.fromAddressbook) {
       this.events.publish('Local/AddressScan', { value: contents });

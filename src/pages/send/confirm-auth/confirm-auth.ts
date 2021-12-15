@@ -107,17 +107,6 @@ export class ConfirmAuthPage {
     this.isCordova = this.platformProvider.isCordova;
     this.hideSlideButton = false;
     this.showMultiplesOutputs = false;
-
-    this.events.subscribe('Local/AuthScan', this.handleAuth);
-  }
-
-  private handleAuth: any = data => {
-    this.logger.info('ConfirmAuth: handleAuth called');
-    this.logger.info(data);  
-  }
-
-  public openScanner(): void {
-    this.navCtrl.push(ScanPage, { fromAuthScan: true });
   }
   
   ngOnInit() {
@@ -134,12 +123,6 @@ export class ConfirmAuthPage {
     this.knownHostname = callbackHostname != null 
       ? KNOWN_URL_DOMAINS.indexOf(callbackHostname) !== -1
       : false;
-
-    let isCordova = this.platformProvider.isCordova;
-    
-    if(isCordova) {
-      this.openScanner();
-    }
   }
 
   getHostName(callbackUrl: Url): string {
