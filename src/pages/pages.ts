@@ -158,6 +158,7 @@ import { SignMessagePage } from './sign-message/sign-message';
 import { ScTxPage } from './sc-tx/sc-tx';
 import { AuthScanPage } from './auth-scan/auth-scan';
 import { ConfirmAuthPage } from './send/confirm-auth/confirm-auth';
+import { AuthScanNewPage } from './auth-scan-new/auth-scan-new';
 
 export const PAGES = [
   AddPage,
@@ -282,6 +283,7 @@ export const PAGES = [
   PhaseOneCardIntro,
   SignMessagePage,
   AuthScanPage,
+  AuthScanNewPage,
   ConfirmAuthPage,
   ScTxPage
 ];

@@ -48,6 +48,7 @@ import { WalletBalanceModal } from './wallet-balance/wallet-balance';
 import { ScTxPage } from '../sc-tx/sc-tx';
 import { AuthScanPage } from '../auth-scan/auth-scan';
 import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
+import { AuthScanNewPage } from '../auth-scan-new/auth-scan-new';
 
 const HISTORY_SHOW_LIMIT = 10;
 const MIN_UPDATE_TIME = 2000;
@@ -781,7 +782,7 @@ export class WalletDetailsPage {
       const addressIndex = 0; // Always the first address on Cirrus
       const path = `m/${changeNum}/${addressIndex}`;
 
-      this.navCtrl.push(ConfirmAuthPage, {
+      this.navCtrl.push(AuthScanNewPage, {
         signingAddress: {
           address,
           path

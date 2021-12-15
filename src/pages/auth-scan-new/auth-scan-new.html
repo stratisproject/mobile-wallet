@@ -1,0 +1,23 @@
+<wide-header-page title="{{'New contact'|translate}}">
+  <ion-buttons right>
+    <button clear wide-header-bar-button (click)="save()" ion-button [disabled]="addressBookAdd.invalid">
+      <span translate>Add</span>
+    </button>
+  </ion-buttons>
+  <div page-content>
+
+    <form [formGroup]="addressBookAdd">
+      <ion-item>
+        <ion-label stacked>{{ 'Name' | translate }}</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>
+          <ion-icon class="scanner-icon" name="qr-scanner" item-right (click)="openScanner()"></ion-icon>
+      </ion-item>
+
+      <label-tip type="info" header="no-header">
+        <div label-tip-body>
+          <span>{{data}}</span>
+        </div>
+      </label-tip>
+    </form>
+  </div>
+</wide-header-page>
