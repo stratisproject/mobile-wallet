@@ -20,11 +20,12 @@ import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
   templateUrl: 'auth-scan-new.html'
 })
 export class AuthScanNewPage {
-  public addressBookAdd: FormGroup;
+  public loginUrlForm: FormGroup;
 
   public isCordova: boolean;
   public appName: string;
   data: any;
+  hasScanner: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -36,8 +37,8 @@ export class AuthScanNewPage {
     private errorsProvider: ErrorsProvider,
     private platformProvider: PlatformProvider
   ) {
-    this.addressBookAdd = this.formBuilder.group({
-      name: [
+    this.loginUrlForm = this.formBuilder.group({
+      url: [
         ''
       ],
     });
@@ -49,8 +50,9 @@ export class AuthScanNewPage {
   ionViewDidLoad() {
     this.logger.info('Loaded: AuthScanNew');
 
-    console.log("Can go back: " + this.navCtrl.canGoBack());
-    if(this.platformProvider.isCordova)
+    this.hasScanner = this.platformProvider.isCordova;
+
+    if(this.hasScanner)
       this.openScanner();
   }
 
@@ -64,7 +66,7 @@ export class AuthScanNewPage {
 
     this.data = data.value;
 
-    this.addressBookAdd.controls['name'].setValue(
+    this.loginUrlForm.controls['url'].setValue(
       data.value
     );
 
@@ -93,7 +95,7 @@ export class AuthScanNewPage {
   }
   
   private confirm() {
-    let loginData = this.parseInput(this.addressBookAdd.controls['name'].value);
+    let loginData = this.parseInput(this.loginUrlForm.controls['url'].value);
     
     if (loginData == null) {
       this.logger.error("Scanned auth URI was invalid")

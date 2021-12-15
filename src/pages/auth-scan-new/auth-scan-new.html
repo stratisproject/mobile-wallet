@@ -1,28 +1,17 @@
-<wide-header-page title="{{'New contact'|translate}}">
-  <ion-buttons right>
-    <button clear wide-header-bar-button (click)="save()" ion-button [disabled]="addressBookAdd.invalid">
-      <span translate>Add</span>
-    </button>
-  </ion-buttons>
+<wide-header-page title="{{'Login'|translate}}">
   <div page-content>
 
-    <form [formGroup]="addressBookAdd">
+    <form [formGroup]="loginUrlForm">
       <ion-item>
-        <ion-label stacked>{{ 'Name' | translate }}</ion-label>
-        <ion-input formControlName="name" type="text"></ion-input>
-          <ion-icon class="scanner-icon" name="qr-scanner" item-right (click)="openScanner()"></ion-icon>
+        <ion-label stacked>{{ 'Login URL' | translate }}</ion-label>
+        <ion-input formControlName="url" type="text"></ion-input>
+          <ion-icon *ngIf="hasScanner" class="scanner-icon" name="qr-scanner" item-right (click)="openScanner()"></ion-icon>
       </ion-item>
-
-      <label-tip type="info" header="no-header">
-        <div label-tip-body>
-          <span>{{data}}</span>
-        </div>
-      </label-tip>
     </form>
   </div>
   <div footer-content>
     <ion-toolbar>
-      <button ion-button full class="button-footer" (click)="confirm()">Confirm And Broadcast</button>
+      <button ion-button full class="button-footer" (click)="confirm()">Confirm Login</button>
     </ion-toolbar>
   </div>
 </wide-header-page>
