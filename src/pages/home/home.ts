@@ -195,12 +195,12 @@ export class HomePage {
     if (this.showTotalBalance)
       this.updateTotalBalance(this.appProvider.homeBalance);
     if (this.platformProvider.isElectron) this.checkNewRelease();
-    this.showCoinbase = !!config.showIntegration['coinbase'];
-    this.setIntegrations();
-    this.setMerchantDirectoryAdvertisement();
-    this.loadAds();
-    this.fetchAdvertisements();
-    this.fetchGiftCardAdvertisement();
+    // this.showCoinbase = !!config.showIntegration['coinbase'];
+    // this.setIntegrations();
+    // this.setMerchantDirectoryAdvertisement();
+    // this.loadAds();
+    // this.fetchAdvertisements();
+    // this.fetchGiftCardAdvertisement();
     this.persistenceProvider.getDynamicLink().then((deepLink: string) => {
       if (deepLink) {
         this.persistenceProvider.setOnboardingFlowFlag('disabled');
@@ -219,7 +219,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.preFetchWallets();
-    this.merchantProvider.getMerchants();
+    // this.merchantProvider.getMerchants();
 
     // Required delay to improve performance loading
     setTimeout(() => {
@@ -659,8 +659,8 @@ export class HomePage {
   }
 
   public doRefresh(refresher): void {
-    this.loadAds();
-    this.fetchAdvertisements();
+    // this.loadAds();
+    // this.fetchAdvertisements();
     this.preFetchWallets();
     setTimeout(() => {
       refresher.complete();
