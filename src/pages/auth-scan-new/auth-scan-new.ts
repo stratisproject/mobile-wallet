@@ -3,14 +3,17 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
-import { Events, NavController } from 'ionic-angular';
+import { Events, NavController, NavParams } from 'ionic-angular';
+import { ErrorsProvider } from '../../providers';
 
 // providers
 import { AppProvider } from '../../providers/app/app';
 import { Logger } from '../../providers/logger/logger';
+import { AuthData } from '../auth-scan/auth-scan';
 
 // validators
 import { ScanPage } from '../scan/scan';
+import { ConfirmAuthPage } from '../send/confirm-auth/confirm-auth';
 
 @Component({
   selector: 'page-auth-scan-new',
@@ -29,6 +32,8 @@ export class AuthScanNewPage {
     private appProvider: AppProvider,
     private formBuilder: FormBuilder,
     private logger: Logger,
+    private navParams: NavParams,
+    private errorsProvider: ErrorsProvider
   ) {
     this.addressBookAdd = this.formBuilder.group({
       name: [
@@ -37,15 +42,17 @@ export class AuthScanNewPage {
     });
     
     this.appName = this.appProvider.info.nameCase;
-    this.events.subscribe('Local/AddressScan', this.updateAddressHandler);
+    this.events.subscribe('Local/AuthScan', this.updateAddressHandler);
   }
 
   ionViewDidLoad() {
     this.logger.info('Loaded: AuthScanNew');
+
+    this.openScanner();
   }
 
   ngOnDestroy() {
-    this.events.unsubscribe('Local/AddressScan', this.updateAddressHandler);
+    this.events.unsubscribe('Local/AuthScan', this.updateAddressHandler);
   }
 
   private updateAddressHandler: any = data => {
@@ -57,9 +64,41 @@ export class AuthScanNewPage {
     this.addressBookAdd.controls['name'].setValue(
       data.value
     );
-  };
 
+        let loginData = this.parseInput(data.value);
+    
+    if (loginData == null) {
+      this.logger.error("Scanned auth URI was invalid")
+      this.logger.error(data.value);
+      return;
+    }
+
+    this.logger.info('Auth data scanned successfully');
+    this.logger.info(data.value);
+
+    this.navCtrl.push(ConfirmAuthPage, {
+      message: loginData,
+      walletId: this.navParams.data.walletId,
+      signingAddress: this.navParams.data.address,
+      expired: loginData
+    });
+  };
+  private parseInput(message: string) {
+    try {
+      let url = new URL(message);
+
+      return this.parseUrl(url);
+    }
+    catch (e) {
+      this.errorsProvider.showDefaultError(e, "Unreadable scan");
+      return null;
+    }
+  }
+
+  private parseUrl(url: URL): AuthData {   
+    return new AuthData(url);
+  }
   public openScanner(): void {
-    this.navCtrl.push(ScanPage, { fromAddressbook: true });
+    this.navCtrl.push(ScanPage, { fromAuthScan: true });
   }
 }
