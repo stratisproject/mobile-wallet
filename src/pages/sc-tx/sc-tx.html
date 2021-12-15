@@ -1,26 +1,23 @@
 <wide-header-page title="{{'Smart Contract Transaction' | translate}}">
   <div page-content>
     <ion-list class="settings-list bp-list">
-      <div class="settings-explanation">
-        <div class="settings-heading" translate>Enter the smart contract transaction details</div>
-        <div class="settings-description">
-          {{description}}
+        <div class="settings-explanation">
+          <div class="settings-heading" translate>Enter the smart contract transaction details</div>
+          <div class="settings-description">
+            {{description}}
+          </div>
         </div>
-      </div>
-        <ion-item>
+        <ion-item text-wrap>
           <ion-label stacked>{{'Smart Contract Data' | translate}}</ion-label>
-          <ion-textarea class="summary-item-detail" placeholder="{{'SC Tx JSON Data' | translate}}" 
-          [(ngModel)]="txDataString"
-          name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
-          <!-- <ion-input type="text" formControlName="walletName" [value]="scTxDataForm.value.txData" required></ion-input> -->
+          <ion-textarea class="summary-item-detail" [(ngModel)]="txDataString" name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
         </ion-item>
-        <ngx-qrcode *ngIf="txData" hide-toast="true" [qrc-value]="txData" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
     </ion-list>
-    <div class="settings-heading">{{ signedMessage }}</div>
-
-    <button ion-button class="button-standard" (click)="broadcastSignedMessage()" >
-      {{'Broadcast' | translate}}
-    </button>
-
+  </div>
+  <div footer-content>
+    <ion-toolbar>
+      <button ion-button class="button-standard" (click)="broadcastSignedMessage()" >
+        {{'Broadcast' | translate}}
+      </button>
+    </ion-toolbar>
   </div>
 </wide-header-page>

@@ -52,38 +52,44 @@ export class ScTxPage {
     private errorsProvider: ErrorsProvider
   ) {
     this.scTxDataForm = this.formBuilder.group({
-      txData: [
-        '',
-        Validators.compose([Validators.minLength(1), Validators.required])
-      ]
+      txData: ['']
     });
+    
+    this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
+    this.config = this.configProvider.get();
+    this.events.subscribe('Local/ScTx', this.updateScTxDataHandler);
+  }
+  
+  ionViewDidLoad() {
+    this.logger.info('Loaded: ScTxPage');
+    if(this.platformProvider.isCordova) {
+      this.openScanner();
+    }
+  }
+ 
+  ngOnDestroy() {
+    this.events.unsubscribe('Local/ScTx', this.updateScTxDataHandler);
   }
 
   private updateScTxDataHandler: any = (data: { value: string }) => {
     this.logger.info('ScTx: updateScTxDataHandler called');
 
-    // The scanner is buggy and can return multiple times, so we debounce the output.
-    _.debounce(() => {
-      this.logger.info('ScTx: debounced updateScTxDataHandler called');
+    this.logger.info(data);
+    this.txDataString = data.value;
 
-      this.logger.info(data);
-      this.txDataString = data.value;
-
-      if(this.validateInput()) { 
-        let qrcodeData = JSON.parse(data.value) as QrCodePayload;
-        
-        // TODO finish this
-        this.navCtrl.push(ConfirmScPage, {
-          toAddress: qrcodeData.to,
-          amount: qrcodeData.amount,
-          walletId: this.wallet.credentials.walletId,
-          scData: qrcodeData,
-          coin: this.wallet.coin,
-          network: this.wallet.network,
-          useSendMax: false,
-        });
-      }
-    }, 500)
+    if(this.validateInput()) { 
+      let qrcodeData = JSON.parse(data.value) as QrCodePayload;
+      
+      this.navCtrl.push(ConfirmScPage, {
+        toAddress: qrcodeData.to,
+        amount: qrcodeData.amount,
+        walletId: this.wallet.credentials.walletId,
+        scData: qrcodeData,
+        coin: this.wallet.coin,
+        network: this.wallet.network,
+        useSendMax: false,
+      });
+    }
   };
 
   private instanceOfQrCodeParameters(parameters: []) {
@@ -130,25 +136,7 @@ export class ScTxPage {
   }
 
   public openScanner(): void {
-    this.navCtrl.push(ScanPage, { fromScTx: true }, { animate: false });
-  }
-
-  ionViewDidLoad() {
-    this.logger.info('Loaded: ScTxPage');
-    if(this.platformProvider.isCordova) {
-      this.openScanner();
-    }
-  }
-
-  ionViewWillEnter() {
-    this.events.subscribe('Local/ScTx', this.updateScTxDataHandler);
-
-    this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
-    this.config = this.configProvider.get();
-  }
-
-  ionViewWillLeave() {
-    this.events.unsubscribe('Local/ScTx', this.updateScTxDataHandler);
+    this.navCtrl.push(ScanPage, { fromScTx: true });
   }
 
   jsonTxData() {
