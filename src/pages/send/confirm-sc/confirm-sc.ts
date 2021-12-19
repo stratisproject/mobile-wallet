@@ -974,8 +974,6 @@ export class ConfirmScPage {
   }
 
   private buildScript(scData: QrCodePayload) {
-    console.log("Serializing sc data");
-
     let Address = GetAddress();
     let contractTxData = {
       vmVersion: 1,
