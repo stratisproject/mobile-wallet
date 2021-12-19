@@ -222,10 +222,10 @@ export class HomePage {
     // this.merchantProvider.getMerchants();
 
     // Required delay to improve performance loading
-    setTimeout(() => {
-      this.checkEmailLawCompliance();
-      this.checkAltCurrency(); // Check if the alternative currency setted is no longer supported
-    }, 2000);
+    // setTimeout(() => {
+    //   this.checkEmailLawCompliance();
+    //   this.checkAltCurrency(); // Check if the alternative currency setted is no longer supported
+    // }, 2000);
   }
 
   private loadAds() {
