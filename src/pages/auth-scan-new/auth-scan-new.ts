@@ -39,7 +39,7 @@ export class AuthScanNewPage {
   ) {
     this.loginUrlForm = this.formBuilder.group({
       url: [
-        'sid:enjrxoquzz7e.x.pipedream.net/auth?uid=4606287adc774829ab643816a021efbf&exp=' + ((new Date().valueOf() + 1000000)/ 10000)
+        'sid:enjrxoquzz7e.x.pipedream.net/auth?uid=4606287adc774829ab643816a021efbf&exp=' + ((new Date().valueOf() + 1000000)/ 1000)
       ],
     });
     

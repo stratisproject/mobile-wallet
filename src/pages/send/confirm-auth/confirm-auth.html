@@ -9,12 +9,12 @@
       </ion-item>
 
       <ion-item [style.background-color]="message?.expired() ? 'red' : 'auto'">        
-        <ion-label stacked><span translate>Expiry</span> <ion-icon *ngIf="message?.expired()" name="warning"></ion-icon></ion-label>
+        <ion-label stacked><span translate>Expiry</span> <ion-icon *ngIf="message?.expired()" name="warning"></ion-icon><span *ngIf="!knownHostname">Expired</span></ion-label>
         <ion-textarea copy-to-clipboard="{{ message.expiry }}" readonly=true [value]="message.expiry" style="overflow:hidden;resize:none;"></ion-textarea>
       </ion-item>
 
       <ion-item [style.background-color]="knownHostname? 'green' : 'red'" text-wrap>        
-        <ion-label stacked><span translate>Callback URL</span> <ion-icon *ngIf="!knownHostname" name="warning"></ion-icon></ion-label>
+        <ion-label stacked><span translate>Callback URL</span> <ion-icon *ngIf="!knownHostname" name="warning"></ion-icon><span *ngIf="!knownHostname">Unknown host</span></ion-label>
         <ion-textarea disabled rows=3 copy-to-clipboard="{{ message.callbackUrl.href }}" readonly=true [value]="message.callbackUrl.href" style="height: 60px;"></ion-textarea>
       </ion-item>
 
