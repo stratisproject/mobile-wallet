@@ -1,15 +1,26 @@
-<wide-header-page title="{{'Login'|translate}}">
+<wide-header-page title="{{'Scan Login Code'|translate}}">
   <div page-content>
 
     <form [formGroup]="loginUrlForm">
-      <ion-item>
+      <ion-item *ngIf="!hasScanner">
         <ion-label stacked>{{ 'Login URL' | translate }}</ion-label>
         <ion-input formControlName="url" type="text"></ion-input>
-          <ion-icon *ngIf="hasScanner" class="scanner-icon" name="qr-scanner" item-right (click)="openScanner()"></ion-icon>
       </ion-item>
     </form>
+    <ion-row *ngIf="hasScanner">
+      <ion-col text-center>
+          <ion-icon item-center class="scan-icon" (click)="openScanner()" style="width: 100%;">
+            <img src="assets/img/scan-ico.svg" style="width: 100%;">
+          </ion-icon>
+      </ion-col>
+    </ion-row>
   </div>
-  <div footer-content>
+  <div footer-content *ngIf="hasScanner">
+    <ion-toolbar>
+      <button ion-button full class="button-footer" (click)="openScanner()">Open Scanner</button>
+    </ion-toolbar>
+  </div>
+  <div footer-content *ngIf="!hasScanner">
     <ion-toolbar>
       <button ion-button full class="button-footer" (click)="confirm()">Confirm Login</button>
     </ion-toolbar>
