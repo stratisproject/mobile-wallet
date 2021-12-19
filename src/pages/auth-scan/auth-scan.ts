@@ -16,10 +16,6 @@ export class AuthData {
   // public expiry: Date;
   // public messageToSign: string;
   // public callbackUrl: string;
-
-  // 5 mins
-  private EXPIRY_DURATION = 5*60*1000;
-
   public messageToSign: string;
   public callbackUrl: Url;
   public expiry?: Date;
@@ -43,7 +39,7 @@ export class AuthData {
       return false;
 
     let now = new Date();
-    return (this.expiry.valueOf() - now.valueOf()) < this.EXPIRY_DURATION;
+    return (this.expiry.valueOf() - now.valueOf()) < 0;
   }
 }
 
