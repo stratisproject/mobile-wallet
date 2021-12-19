@@ -2,7 +2,7 @@ import { BwcProvider } from '../../providers/bwc/bwc';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Events, NavController, NavParams } from 'ionic-angular';
+import { Events, ModalController, NavController, NavParams } from 'ionic-angular';
 import { Logger } from '../../providers/logger/logger';
 
 // providers
@@ -10,6 +10,8 @@ import { ConfigProvider } from '../../providers/config/config';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { ReplaceParametersProvider } from '../../providers/replace-parameters/replace-parameters';
 import { KeyProvider } from '../../providers/key/key';
+import { FinishModalPage } from '../finish/finish';
+import { BwcErrorProvider, ErrorsProvider } from '../../providers';
 
 @Component({
   selector: 'page-sign-message',
@@ -25,8 +27,8 @@ export class SignMessagePage {
 
   private config;
   signedMessage: any;
-  xPrivKey: any;
   public address: any;
+  xPrivKey: any;
 
   constructor(
     private profileProvider: ProfileProvider,
@@ -34,12 +36,13 @@ export class SignMessagePage {
     private navParams: NavParams,
     private configProvider: ConfigProvider,
     private formBuilder: FormBuilder,
-    private events: Events,
     private logger: Logger,
-    private replaceParametersProvider: ReplaceParametersProvider,
     private translate: TranslateService,
     private bwcProvider: BwcProvider,
     private keyProvider: KeyProvider,
+    protected errorsProvider: ErrorsProvider,
+    protected modalCtrl: ModalController,
+    private bwcErrorProvider: BwcErrorProvider
   ) {
     this.walletName = this.navParams.data.walletName;
 
@@ -66,33 +69,15 @@ export class SignMessagePage {
       ? alias
       : this.wallet.credentials.walletName;
     this.walletName = this.wallet.credentials.walletName;
-    this.description = this.replaceParametersProvider.replace(
-      this.translate.instant(
-        'When this wallet was created, it was called "{{walletName}}". You can change the name displayed on this device below.'
-      ),
-      { walletName: this.walletName }
-    );
-
-    this.keyProvider
-      .handleEncryptedWallet(this.wallet.keyId)
-      .then((password: string) => {
-        const key = this.keyProvider.get(this.wallet.keyId, password);
-        this.xPrivKey = key.xPrivKey; 
-      })
-      .catch(err => {
-        // TODO handle this properly
-        console.log(err);
-        this.navCtrl.pop();
-      });
   }
 
-  signMessage() {
+  async signMessage() {
     let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
     let message = this.walletNameForm.value.walletName;
     let bcMessage = new bitcore.Message(message);
 
-    const signMessage = (path: string) => {
-      const privKey = new bitcore.HDPrivateKey(this.xPrivKey).deriveChild(this.wallet.credentials.rootPath).deriveChild(path).privateKey;
+    const signMessage = (xPrivKey: any, path: string) => {
+      const privKey = new bitcore.HDPrivateKey(xPrivKey).deriveChild(this.wallet.credentials.rootPath).deriveChild(path).privateKey;
 
       let ecdsa = bitcore.crypto.ECDSA().set({
         hashbuf: bcMessage.magicHash(),
@@ -106,21 +91,34 @@ export class SignMessagePage {
       this.signedMessage = sigBytes.toString('base64');
     }
 
-    signMessage(this.address.path);
+    if (this.xPrivKey == null) {
+      try {
+        let password = await this.keyProvider.handleEncryptedWallet(this.wallet.keyId);
+        const key = this.keyProvider.get(this.wallet.keyId, password);
+        this.xPrivKey = key.xPrivKey;
+      }
+      catch(err){
+        if (err && err.message != 'PASSWORD_CANCELLED') {
+          if (err.message == 'WRONG_PASSWORD') {
+            this.errorsProvider.showWrongEncryptPasswordError();
+          } else {
+            let title = this.translate.instant('Could not decrypt wallet');
+            this.showErrorInfoSheet(this.bwcErrorProvider.msg(err), title);
+          }
+        }
+        return;
+      };
+    }
+
+    signMessage(this.xPrivKey, this.address.path);
   };
 
-  public save(): void {
-    let opts = {
-      aliasFor: {}
-    };
-    opts.aliasFor[
-      this.wallet.credentials.walletId
-    ] = this.walletNameForm.value.walletName;
-    this.configProvider.set(opts);
-    this.events.publish('Local/ConfigUpdate', {
-      walletId: this.wallet.credentials.walletId
-    });
-    this.profileProvider.setOrderedWalletsByGroup();
-    this.navCtrl.pop();
+  private showErrorInfoSheet(
+    err: Error | string,
+    infoSheetTitle: string
+  ): void {
+    if (!err) return;
+    this.logger.error('Could not get keys:', err);
+    this.errorsProvider.showDefaultError(err, infoSheetTitle);
   }
 }
