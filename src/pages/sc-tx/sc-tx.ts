@@ -7,7 +7,7 @@ import { Logger } from '../../providers/logger/logger';
 import { ConfigProvider } from '../../providers/config/config';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { ScanPage } from '../scan/scan';
-import { ErrorsProvider, PlatformProvider } from '../../providers';
+import { ErrorsProvider, PlatformProvider, TxFormatProvider } from '../../providers';
 import { ConfirmScPage } from '../send/confirm-sc/confirm-sc';
 import { QrCodePayload } from 'calldataserializer';
 import _ from 'lodash';
@@ -49,7 +49,8 @@ export class ScTxPage {
     private events: Events,
     private logger: Logger,
     private platformProvider: PlatformProvider,
-    private errorsProvider: ErrorsProvider
+    private errorsProvider: ErrorsProvider,
+    private txFormatProvider: TxFormatProvider
   ) {
     this.scTxDataForm = this.formBuilder.group({
       txData: ['']
@@ -79,10 +80,13 @@ export class ScTxPage {
 
     if(this.validateInput()) { 
       let qrcodeData = JSON.parse(data.value) as QrCodePayload;
+
+      // Send page is expecting sats, but this value is in decimals
+      let amount = this.txFormatProvider.parseAmount(this.wallet.coin, parseFloat(qrcodeData.amount), 'CRS').amountSat;
       
       this.navCtrl.push(ConfirmScPage, {
         toAddress: qrcodeData.to,
-        amount: qrcodeData.amount,
+        amount,
         walletId: this.wallet.credentials.walletId,
         scData: qrcodeData,
         coin: this.wallet.coin,
