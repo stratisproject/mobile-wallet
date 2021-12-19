@@ -844,7 +844,8 @@ export class ConfirmScPage {
           }
 
           if (txp.feeTooHigh) {
-            this.showHighFeeSheet();
+            // Meaningless for SCs when sending 0 amount but still using gas
+            // this.showHighFeeSheet();
           }
 
           tx.txp[wallet.id] = txp;
