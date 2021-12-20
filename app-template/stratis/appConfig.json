@@ -25,7 +25,7 @@
   "WindowsApplicationId": "StratisforWindows",
   "pushSenderId": "1036948132229",
   "description": "A Secure Stratis Wallet",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "androidVersion": "91204002",
   "_extraCSS": null,
   "iOSBuildVersion": "1",
