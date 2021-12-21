@@ -844,7 +844,8 @@ export class ConfirmScPage {
           }
 
           if (txp.feeTooHigh) {
-            this.showHighFeeSheet();
+            // Meaningless for SCs when sending 0 amount but still using gas
+            // this.showHighFeeSheet();
           }
 
           tx.txp[wallet.id] = txp;
@@ -973,8 +974,6 @@ export class ConfirmScPage {
   }
 
   private buildScript(scData: QrCodePayload) {
-    console.log("Serializing sc data");
-
     let Address = GetAddress();
     let contractTxData = {
       vmVersion: 1,

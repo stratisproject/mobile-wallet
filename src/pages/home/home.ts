@@ -195,12 +195,12 @@ export class HomePage {
     if (this.showTotalBalance)
       this.updateTotalBalance(this.appProvider.homeBalance);
     if (this.platformProvider.isElectron) this.checkNewRelease();
-    this.showCoinbase = !!config.showIntegration['coinbase'];
-    this.setIntegrations();
-    this.setMerchantDirectoryAdvertisement();
-    this.loadAds();
-    this.fetchAdvertisements();
-    this.fetchGiftCardAdvertisement();
+    // this.showCoinbase = !!config.showIntegration['coinbase'];
+    // this.setIntegrations();
+    // this.setMerchantDirectoryAdvertisement();
+    // this.loadAds();
+    // this.fetchAdvertisements();
+    // this.fetchGiftCardAdvertisement();
     this.persistenceProvider.getDynamicLink().then((deepLink: string) => {
       if (deepLink) {
         this.persistenceProvider.setOnboardingFlowFlag('disabled');
@@ -210,8 +210,8 @@ export class HomePage {
         this.persistenceProvider
           .getOnboardingFlowFlag()
           .then((value: string) => {
-            if (value === 'enabled' && this.appProvider.info.name !== 'copay')
-              this.openAddFunds();
+            // if (value === 'enabled' && this.appProvider.info.name !== 'copay')
+            //   // this.openAddFunds();
           });
       }
     });
@@ -219,13 +219,13 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.preFetchWallets();
-    this.merchantProvider.getMerchants();
+    // this.merchantProvider.getMerchants();
 
     // Required delay to improve performance loading
-    setTimeout(() => {
-      this.checkEmailLawCompliance();
-      this.checkAltCurrency(); // Check if the alternative currency setted is no longer supported
-    }, 2000);
+    // setTimeout(() => {
+    //   this.checkEmailLawCompliance();
+    //   this.checkAltCurrency(); // Check if the alternative currency setted is no longer supported
+    // }, 2000);
   }
 
   private loadAds() {
@@ -659,8 +659,8 @@ export class HomePage {
   }
 
   public doRefresh(refresher): void {
-    this.loadAds();
-    this.fetchAdvertisements();
+    // this.loadAds();
+    // this.fetchAdvertisements();
     this.preFetchWallets();
     setTimeout(() => {
       refresher.complete();

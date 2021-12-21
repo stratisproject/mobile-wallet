@@ -1,21 +1,33 @@
 <wide-header-page title="{{'Smart Contract Transaction' | translate}}">
   <div page-content>
-    <ion-list class="settings-list bp-list">
-        <div class="settings-explanation">
-          <div class="settings-heading" translate>Enter the smart contract transaction details</div>
-          <div class="settings-description">
-            {{description}}
-          </div>
+    <ion-list class="settings-list bp-list" *ngIf="!hasScanner">
+      <div class="settings-explanation">
+        <div class="settings-heading" translate>Enter the smart contract transaction details</div>
+        <div class="settings-description">
+          {{description}}
         </div>
-        <ion-item text-wrap>
-          <ion-label stacked>{{'Smart Contract Data' | translate}}</ion-label>
-          <ion-textarea class="summary-item-detail" [(ngModel)]="txDataString" name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
-        </ion-item>
+      </div>
+      <ion-item text-wrap>
+        <ion-label stacked>{{'Smart Contract Data' | translate}}</ion-label>
+        <ion-textarea class="summary-item-detail" rows="10" [(ngModel)]="txDataString" name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
+      </ion-item>
     </ion-list>
+    <ion-row *ngIf="hasScanner">
+      <ion-col text-center>
+          <ion-icon item-center class="scan-icon" (click)="openScanner()" style="width: 100%;">
+            <img src="assets/img/scan-ico.svg" style="width: 100%;">
+          </ion-icon>
+      </ion-col>
+    </ion-row>
   </div>
-  <div footer-content>
+  <div footer-content *ngIf="hasScanner">
     <ion-toolbar>
-      <button ion-button class="button-standard" (click)="broadcastSignedMessage()" >
+      <button ion-button full class="button-footer" (click)="openScanner()">Open Scanner</button>
+    </ion-toolbar>
+  </div>
+  <div footer-content *ngIf="!hasScanner">
+    <ion-toolbar>
+      <button ion-button class="button-footer" (click)="broadcastSignedMessage()" >
         {{'Broadcast' | translate}}
       </button>
     </ion-toolbar>

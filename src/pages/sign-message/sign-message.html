@@ -1,29 +1,28 @@
 <wide-header-page title="{{'Sign Message' | translate}}">
   <div page-content>
-    <ion-list class="settings-list bp-list">
-      <div class="settings-explanation">
-        <div class="settings-heading" translate>Enter the message to sign with the {{ walletName }} wallet's private key</div>
-        <div class="settings-description">
-          {{description}}
-        </div>
-      </div>
-      <ion-item>
-        Signing address:
-        <ion-note item-end>
-          {{ address?.address }}
-        </ion-note>
+    <ion-list class="bp-list">
+      <ion-item class="sub-title">
+        <ion-label>
+          <div class="main-label" translate>Enter the message to sign with the {{ walletName }} wallet's private key</div>
+        </ion-label>
+      </ion-item>
+      <ion-item>        
+        <ion-label stacked><span translate>Signing address</span></ion-label>
+        <ion-input type="text" disabled copy-to-clipboard="{{ address?.address }}" readonly=true [value]="address?.address"></ion-input>
       </ion-item>
       <form [formGroup]="walletNameForm">
         <ion-item>
           <ion-label stacked>{{'Message' | translate}}</ion-label>
-          <ion-input type="text" formControlName="walletName" [value]="walletNameForm.value.walletName" required></ion-input>
+          <ion-input type="text" formControlName="walletName" [value]="walletNameForm.value.walletName" (change)="signMessage()" required></ion-input>
         </ion-item>
         <button ion-button class="button-standard" (click)="signMessage()" [disabled]="!walletNameForm.valid">
           {{'Sign' | translate}}
         </button>
       </form>
+      <ion-item>
+        <ion-label stacked>{{'Signed Message' | translate}}</ion-label>
+        <ion-textarea readonly=true  rows="3" [value]="signedMessage" copy-to-clipboard="{{signedMessage}}"></ion-textarea>
+      </ion-item>
     </ion-list>
-    <div class="settings-heading">{{ signedMessage }}</div>
-
   </div>
 </wide-header-page>
