@@ -8,7 +8,8 @@ const env: EnvironmentSchema = {
   name: 'production',
   enableAnimations: true,
   ratesAPI: new CurrencyProvider().getRatesApi(),
-  activateScanner: true
+  activateScanner: true,
+  defaultEndpoint: 'https://bws.stratisplatform.com/bws/api'
 };
 
 export default env;

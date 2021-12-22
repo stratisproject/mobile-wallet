@@ -4,6 +4,7 @@ import { CoinsMap } from '../providers/currency/currency';
  * the same way.
  */
 export interface EnvironmentSchema {
+  defaultEndpoint: string;
   name: 'production' | 'development';
   enableAnimations: boolean;
   ratesAPI: CoinsMap<string>;

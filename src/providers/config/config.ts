@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CoinsMap, CurrencyProvider } from '../../providers/currency/currency';
 import { Logger } from '../../providers/logger/logger';
 import { PersistenceProvider } from '../persistence/persistence';
+import env from '../../environments';
 
 import * as _ from 'lodash';
 
@@ -172,7 +173,7 @@ export class ConfigProvider {
 
       // Bitcore wallet service URL
       bws: {
-        url: 'https://bws-test.stratis.top/bws/api'
+        url: env.defaultEndpoint
       },
 
       adPubKey: {
