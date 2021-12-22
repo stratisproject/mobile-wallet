@@ -189,8 +189,9 @@ export class ConfirmAuthPage {
       this.broadcasting = false;
       
       await this.openFinishModal();
-    } catch {
+    } catch(error) {
       this.broadcasting = false;
+      this.logger.error("Could not breadcast callback: ", error);
       await this.openFinishErrorModal();
     }
   }
