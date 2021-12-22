@@ -80,15 +80,15 @@ export class WalletServiceUrlPage {
     switch (this.walletServiceForm.value.bwsurl) {
       case 'prod':
       case 'production':
-        bws = 'http://bitcore-testnet.stratis.top/api';
+        bws = 'http://bws.stratisplatform.com/bws/api';
         break;
       case 'sta':
       case 'staging':
-        bws = 'http://bitcore-testnet.stratis.top/bws';
+        bws = 'http://bws.stratisplatform.com/bws/api';
         break;
       case 'loc':
       case 'local':
-        bws = 'https://bws-test.stratis.top/bws/api';
+        bws = 'http://bws-test.stratisplatform.com/bws/api';
         break;
     }
     if (bws) {

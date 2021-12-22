@@ -81,7 +81,7 @@
         Stratis Inc.
     </author>
     <content src="index.html" />
-    <access origin="http://bws.stratis.top" />
+    <access origin="https://bws.stratisplatform.com" />
     <access origin="http://bitcore-testnet.stratis.top" />
     <access origin="http://localhost:3000" />
     <access origin="http://localhost:3032" />
