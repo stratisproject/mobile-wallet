@@ -12,12 +12,11 @@
         BitPay Inc.
     </author>
     <content src="index.html" />
-    <access origin="http://bws.stratis.top" />
-    <access origin="http://bitcore-testnet.stratis.top" />
+    <access origin="https://bws-test.stratisplatform.com" />
+    <access origin="https://bws.stratisplatform.com" />
     <access origin="http://localhost:3000" />
     <access origin="http://localhost:3032" />
     <access origin="https://walletservice-test.stratisplatform.com" />
-    <access origin="https://bws-test.stratis.top" />    
     <access origin="https://stratrates.stratisplatform.com" />
     <access origin="https://bws.bitpay.com" />
     <access origin="https://bitpay.com" />
@@ -30,7 +29,6 @@
     <access origin="https://www.coinbase.com" />
     <access origin="https://api.testwyre.com" />
     <access origin="https://api.sendwyre.com" />
-    <access origin="https://bws-test.stratis.top/" />
     <allow-navigation href="gap://ready" />
     <allow-navigation href="*" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
