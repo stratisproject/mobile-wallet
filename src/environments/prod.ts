@@ -9,7 +9,7 @@ const env: EnvironmentSchema = {
   enableAnimations: true,
   ratesAPI: new CurrencyProvider().getRatesApi(),
   activateScanner: true,
-  defaultEndpoint: 'https://bws-test.stratis.top/bws/api'
+  defaultEndpoint: 'https://bws.stratisplatform.com/bws/api'
 };
 
 export default env;

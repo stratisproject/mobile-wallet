@@ -9,7 +9,7 @@ const env: EnvironmentSchema = {
   ...production,
   // override for development:
   name: 'development',
-  defaultEndpoint: 'https://bws-test.stratis.top/bws/api'
+  defaultEndpoint: 'https://bws-test.stratisplatform.com/bws/api'
 };
 
 export default env;
