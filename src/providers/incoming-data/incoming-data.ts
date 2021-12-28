@@ -355,7 +355,7 @@ export class IncomingDataProvider {
 
   getCirrusWallets() {
     const opts = {
-      showHidden: true
+      showHidden: false
     };
 
     const wallets = this.profileProvider.getWallets(opts);
