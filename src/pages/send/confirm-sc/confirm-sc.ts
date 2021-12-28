@@ -206,55 +206,22 @@ export class ConfirmScPage {
     this.logger.info('Loaded: ConfirmScPage');
     this.navCtrl.swipeBackEnabled = false;
     this.isOpenSelector = false;
-    this.coin = this.navParams.data.coin;
-    let networkName;
-    let amount;
+    this.coin = this.wallet.coin;
+    let networkName = this.wallet.network;
+    let scData = this.navParams.data.message;
+    let toAddress = scData.to;
+    // Send page is expecting sats, but this value is in decimals
+    let amount = this.txFormatProvider.parseAmount(this.wallet.coin, parseFloat(scData.amount), 'CRS').amountSat;
+
     this.setTitle();
     console.log("ionviewdidload")
-    if (this.fromMultiSend) {
-      networkName = this.navParams.data.network;
-      amount = this.navParams.data.totalAmount;
-    } else if (this.fromSelectInputs) {
-      networkName = this.navParams.data.network;
-      amount = this.navParams.data.amount
-        ? this.navParams.data.amount
-        : this.navParams.data.totalInputsAmount;
-    } else {
-      amount = this.navParams.data.amount;
-      try {
-        networkName = this.addressProvider.getCoinAndNetwork(
-          this.navParams.data.toAddress,
-          this.navParams.data.network || ''
-        ).network;
-      } catch (e) {
-        const message = this.replaceParametersProvider.replace(
-          this.translate.instant(
-            '{{appName}} only supports Bitcoin Cash using new version numbers addresses.'
-          ),
-          { appName: this.appName }
-        );
-        const backText = this.translate.instant('Go back');
-        const learnText = this.translate.instant('Learn more');
-        this.popupProvider
-          .ionicConfirm(null, message, backText, learnText)
-          .then(back => {
-            if (!back) {
-              const url =
-                'https://stratisplatform.com/';
-              this.externalLinkProvider.open(url);
-            }
-            this.navCtrl.pop();
-          });
-        return;
-      }
-    }
 
     this.tx = {
-      toAddress: this.navParams.data.toAddress,
+      toAddress,
       description: this.navParams.data.description,
       paypro: this.navParams.data.paypro,
       data: this.navParams.data.data, // eth
-      scData: this.navParams.data.scData, // crs
+      scData, // crs
       payProUrl: this.navParams.data.payProUrl,
       spendUnconfirmed: this.config.wallet.spendUnconfirmed,
 
@@ -262,10 +229,8 @@ export class ConfirmScPage {
       recipientType: this.navParams.data.recipientType,
       email: this.navParams.data.email,
       color: this.navParams.data.color,
-      network: this.navParams.data.network
-        ? this.navParams.data.network
-        : networkName,
-      coin: this.navParams.data.coin,
+      network: networkName,
+      coin: this.wallet.coin,
       txp: {},
       multisigContractAddress: this.navParams.data.multisigContractAddress,
       tokenAddress: this.navParams.data.tokenAddress,

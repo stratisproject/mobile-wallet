@@ -262,13 +262,14 @@ export class IncomingDataProvider {
     let authData = this.parseAuthLoginCode(data);
 
     if (authData != null) {
-      this.navigateToAuthConfirm('ConfirmAuthPage', authData);
+      this.navigateToAuthConfirm(authData);
       return true;
     }
 
     let scData = this.parseSmartContractTx(data);
 
     if (scData != null) {
+      this.navigateToScConfirm(scData);
       return true;
     }
 
@@ -326,7 +327,36 @@ export class IncomingDataProvider {
     return false;    
   }
 
-  navigateToAuthConfirm(page: string, data: AuthData) {
+  navigateToAuthConfirm(data: AuthData) {
+    let page = 'ConfirmAuthPage';
+    let cirrusWallets = this.getCirrusWallets();
+
+    if (cirrusWallets.length == 1) {
+      this.logger.info("Navigate to " + page);
+
+      let wallet = cirrusWallets[0];
+
+      let params = {
+        walletId: wallet.credentials.walletId,
+        message: data
+      }
+
+      let nextView = {
+        name: page,
+        params
+      };
+
+      this.incomingDataRedir(nextView);
+    }
+
+    if (cirrusWallets.length > 1) {
+      // TODO nav to wallet select screen
+      this.logger.info("Can't navigate as there is more than 1 cirrus wallet");
+    }
+  }
+
+  navigateToScConfirm(data: QrCodePayload) {
+    let page = 'ConfirmScPage';
     let cirrusWallets = this.getCirrusWallets();
 
     if (cirrusWallets.length == 1) {

@@ -80,18 +80,10 @@ export class ScTxPage {
 
     if(this.validateInput()) { 
       let qrcodeData = JSON.parse(data.value) as QrCodePayload;
-
-      // Send page is expecting sats, but this value is in decimals
-      let amount = this.txFormatProvider.parseAmount(this.wallet.coin, parseFloat(qrcodeData.amount), 'CRS').amountSat;
       
       this.navCtrl.push(ConfirmScPage, {
-        toAddress: qrcodeData.to,
-        amount,
         walletId: this.wallet.credentials.walletId,
-        scData: qrcodeData,
-        coin: this.wallet.coin,
-        network: this.wallet.network,
-        useSendMax: false,
+        message: qrcodeData
       });
     }
   };
