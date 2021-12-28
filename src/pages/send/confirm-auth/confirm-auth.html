@@ -4,7 +4,7 @@
     <ion-list *ngIf="message" class="bp-list">
       <ion-item class="sub-title">
         <ion-label>
-          <div class="main-label" translate>SUMMARY</div>
+          <div class="main-label" translate>SUMMARY</div><ion-spinner name="crescent" *ngIf="signingAddressLoading" item-end></ion-spinner>
         </ion-label>
       </ion-item>
 
@@ -25,7 +25,7 @@
 
       <ion-item>        
         <ion-label stacked><span translate>Signing address</span></ion-label>
-        <ion-textarea disabled rows=3 copy-to-clipboard="{{ signingAddress?.address }}" readonly=true [value]="signingAddress?.address" style="height: 60px;"></ion-textarea>
+        <ion-input disabled copy-to-clipboard="{{ signingAddress?.address }}" readonly=true [value]="signingAddress?.address" style="height: 60px;"></ion-input>
       </ion-item>
 
       <div class="line-divider"></div>
@@ -35,7 +35,7 @@
 
   <div footer-content>    
     <ion-toolbar>
-      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="broadcasting">Sign & Callback</button>
+      <button ion-button full class="button-footer" (click)="signAndBroadcastLogin()" [disabled]="broadcasting || signingAddressLoading || !signingAddress">Sign & Callback</button>
     </ion-toolbar>
   </div>
 </wide-header-page>

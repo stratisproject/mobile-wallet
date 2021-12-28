@@ -68,6 +68,7 @@ export class ConfirmAuthPage {
   knownHostname: boolean;
   broadcasting: boolean;
   signingAddress: { address: string; path: string; };
+  signingAddressLoading = false;
 
   constructor(
     protected addressProvider: AddressProvider,
@@ -110,7 +111,9 @@ export class ConfirmAuthPage {
   }
   
   async ngOnInit() {
+    this.signingAddressLoading = true;
     this.signingAddress = await this.getSigningAddress();
+    this.signingAddressLoading = false;
   }
 
   ionViewWillEnter() {
@@ -180,11 +183,11 @@ export class ConfirmAuthPage {
       return;
     };
 
-    let signingAddress = await this.getSigningAddress();
-
-    let signedMessage = this.signMessage(this.message.messageToSign, xPrivKey, signingAddress.path);
+    let signingAddress = this.signingAddress;
 
     try {
+      let signedMessage = this.signMessage(this.message.messageToSign, xPrivKey, signingAddress.path);
+
       this.broadcasting = true;
       await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, publicKey: signingAddress.address, signature: signedMessage} );
       this.broadcasting = false;
@@ -192,7 +195,7 @@ export class ConfirmAuthPage {
       await this.openFinishModal();
     } catch(error) {
       this.broadcasting = false;
-      this.logger.error("Could not breadcast callback: ", error);
+      this.logger.error("Could not broadcast callback: ", error);
       await this.openFinishErrorModal();
     }
   }
