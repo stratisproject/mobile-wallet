@@ -339,7 +339,7 @@ export class IncomingDataProvider {
       let params = {
         walletId: wallet.credentials.walletId,
         message: data
-      }
+      };
 
       let nextView = {
         name: page,
@@ -352,6 +352,7 @@ export class IncomingDataProvider {
     if (cirrusWallets.length > 1) {
       // TODO nav to wallet select screen
       this.logger.info("Can't navigate as there is more than 1 cirrus wallet");
+      this.showMultiWalletError();
     }
   }
 
@@ -367,7 +368,7 @@ export class IncomingDataProvider {
       let params = {
         walletId: wallet.credentials.walletId,
         message: data
-      }
+      };
 
       let nextView = {
         name: page,
@@ -380,6 +381,7 @@ export class IncomingDataProvider {
     if (cirrusWallets.length > 1) {
       // TODO nav to wallet select screen
       this.logger.info("Can't navigate as there is more than 1 cirrus wallet");
+      this.showMultiWalletError();
     }
   }
 
@@ -680,5 +682,16 @@ export class IncomingDataProvider {
     } else {
       this.events.publish('IncomingDataRedir', nextView);
     }
+  }
+
+  private showMultiWalletError() {
+    this.actionSheetProvider
+      .createInfoSheet('default-error', {
+        msg: this.translate.instant(
+          'Multiple Cirrus wallets are defined. Please select the specific wallet and scan the code using the drop-down menu.'
+        ),
+        title: this.translate.instant('Multiple Cirrus Wallets')
+      })
+      .present();
   }
 }
