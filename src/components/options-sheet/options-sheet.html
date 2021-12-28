@@ -10,7 +10,7 @@
         </ion-label>
       </button>
 
-      <button ion-item (click)="optionClicked('sign-message')">
+      <button ion-item (click)="optionClicked('sign-message')" *ngIf="params.showSmartContracts">
         <ion-icon class="item-img icon-settings" item-start>
           <img src="assets/img/specific-amount.svg">
         </ion-icon>
