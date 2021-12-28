@@ -65,7 +65,6 @@ export class ConfirmAuthPage {
   coin: any;
   mainTitle: any;
   message: AuthData;
-  signingAddress: any;
   knownHostname: boolean;
   broadcasting: boolean;
 
@@ -116,20 +115,6 @@ export class ConfirmAuthPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.message = this.navParams.data.message;
-
-    this.walletProvider.getAddress(this.wallet, false).then(address => {
-      // On Cirrus we want the first child (address 0) of the first child (change/non-change).
-
-      const changeNum = 0; // Not change
-      const addressIndex = 0; // Always the first address on Cirrus
-      const path = `m/${changeNum}/${addressIndex}`;
-
-      this.signingAddress = {
-        address,
-        path
-      };
-    });
-
 
     // If it's invalid we can't use it at all for some reason.
     let callbackHostname = this.getHostName(this.message.callbackUrl);
@@ -194,11 +179,13 @@ export class ConfirmAuthPage {
       return;
     };
 
-    let signedMessage = this.signMessage(this.message.messageToSign, xPrivKey);
+    let signingAddress = await this.getSigningAddress();
+
+    let signedMessage = this.signMessage(this.message.messageToSign, xPrivKey, signingAddress.path);
 
     try {
       this.broadcasting = true;
-      await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, publicKey: this.signingAddress.address, signature: signedMessage} );
+      await this.walletProvider.callbackAuthURL(this.wallet, { callbackUrl: this.message.callbackUrl.href, publicKey: signingAddress.address, signature: signedMessage} );
       this.broadcasting = false;
       
       await this.openFinishModal();
@@ -209,7 +196,7 @@ export class ConfirmAuthPage {
     }
   }
 
-  signMessage(message: string, xPrivKey: string): string {
+  signMessage(message: string, xPrivKey: string, addressPath: string): string {
     let bitcore = this.wallet.coin == 'crs' ? this.bwcProvider.getBitcoreCirrus() : this.bwcProvider.getBitcoreStrax();
     let bcMessage = new bitcore.Message(message);
 
@@ -228,9 +215,22 @@ export class ConfirmAuthPage {
       return sigBytes.toString('base64');
     }
 
-    return signMessage(this.signingAddress.path);
+    return signMessage(addressPath);
   };
 
+  private async getSigningAddress(): Promise<{ address: string, path: string }> {
+    let address = await this.walletProvider.getAddress(this.wallet, false);
+    // On Cirrus we want the first child (address 0) of the first child (change/non-change).
+
+    const changeNum = 0; // Not change
+    const addressIndex = 0; // Always the first address on Cirrus
+    const path = `m/${changeNum}/${addressIndex}`;
+
+    return {
+      address,
+      path
+    };
+  }
 
   private async openFinishModal() {
     let params: {
