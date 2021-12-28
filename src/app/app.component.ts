@@ -77,6 +77,7 @@ import { AboutPage } from '../pages/settings/about/about';
 import { AddressbookAddPage } from '../pages/settings/addressbook/add/add';
 import { TabsPage } from '../pages/tabs/tabs';
 import { WalletDetailsPage } from '../pages/wallet-details/wallet-details';
+import { ConfirmAuthPage } from '../pages/send/confirm-auth/confirm-auth';
 // As the handleOpenURL handler kicks in before the App is started,
 // declare the handler function at the top of app.component.ts (outside the class definition)
 // to track the passed Url
@@ -112,6 +113,7 @@ export class CopayApp {
     CoinbasePage,
     ConfirmPage,
     ConfirmScPage,
+    ConfirmAuthPage,
     CopayersPage,
     ImportWalletPage,
     JoinWalletPage,
