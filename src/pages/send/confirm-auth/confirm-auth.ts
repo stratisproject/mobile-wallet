@@ -112,8 +112,18 @@ export class ConfirmAuthPage {
   
   async ngOnInit() {
     this.signingAddressLoading = true;
-    this.signingAddress = await this.getSigningAddress();
-    this.signingAddressLoading = false;
+
+    // Sometimes it's not possible to get the signing address if the user has not backed up their key.
+    // In this instance, we should show an error.
+    try {
+      this.signingAddress = await this.getSigningAddress();
+    }
+    catch (err) {
+      this.bwcErrorProvider.msg(err, 'Confirm Auth');
+    }
+    finally {
+      this.signingAddressLoading = false;
+    }
   }
 
   ionViewWillEnter() {
