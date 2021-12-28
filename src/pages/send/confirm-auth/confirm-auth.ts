@@ -67,6 +67,7 @@ export class ConfirmAuthPage {
   message: AuthData;
   knownHostname: boolean;
   broadcasting: boolean;
+  signingAddress: { address: string; path: string; };
 
   constructor(
     protected addressProvider: AddressProvider,
@@ -108,8 +109,8 @@ export class ConfirmAuthPage {
     this.showMultiplesOutputs = false;
   }
   
-  ngOnInit() {
-    
+  async ngOnInit() {
+    this.signingAddress = await this.getSigningAddress();
   }
 
   ionViewWillEnter() {
