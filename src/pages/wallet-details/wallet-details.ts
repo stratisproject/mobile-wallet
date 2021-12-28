@@ -815,7 +815,7 @@ export class WalletDetailsPage {
         this.navCtrl.push(SignMessagePage, {
           privKey: null,
           walletName: this.wallet.name,
-          thisAddress,
+          address: thisAddress,
           walletId: this.wallet.credentials.walletId,
         });
       });
