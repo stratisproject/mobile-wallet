@@ -1,6 +1,6 @@
 {
   "name": "*USERVISIBLENAME*",
-  "app_id": "com.stratis.live",
+  "app_id": "com.stratisplatform.mobile",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

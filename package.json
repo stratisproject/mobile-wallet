@@ -2,7 +2,7 @@
   "name": "stratiswallet",
   "description": "A Secure Stratis Wallet",
   "author": "BitPay",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "keywords": [
     "bitcoin",
     "wallet",

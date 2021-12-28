@@ -1,7 +1,7 @@
 {
   "packageName": "stratiswallet",
   "packageDescription": "Stratis Mobile Wallet",
-  "packageNameId": "com.stratis.live",
+  "packageNameId": "com.stratisplatform.mobile",
   "packageNameIdDesktop": "com.bitpay.copay.desktop2",
   "themeColor": "#192c3a",
   "userVisibleName": "Stratis Wallet",

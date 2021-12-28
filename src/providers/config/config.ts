@@ -194,13 +194,13 @@ export class ConfigProvider {
           ios:
             'https://itunes.apple.com/app/stratiswallet-secure-bitcoin-wallet/id1149581638',
           android:
-            'https://play.google.com/store/apps/details?id=com.stratis.live',
+            'https://play.google.com/store/apps/details?id=com.stratisplatform.mobile',
           wp: ''
         },
         copay: {
           ios: 'https://itunes.apple.com/app/strais-bitcoin-wallet/id951330296',
           android:
-            'https://play.google.com/store/apps/details?id=com.stratis.live',
+            'https://play.google.com/store/apps/details?id=com.stratisplatform.mobile',
           wp: ''
         }
       },

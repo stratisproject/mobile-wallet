@@ -162,7 +162,7 @@ npm run final:desktop
 Per-user application data directory for BitPay distribution.
 
 ```sh
-"~/Library/Containers/com.stratis.live.desktop/Data/.bitpay"
+"~/Library/Containers/com.stratisplatform.desktop/Data/.bitpay"
 ```
 
 ## Configuration

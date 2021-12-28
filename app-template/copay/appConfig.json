@@ -1,8 +1,8 @@
 {
   "packageName": "stratiswallet",
   "packageDescription": "Stratis Mobile Wallet",
-  "packageNameId": "com.stratis.live",
-  "packageNameIdDesktop": "com.stratis.live.desktop2",
+  "packageNameId": "com.stratisplatform.mobile",
+  "packageNameIdDesktop": "com.stratisplatform.desktop",
   "themeColor": "#192c3a",
   "userVisibleName": "Stratis Wallet",
   "purposeLine": "Stratis Mobile Wallet",
