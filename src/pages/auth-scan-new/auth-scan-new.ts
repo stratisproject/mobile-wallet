@@ -9,7 +9,7 @@ import { ErrorsProvider, PlatformProvider } from '../../providers';
 // providers
 import { AppProvider } from '../../providers/app/app';
 import { Logger } from '../../providers/logger/logger';
-import { AuthData } from '../auth-scan/auth-scan';
+import { AuthData } from "../../models/auth/authdata";
 
 // validators
 import { ScanPage } from '../scan/scan';

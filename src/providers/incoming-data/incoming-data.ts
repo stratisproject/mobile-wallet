@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { QrCodePayload } from 'calldataserializer';
 import { Events } from 'ionic-angular';
 import * as _ from 'lodash';
+import { TxFormatProvider, WalletProvider } from '..';
+import { AuthData } from "../../models/auth/authdata";
 
 // providers
 import { ActionSheetProvider } from '../action-sheet/action-sheet';
@@ -255,6 +258,21 @@ export class IncomingDataProvider {
       this.activePage = redirParams.activePage;
     }
 
+    // Auth/login code
+    let authData = this.parseAuthLoginCode(data);
+
+    if (authData != null) {
+      this.navigateToCirrusWalletOrWalletSelect('ConfirmAuthPage');
+      return true;
+    }
+
+    let scData = this.parseSmartContractTx(data);
+
+    if (scData != null) {
+      this.navigateToCirrusWalletOrWalletSelect('ConfirmScPage');
+      return true;
+    }
+
     // Strax address
     if (this.isValidStraxAddress(data)) {
       this.handlePlainStraxAddress(data, redirParams);
@@ -307,6 +325,87 @@ export class IncomingDataProvider {
 
     this.logger.warn('Incoming-data: Unknown information');
     return false;    
+  }
+
+  navigateToCirrusWalletOrWalletSelect(page: string) {
+    let cirrusWallets = this.getCirrusWallets();
+
+    if (cirrusWallets.length == 1) {
+      this.logger.info("Navigate to " + page);
+
+      let wallet = cirrusWallets[0];
+
+      let nextView = {
+        name: page,
+        wallet
+      };
+
+      this.incomingDataRedir(nextView);
+    }
+
+    if (cirrusWallets.length > 1) {
+      // TODO nav to wallet select screen
+      this.logger.info("Navigate to select wallet screen");
+    }
+  }
+
+  getCirrusWallets() {
+    const opts = {
+      showHidden: true
+    };
+
+    const wallets = this.profileProvider.getWallets(opts);
+
+    return wallets.filter(w => w.coin == Coin.CRS);
+  }
+
+  private parseAuthLoginCode(data: string): AuthData {
+    try {
+      let url = new URL(data);
+
+      let authData = new AuthData(url);
+
+      this.logger.info("Scanned login URL: " + authData.uri.toString())
+
+      return authData;
+    }
+    catch (e) {
+      return null;
+    }
+  }
+
+  private parseSmartContractTx(data: string): QrCodePayload {
+
+    let instanceOfQrCodeParameters = (parameters: []) => {
+      return Array.isArray(parameters) && parameters.every(p => instanceOfQrCodeParameter(p));
+    }
+  
+    let instanceOfQrCodeParameter = (data: any) => {
+      return 'label' in data
+        && 'value' in data;
+    }
+
+    let instanceOfQrCodePayload = (data: any) => {
+      return 'to' in data
+        && 'amount' in data
+        && 'method' in data
+        && 'parameters' in data
+        && 'callback' in data
+        && instanceOfQrCodeParameters(data.parameters);
+    }
+  
+    try {
+      let result = JSON.parse(data);
+
+      if(!instanceOfQrCodePayload(result)) {
+        return null;
+      }
+
+      return result;
+    }
+    catch (e) { 
+      return null;
+    }
   }
 
   public parseData(data: string): any {

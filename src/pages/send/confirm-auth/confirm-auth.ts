@@ -8,7 +8,7 @@ import {
   NavParams
 } from 'ionic-angular';
 import * as _ from 'lodash';
-import { AuthData } from '../../../pages/auth-scan/auth-scan';
+import { AuthData } from "../../../models/auth/authdata";
 import { KeyProvider } from '../../../providers';
 
 // Providers
