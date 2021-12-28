@@ -717,7 +717,7 @@ export class WalletDetailsPage {
     const showShare = showRequest && this.isCordova;
     const optionsSheet = this.actionSheetProvider.createOptionsSheet(
       'wallet-options',
-      { showShare, showRequest }
+      { showShare, showRequest, showSmartContracts: this.wallet.coin == 'crs' }
     );
     optionsSheet.present();
 

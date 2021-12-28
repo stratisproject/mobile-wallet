@@ -19,7 +19,7 @@
         </ion-label>
       </button>
 
-      <button ion-item (click)="optionClicked('sc-tx')">
+      <button ion-item (click)="optionClicked('sc-tx')" *ngIf="params.showSmartContracts">
         <ion-icon class="item-img icon-settings" item-start>
           <img src="assets/img/specific-amount.svg">
         </ion-icon>
@@ -28,7 +28,7 @@
         </ion-label>
       </button>
 
-      <button ion-item (click)="optionClicked('auth-scan-2')">
+      <button ion-item (click)="optionClicked('auth-scan-2')" *ngIf="params.showSmartContracts">
         <ion-icon class="item-img icon-settings" item-start>
           <img src="assets/img/specific-amount.svg">
         </ion-icon>
