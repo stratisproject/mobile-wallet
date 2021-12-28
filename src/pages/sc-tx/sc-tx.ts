@@ -18,19 +18,6 @@ import _ from 'lodash';
 })
 export class ScTxPage {
   public wallet;
-
-  // Base64 encoded tx data
-  public get txData() {
-     return this.txDataString;
-  }
-
-  public txDataString: string = JSON.stringify({
-    to: "tCzkmt5BPJVQHqtygbboc9qhLxbGGAruHQ",
-    method: "Deposit",
-    amount: "50000000", // SATS
-    parameters: [],
-    callback: "https://enjrxoquzz7e.x.pipedream.net/"
-  } as QrCodePayload);
    
   public privKey: string;
 
@@ -53,7 +40,15 @@ export class ScTxPage {
     private txFormatProvider: TxFormatProvider
   ) {
     this.scTxDataForm = this.formBuilder.group({
-      txData: ['']
+      txData: [
+        JSON.stringify({
+          to: "tCzkmt5BPJVQHqtygbboc9qhLxbGGAruHQ",
+          method: "Deposit",
+          amount: "0.01", // CRS
+          parameters: [],
+          callback: "https://enjrxoquzz7e.x.pipedream.net/"
+        } as QrCodePayload)
+      ]
     });
     
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
@@ -76,7 +71,6 @@ export class ScTxPage {
     this.logger.info('ScTx: updateScTxDataHandler called');
 
     this.logger.info(data);
-    this.txDataString = data.value;
 
     if(this.validateInput()) { 
       let qrcodeData = JSON.parse(data.value) as QrCodePayload;
@@ -108,7 +102,7 @@ export class ScTxPage {
 
   private validateInput() {
     try {
-      let result = JSON.parse(this.txDataString);
+      let result = JSON.parse(this.scTxDataForm.controls['txData'].value);
 
       if(!this.instanceOfQrCodePayload(result)) {
         throw new Error("Not a correctly formatted QR code");
@@ -135,11 +129,7 @@ export class ScTxPage {
     this.navCtrl.push(ScanPage, { fromScTx: true });
   }
 
-  jsonTxData() {
-    return JSON.stringify(this.txData);
-  }
-
   broadcastSignedMessage() {
-    this.events.publish('Local/ScTx', { value: this.txDataString });
+    this.events.publish('Local/ScTx', { value: this.scTxDataForm.controls['txData'].value });
   }
 }

@@ -1,17 +1,11 @@
 <wide-header-page title="{{'Smart Contract Transaction' | translate}}">
   <div page-content>
-    <ion-list class="settings-list bp-list" *ngIf="!hasScanner">
-      <div class="settings-explanation">
-        <div class="settings-heading" translate>Enter the smart contract transaction details</div>
-        <div class="settings-description">
-          {{description}}
-        </div>
-      </div>
-      <ion-item text-wrap>
+    <form [formGroup]="scTxDataForm">
+      <ion-item text-wrap *ngIf="!hasScanner">
         <ion-label stacked>{{'Smart Contract Data' | translate}}</ion-label>
-        <ion-textarea class="summary-item-detail" rows="10" [(ngModel)]="txDataString" name="txData" autocomplete="off" autocorrect="off"></ion-textarea>
+        <ion-textarea formControlName="txData" rows="10" name="txData" autocomplete="off" autocorrect="off" type="text"></ion-textarea>
       </ion-item>
-    </ion-list>
+    </form>
     <ion-row *ngIf="hasScanner">
       <ion-col text-center>
           <ion-icon item-center class="scan-icon" (click)="openScanner()" style="width: 100%;">
