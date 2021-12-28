@@ -775,20 +775,8 @@ export class WalletDetailsPage {
   }
 
   private authScan2(): void {
-    this.walletProvider.getAddress(this.wallet, false).then(address => {
-      // On Cirrus we want the first child (address 0) of the first child (change/non-change).
-
-      const changeNum = 0; // Not change
-      const addressIndex = 0; // Always the first address on Cirrus
-      const path = `m/${changeNum}/${addressIndex}`;
-
-      this.navCtrl.push(AuthScanNewPage, {
-        signingAddress: {
-          address,
-          path
-        },
-        walletId: this.wallet.credentials.walletId,
-      });
+    this.navCtrl.push(AuthScanNewPage, {
+      walletId: this.wallet.credentials.walletId,
     });
   }
 

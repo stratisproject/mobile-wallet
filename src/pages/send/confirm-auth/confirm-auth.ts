@@ -116,7 +116,20 @@ export class ConfirmAuthPage {
   ionViewWillEnter() {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.message = this.navParams.data.message;
-    this.signingAddress = this.navParams.data.signingAddress;
+
+    this.walletProvider.getAddress(this.wallet, false).then(address => {
+      // On Cirrus we want the first child (address 0) of the first child (change/non-change).
+
+      const changeNum = 0; // Not change
+      const addressIndex = 0; // Always the first address on Cirrus
+      const path = `m/${changeNum}/${addressIndex}`;
+
+      this.signingAddress = {
+        address,
+        path
+      };
+    });
+
 
     // If it's invalid we can't use it at all for some reason.
     let callbackHostname = this.getHostName(this.message.callbackUrl);

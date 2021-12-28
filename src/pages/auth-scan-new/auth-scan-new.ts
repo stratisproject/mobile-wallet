@@ -90,7 +90,6 @@ export class AuthScanNewPage {
     this.navCtrl.push(ConfirmAuthPage, {
       message: loginData,
       walletId: this.navParams.data.walletId,
-      signingAddress: this.navParams.data.signingAddress
     });
   }
   
