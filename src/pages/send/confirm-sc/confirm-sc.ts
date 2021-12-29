@@ -210,11 +210,14 @@ export class ConfirmScPage {
     let networkName = this.wallet.network;
     let scData = this.navParams.data.message;
     let toAddress = scData.to;
-    // Send page is expecting sats, but this value is in decimals
-    let amount = this.txFormatProvider.parseAmount(this.wallet.coin, parseFloat(scData.amount), 'CRS').amountSat;
+
 
     this.setTitle();
     console.log("ionviewdidload")
+
+    if (!this.wallet) {
+      this.logger.info("Wallet is null in ionViewDidLoad before this.tx is set");
+    }
 
     this.tx = {
       toAddress,
@@ -230,7 +233,7 @@ export class ConfirmScPage {
       email: this.navParams.data.email,
       color: this.navParams.data.color,
       network: networkName,
-      coin: this.wallet.coin,
+      coin: Coin.CRS,
       txp: {},
       multisigContractAddress: this.navParams.data.multisigContractAddress,
       tokenAddress: this.navParams.data.tokenAddress,
@@ -246,6 +249,9 @@ export class ConfirmScPage {
 
     this.tx.sendMax = this.navParams.data.useSendMax ? true : false;
 
+    // Send page is expecting sats, but this value is in decimals
+    let amount = this.txFormatProvider.parseAmount(Coin.CRS, parseFloat(scData.amount), 'CRS').amountSat;
+    
     this.tx.amount =
       this.navParams.data.useSendMax && this.shouldUseSendMax()
         ? 0
@@ -372,6 +378,11 @@ export class ConfirmScPage {
 
   private setWallet(wallet): void {
     this.wallet = wallet;
+
+    if (!this.wallet) {
+      this.logger.info("Wallet is null in setWallet");
+    }
+
     this.coinbaseAccount = null;
 
     // If select another wallet
@@ -1331,6 +1342,14 @@ export class ConfirmScPage {
   }
 
   public approve(tx, wallet): Promise<void> {
+    if (!wallet) {
+      this.logger.info("Wallet is null in approve");
+    }
+
+    if (!tx) {
+      this.logger.info("tx is null in approve");
+    }
+
     if (!tx || (!wallet && !this.coinbaseAccount)) return undefined;
 
     if (this.paymentExpired) {
