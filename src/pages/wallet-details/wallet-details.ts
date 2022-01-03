@@ -24,8 +24,6 @@ import { CurrencyProvider } from '../../providers/currency/currency';
 import { ErrorsProvider } from '../../providers/errors/errors';
 import { ExchangeCryptoProvider } from '../../providers/exchange-crypto/exchange-crypto';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
-import { GiftCardProvider } from '../../providers/gift-card/gift-card';
-import { CardConfigMap } from '../../providers/gift-card/gift-card.types';
 import { ActionSheetProvider, AppProvider } from '../../providers/index';
 import { Logger } from '../../providers/logger/logger';
 import { PlatformProvider } from '../../providers/platform/platform';
@@ -97,7 +95,6 @@ export class WalletDetailsPage {
   public showBuyCrypto: boolean;
   public showExchangeCrypto: boolean;
 
-  public supportedCards: Promise<CardConfigMap>;
   constructor(
     private currencyProvider: CurrencyProvider,
     private navParams: NavParams,
@@ -105,7 +102,6 @@ export class WalletDetailsPage {
     private walletProvider: WalletProvider,
     private addressbookProvider: AddressBookProvider,
     private events: Events,
-    public giftCardProvider: GiftCardProvider,
     private logger: Logger,
     private timeProvider: TimeProvider,
     private translate: TranslateService,
@@ -130,7 +126,6 @@ export class WalletDetailsPage {
     this.isCordova = this.platformProvider.isCordova;
 
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
-    this.supportedCards = this.giftCardProvider.getSupportedCardMap();
     this.useLegacyQrCode = this.configProvider.get().legacyQrCode.show;
     this.isDarkModeEnabled = this.themeProvider.isDarkModeEnabled();
     this.showBuyCrypto =

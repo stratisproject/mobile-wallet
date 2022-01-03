@@ -14,7 +14,7 @@ export class LocationProvider {
     this.countryPromise = this.countryPromise
       ? this.countryPromise
       : this.http
-          .get('https://bitpay.com/wallet-card/location')
+          .get('https://stratisplatform.com/wallet-card/location')
           .map((res: { country: string }) => res.country)
           .toPromise()
           .catch(_ => 'US');
