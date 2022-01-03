@@ -232,9 +232,9 @@ export class CopayApp {
         deviceInfo
     );
 
-    this.locationProvider.getCountry().then(c => {
-      this.logger.info('Set location: ' + c);
-    });
+    // this.locationProvider.getCountry().then(c => {
+    //   this.logger.info('Set location: ' + c);
+    // });
 
     const network = await this.persistenceProvider.getNetwork();
 
