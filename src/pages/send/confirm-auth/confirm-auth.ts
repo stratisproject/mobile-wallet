@@ -42,12 +42,17 @@ import {
 import { parseDomain, ParseResultType } from "parse-domain";
 import { Url } from 'url';
 import { FinishModalPage } from '../../../pages/finish/finish';
-import { ScanPage } from '../../../pages/scan/scan';
 
+// These have wildcarded subdomains.
 export const KNOWN_URL_DOMAINS = [
-  "example.com",
-  "opdex.com"
+  "opdex.com",
+  "stratisphere.com"
 ];
+
+// These hosts must be matched exactly.
+export const KNOWN_URL_HOSTS = [
+  "nftmarketplacetest.azurewebsites.net"
+]
 
 @Component({
   selector: 'page-confirm-auth',
@@ -130,9 +135,20 @@ export class ConfirmAuthPage {
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
     this.message = this.navParams.data.message;
 
-    // If it's invalid we can't use it at all for some reason.
-    let callbackHostname = this.getHostName(this.message.callbackUrl);
-    this.knownHostname = callbackHostname != null 
+    this.knownHostname = this.checkCallbackUrlWhitelist(this.message.callbackUrl);
+  }
+
+  checkCallbackUrlWhitelist(callbackUrl: Url): boolean {
+
+    // Try matching the exact subdomain first.
+    if (KNOWN_URL_HOSTS.indexOf(callbackUrl.hostname) !== -1) {
+      return true;
+    }
+
+    // Check if the domain is whitelisted.
+    let callbackHostname = this.getHostName(callbackUrl);
+
+    return callbackHostname != null 
       ? KNOWN_URL_DOMAINS.indexOf(callbackHostname) !== -1
       : false;
   }
