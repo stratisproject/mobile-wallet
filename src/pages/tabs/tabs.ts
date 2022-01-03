@@ -124,8 +124,7 @@ export class TabsPage {
       this.events.unsubscribe('experimentUpdateStart');
     });
 
-    this.checkCardEnabled();
-    this.tabProvider.prefetchGiftCards();
+    // this.checkCardEnabled();
   }
 
   ngOnDestroy() {
