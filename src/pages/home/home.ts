@@ -189,7 +189,7 @@ export class HomePage {
     const config = this.configProvider.get();
     this.totalBalanceAlternativeIsoCode =
       config.wallet.settings.alternativeIsoCode;
-    this.events.publish('Local/showNewFeaturesSlides');
+    // this.events.publish('Local/showNewFeaturesSlides');
     this.checkFeedbackInfo();
     this.showTotalBalance = config.totalBalance.show;
     if (this.showTotalBalance)

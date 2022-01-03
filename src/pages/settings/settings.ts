@@ -194,8 +194,6 @@ export class SettingsPage {
     this.useLegacyQrCode = this.config.legacyQrCode.show;
 
     this.showTotalBalance = this.config.totalBalance.show;
-
-    this.featureList = await this.newFeatureData.get();
   }
 
   ionViewDidEnter() {
