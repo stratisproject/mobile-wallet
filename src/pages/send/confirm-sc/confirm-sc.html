@@ -145,7 +145,7 @@
       </ion-item>
 
       <div *ngIf="tx && fromMultiSend && showMultiplesOutputs">
-        <ion-item *ngFor="let recipient of recipients; let i = index" copy-to-clipboard="{{recipient.toAddress}}">
+        <ion-item *ngFor="let recipient of recipients; let i = index">
           <ion-label>
             <div class="summary-item">
               <span translate>Recipient {{ i + 1 }}</span>
