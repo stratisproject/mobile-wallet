@@ -419,6 +419,7 @@ export class ConfirmScPage {
     this.updateTx(this.tx, this.wallet, { dryRun: true }).catch(err => {
       const previousView = this.navCtrl.getPrevious().name;
       switch (err) {
+        case 'insufficient_funds_for_fee':
         case 'insufficient_funds':
           if (this.showUseUnconfirmedMsg()) {
             this.showErrorInfoSheet(
