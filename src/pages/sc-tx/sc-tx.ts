@@ -40,15 +40,7 @@ export class ScTxPage {
     private txFormatProvider: TxFormatProvider
   ) {
     this.scTxDataForm = this.formBuilder.group({
-      txData: [
-        JSON.stringify({
-          to: "tCzkmt5BPJVQHqtygbboc9qhLxbGGAruHQ",
-          method: "Deposit",
-          amount: "0.01", // CRS
-          parameters: [],
-          callback: "https://enjrxoquzz7e.x.pipedream.net/"
-        } as QrCodePayload)
-      ]
+      txData: []
     });
     
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
