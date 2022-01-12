@@ -61,8 +61,6 @@ export const KNOWN_CONTRACTS_MAINNET = {
   templateUrl: 'confirm-sc.html'
 })
 export class ConfirmScPage {
-  @ViewChild('slideButton')
-  slideButton;
   protected bitcoreCash;
 
   public countDown = null;
@@ -1295,8 +1293,6 @@ export class ConfirmScPage {
     let msg: string;
     if (!error) return;
     this.logger.warn('ERROR:', error);
-    if (this.isCordova) this.slideButton.isConfirmed(false);
-
     if (
       (error as Error).message === 'FINGERPRINT_CANCELLED' ||
       (error as Error).message === 'PASSWORD_CANCELLED'
@@ -1365,7 +1361,6 @@ export class ConfirmScPage {
           this.logger.debug('Transaction Fee:', txp.fee);
           return this.confirmTx(txp, wallet).then((nok: boolean) => {
             if (nok) {
-              if (this.isCordova) this.slideButton.isConfirmed(false);
               this.onGoingProcessProvider.clear();
               return;
             }
@@ -1452,7 +1447,6 @@ export class ConfirmScPage {
         }
       })
       .catch(err => {
-        if (this.isCordova) this.slideButton.isConfirmed(false);
         this.onGoingProcessProvider.clear();
         this.showErrorInfoSheet(err);
         if (txp.payProUrl || this.navParams.data.isEthMultisigInstantiation) {
@@ -1723,7 +1717,6 @@ export class ConfirmScPage {
   }
 
   protected showErrorAndBack(err): void {
-    if (this.isCordova) this.slideButton.isConfirmed(false);
     this.logger.error(err);
     err = err.errors ? err.errors[0].message : err;
     this.popupProvider.ionicAlert(this.translate.instant('Error'), err);
