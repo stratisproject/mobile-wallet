@@ -830,7 +830,6 @@ export class ConfirmCardPurchasePage extends ConfirmPage {
   }
 
   protected showErrorAndBack(err): void {
-    if (this.isCordova) this.slideButton.isConfirmed(false);
     this.logger.error(err);
     err = err.errors ? err.errors[0].message : err;
     this.popupProvider.ionicAlert(this.translate.instant('Error'), err);
