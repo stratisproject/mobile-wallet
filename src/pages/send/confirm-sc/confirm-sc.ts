@@ -1277,7 +1277,7 @@ export class ConfirmScPage {
     insufficientFundsInfoSheet.present();
     insufficientFundsInfoSheet.onDidDismiss(option => {
       if (option || typeof option === 'undefined') {
-        this.fromWalletDetails ? this.navCtrl.pop() : this.navCtrl.popToRoot();
+        this.navCtrl.popToRoot();
       } else {
         this.tx.sendMax = true;
         this.setWallet(this.wallet);
@@ -1319,9 +1319,7 @@ export class ConfirmScPage {
       infoSheetTitle,
       () => {
         if (exit) {
-          this.fromWalletDetails
-            ? this.navCtrl.popToRoot()
-            : this.navCtrl.pop();
+          this.navCtrl.popToRoot();
         }
       }
     );
