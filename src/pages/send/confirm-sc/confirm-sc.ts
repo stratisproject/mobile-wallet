@@ -837,6 +837,8 @@ export class ConfirmScPage {
         .catch(err => {
           if (err.message == 'Insufficient funds') {
             return reject('insufficient_funds');
+          } else if(err.message.startsWith('Insufficient funds for fee')) {
+            return reject('insufficient_funds_for_fee');
           } else {
             return reject(err);
           }
