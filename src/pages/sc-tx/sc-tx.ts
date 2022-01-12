@@ -64,7 +64,7 @@ export class ScTxPage {
 
     this.logger.info(data);
 
-    if(this.validateInput()) { 
+    if(this.validateInput(data.value)) { 
       let qrcodeData = JSON.parse(data.value) as QrCodePayload;
       
       this.navCtrl.push(ConfirmScPage, {
@@ -92,9 +92,9 @@ export class ScTxPage {
       && this.instanceOfQrCodeParameters(data.parameters);
   }
 
-  private validateInput() {
+  private validateInput(data: string) {
     try {
-      let result = JSON.parse(this.scTxDataForm.controls['txData'].value);
+      let result = JSON.parse(data);
 
       if(!this.instanceOfQrCodePayload(result)) {
         throw new Error("Not a correctly formatted QR code");
