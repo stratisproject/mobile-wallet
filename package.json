@@ -23,14 +23,14 @@
   },
   "dom_storage_quota": 200,
   "id": "jid1-x7bV5evAaI1P9Q",
-  "homepage": "https://copay.io",
+  "homepage": "https://stratisplatform.com",
   "license": "MIT",
   "repository": {
-    "url": "git://github.com/bitpay/copay.git",
+    "url": "git://github.com/stratisproject/mobile-wallet.git",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/bitpay/copay/issues"
+    "url": "https://github.com/stratisproject/mobile-wallet/issues"
   },
   "scripts": {
     "postinstall": "npm run env:dev && npm run prompt && npm run patch:bwc && npm run patch:walletconnect",
@@ -158,6 +158,7 @@
     "cordova-launch-review": "3.1.1",
     "cordova-plugin-add-swift-support": "2.0.2",
     "cordova-plugin-advanced-http": "2.1.0",
+    "cordova-plugin-androidx-adapter": "1.1.3",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-customurlscheme-ng": "10.0.0",
     "cordova-plugin-device": "2.0.1",
@@ -304,7 +305,8 @@
       "cordova-plugin-add-swift-support": {},
       "cordova-plugin-fingerprint-aio": {
         "FACEID_USAGE_DESCRIPTION": " "
-      }
+      },
+      "cordova-plugin-androidx-adapter": {}
     },
     "platforms": [
       "ios",
