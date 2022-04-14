@@ -1,3 +1,4 @@
+import { AuthData } from './../../models/auth/authdata';
 import { Component, NgZone } from '@angular/core';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TranslateService } from '@ngx-translate/core';
@@ -94,6 +95,7 @@ export class WalletDetailsPage {
   public isDarkModeEnabled: boolean;
   public showBuyCrypto: boolean;
   public showExchangeCrypto: boolean;
+  public signingCode: string;
 
   constructor(
     private currencyProvider: CurrencyProvider,
@@ -126,6 +128,14 @@ export class WalletDetailsPage {
     this.isCordova = this.platformProvider.isCordova;
 
     this.wallet = this.profileProvider.getWallet(this.navParams.data.walletId);
+    this.signingCode = this.navParams.data.code;
+    if (!!this.signingCode) {
+      this.logger.info(`Loaded wallet details with signing code '${atob(this.signingCode)}'`);
+      this.navCtrl.push(ConfirmAuthPage, {
+        message: this.parseInput(atob(this.signingCode)),
+        walletId: this.navParams.data.walletId,
+      });
+    }
     this.useLegacyQrCode = this.configProvider.get().legacyQrCode.show;
     this.isDarkModeEnabled = this.themeProvider.isDarkModeEnabled();
     this.showBuyCrypto =
@@ -916,5 +926,17 @@ export class WalletDetailsPage {
       okText,
       cancelText
     );
+  }
+
+  private parseInput(message: string) {
+    try {
+      let url = new URL(message);
+
+      return new AuthData(url);
+    }
+    catch (e) {
+      this.errorsProvider.showDefaultError(e, "Unreadable signing code");
+      return null;
+    }
   }
 }

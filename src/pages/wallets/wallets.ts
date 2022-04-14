@@ -4,6 +4,7 @@ import {
   Events,
   ModalController,
   NavController,
+  NavParams,
   Platform
 } from 'ionic-angular';
 import * as _ from 'lodash';
@@ -54,6 +55,7 @@ export class WalletsPage {
   public showCoinbase: boolean;
   public coinbaseLinked: boolean;
   public coinbaseData: object = {};
+  public signingCode: string;
 
   constructor(
     private plt: Platform,
@@ -68,10 +70,20 @@ export class WalletsPage {
     private translate: TranslateService,
     private modalCtrl: ModalController,
     private actionSheetProvider: ActionSheetProvider,
-    private coinbaseProvider: CoinbaseProvider
+    private coinbaseProvider: CoinbaseProvider,
+    private navParams: NavParams
   ) {
     this.collapsedGroups = {};
     this.zone = new NgZone({ enableLongStackTrace: false });
+
+    this.signingCode = this.navParams.get('code');
+    this.logger.info(`Loaded wallets with code ${this.signingCode}`);
+    if (!!this.signingCode) {
+      const infoSheet = this.actionSheetProvider.createInfoSheet(
+        'select-wallet'
+      );
+      infoSheet.present();
+    }
   }
 
   ionViewDidEnter() {
@@ -355,7 +367,8 @@ export class WalletsPage {
   public goToWalletDetails(wallet): void {
     if (wallet.isComplete()) {
       this.navCtrl.push(WalletDetailsPage, {
-        walletId: wallet.credentials.walletId
+        walletId: wallet.credentials.walletId,
+        code: this.signingCode
       });
     } else {
       const copayerModal = this.modalCtrl.create(

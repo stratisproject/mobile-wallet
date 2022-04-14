@@ -126,6 +126,7 @@
     <icon background="resources/bitpay/android/icon/v26/mipmap-xhdpi/ic_launcher_background.png" density="xhdpi" foreground="resources/bitpay/android/icon/v26/mipmap-xhdpi/ic_launcher_foreground.png" />
     <icon background="resources/bitpay/android/icon/v26/mipmap-xxhdpi/ic_launcher_background.png" density="xxhdpi" foreground="resources/bitpay/android/icon/v26/mipmap-xxhdpi/ic_launcher_foreground.png" />
     <icon background="resources/bitpay/android/icon/v26/mipmap-xxxhdpi/ic_launcher_background.png" density="xxxhdpi" foreground="resources/bitpay/android/icon/v26/mipmap-xxxhdpi/ic_launcher_foreground.png" />
+    <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="loglevel" value="DEBUG" />
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="iosPersistentFileLocation" value="Library" />

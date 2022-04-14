@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.stratisplatform.mobile"
+<widget id="com.stratis.live"
   version="*VERSION*"
   android-versionCode="*ANDROIDVERSION*"
   ios-CFBundleVersion="*IOSBUILDVERSION*"
@@ -120,6 +120,18 @@
           <string>fb</string>
           <string>twitter</string>
         </array>
+      </config-file>
+
+      <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
+          <array>
+              <string>applinks:stratis-universal.com</string>
+          </array>
+      </config-file>
+
+      <config-file target="*-Release.plist" parent="com.apple.developer.associated-domains">
+          <array>
+              <string>applinks:stratis-universal.com</string>
+          </array>
       </config-file>
 
       <icon src="resources/*PACKAGENAME*/ios/icon/icon-60@3x.png" width="180" height="180" />

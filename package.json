@@ -2,7 +2,7 @@
   "name": "stratiswallet",
   "description": "A Secure Stratis Wallet",
   "author": "BitPay",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "keywords": [
     "bitcoin",
     "wallet",
@@ -110,8 +110,11 @@
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
     "@angular/tsc-wrapped": "4.4.6",
+    "@awesome-cordova-plugins/core": "^5.40.0",
+    "@awesome-cordova-plugins/deeplinks": "^5.40.0",
     "@ionic-native/clipboard": "4.14.0",
     "@ionic-native/core": "4.14.0",
+    "@ionic-native/deeplinks": "4.14.0",
     "@ionic-native/device": "4.14.0",
     "@ionic-native/file": "4.14.0",
     "@ionic-native/fingerprint-aio": "4.14.0",
@@ -188,6 +191,7 @@
     "inherits": "=2.0.1",
     "ionic-angular": "3.9.10",
     "ionic-image-loader": "6.3.2",
+    "ionic-plugin-deeplinks": "^1.0.24",
     "ionicons": "3.0.0",
     "json-stable-stringify": "^1.0.1",
     "lodash": "4.17.19",
@@ -271,7 +275,9 @@
       "cordova-clipboard": {},
       "cordova-plugin-x-toast": {},
       "cordova-plugin-x-socialsharing": {
-        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
+        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
       },
       "cordova-plugin-qrscanner": {},
       "cordova-plugin-dialogs": {},
@@ -306,7 +312,12 @@
       "cordova-plugin-fingerprint-aio": {
         "FACEID_USAGE_DESCRIPTION": " "
       },
-      "cordova-plugin-androidx-adapter": {}
+      "cordova-plugin-androidx-adapter": {},
+      "ionic-plugin-deeplinks": {
+        "URL_SCHEME": "stratisuniversal",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "stratis-universal.com"
+      }
     },
     "platforms": [
       "ios",

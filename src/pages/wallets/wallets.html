@@ -1,8 +1,9 @@
 <ion-header class="bp-header">
   <ion-navbar>
     <ion-title>
-      <div [reveal-at-scroll-pos]="expandableHeader.headerHeight" [scrollArea]="scrollArea">
-        {{ 'Wallets' | translate }}
+      <div [reveal-at-scroll-pos]="expandableHeader.headerHeight" [scrollArea]="scrollArea" >
+        <span [hidden]="!!signingCode">{{ 'Wallets' | translate }}</span>
+        <span [hidden]="!signingCode">Please select wallet</span>
       </div>
     </ion-title>
     <ion-buttons right class="settings-button" *ngIf="walletsGroups && walletsGroups[0]">

@@ -70,7 +70,7 @@ export class ExchangeRates {
     try {
       this.rateProvider.getRates()
       .then(response => {
-        this.logger.error('Loaded');
+        
         _.forEach(this.coins, (coin, index) => {
           const rate = response[coin.unitCode].find(r => r.code.toUpperCase() === this.fiatIsoCode.toUpperCase());
           this.coins[index].currentPrice = rate.rate;

@@ -1,3 +1,5 @@
+// tslint:disable-next-line:no-submodule-imports
+import { Deeplinks } from '@ionic-native/deeplinks';
 import { Component, Renderer2, ViewChild } from '@angular/core';
 import { Device } from '@ionic-native/device';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -78,6 +80,8 @@ import { AddressbookAddPage } from '../pages/settings/addressbook/add/add';
 import { TabsPage } from '../pages/tabs/tabs';
 import { WalletDetailsPage } from '../pages/wallet-details/wallet-details';
 import { ConfirmAuthPage } from '../pages/send/confirm-auth/confirm-auth';
+// import { AuthScanNewPage } from '../pages/auth-scan-new/auth-scan-new';
+import { WalletsPage } from '../pages/wallets/wallets';
 // As the handleOpenURL handler kicks in before the App is started,
 // declare the handler function at the top of app.component.ts (outside the class definition)
 // to track the passed Url
@@ -162,7 +166,8 @@ export class CopayApp {
     private themeProvider: ThemeProvider,
     private logsProvider: LogsProvider,
     private dynamicLinksProvider: DynamicLinksProvider,
-    private locationProvider: LocationProvider
+    private locationProvider: LocationProvider,
+    private deeplinks: Deeplinks
   ) {
     this.imageLoaderConfig.setFileNameCachedWithExtension(true);
     this.imageLoaderConfig.useImageTag(true);
@@ -219,6 +224,29 @@ export class CopayApp {
   }
 
   private async onAppLoad(readySource) {
+    try {
+      this.deeplinks.route({
+        '/mobile-app/wallet/auth-scan/:code': WalletsPage,
+        '/auth-scan/:code': WalletsPage,
+        '/:code': WalletsPage
+      }).subscribe((match) => {
+        // match.$route - the route we matched, which is the matched entry from the arguments to route()
+        // match.$args - the args passed in the link
+        // match.$link - the full link data
+        this.logger.info('-----Successfully matched route----', match);
+        this.nav.push(WalletsPage, {
+          code: match.$args.code
+        });
+
+      },
+      (nomatch) => {
+        // nomatch.$link - the full link data
+        this.logger.error('-----Got a deeplink that didn\'t match----', nomatch);
+      });
+    } catch (e) {
+      this.logger.error('-----Failed to load routes----', e);
+    }
+
     const deviceInfo = this.platformProvider.getDeviceInfo();
 
     this.logger.info(

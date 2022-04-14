@@ -27,6 +27,7 @@ export type InfoSheetType =
   | 'backup-ready'
   | 'backup-later-warning'
   | 'backup-safeguard-warning'
+  | 'select-wallet'
   | 'copy-to-clipboard'
   | 'copied-gift-card-claim-code'
   | 'copied-invoice-url'

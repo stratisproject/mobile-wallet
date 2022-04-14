@@ -6,6 +6,8 @@ import { NgxTextOverflowClampModule } from 'ngx-text-overflow-clamp';
 
 import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+// tslint:disable-next-line:no-submodule-imports
+import { Deeplinks } from '@ionic-native/deeplinks';
 import {
   Config,
   IonicApp,
@@ -142,7 +144,8 @@ export class MyMissingTranslationHandler implements MissingTranslationHandler {
       provide: ErrorHandler,
       useClass: IonicErrorHandler
     },
-    FormatCurrencyPipe
+    FormatCurrencyPipe,
+    Deeplinks
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
