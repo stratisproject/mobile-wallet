@@ -316,7 +316,9 @@
       "ionic-plugin-deeplinks": {
         "URL_SCHEME": "stratisuniversal",
         "DEEPLINK_SCHEME": "https",
-        "DEEPLINK_HOST": "stratis-universal.com"
+        "DEEPLINK_HOST": "s7oo6.app.link",
+        "DEEPLINK_2_SCHEME": "https",
+        "DEEPLINK_2_HOST": "s7oo6-alternate.app.link"
       }
     },
     "platforms": [
