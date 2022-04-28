@@ -318,7 +318,9 @@
         "DEEPLINK_SCHEME": "https",
         "DEEPLINK_HOST": "f2ojv.app.link",
         "DEEPLINK_2_SCHEME": "https",
-        "DEEPLINK_2_HOST": "f2ojv-alternate.app.link"
+        "DEEPLINK_2_HOST": "f2ojv-alternate.app.link",
+        "DEEPLINK_3_SCHEME": "https",
+        "DEEPLINK_3_HOST": "stratis-universal.com"
       }
     },
     "platforms": [
