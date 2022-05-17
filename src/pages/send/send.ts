@@ -44,6 +44,8 @@ export class SendPage {
   public search: string = '';
   public invalidAddress: boolean;
   public validDataFromClipboard;
+  public transferToChain: string = '';
+  public federation: string;
   private onResumeSubscription: Subscription;
   private validDataTypeMap: string[] = [
     'BitcoinAddress',
@@ -76,6 +78,16 @@ export class SendPage {
     SelectInvoicePage,
     WalletDetailsPage
   };
+  private federationMap = {
+    crs: {
+      livenet: 'yU2jNwiac7XF8rQvSk2bgibmwsNLkkhsHV',
+      testnet: 'tGWegFbA6e6QKZP7Pe3g16kFVXMghbSfY8'
+    },
+    strax: {
+      livenet: 'cYTNBJDbgjRgcKARAvi2UCSsDdyHkjUqJ2',
+      testnet: 'xHtgXLa3CSjAVtmydqNrrMU7nZw7qdq2w6'
+    }
+  }
 
   constructor(
     private currencyProvider: CurrencyProvider,
@@ -110,6 +122,10 @@ export class SendPage {
   transferTo;
 
   ionViewDidLoad() {
+    if (this.isCrsOrStraxCoin()) {
+      this.transferToChain = this.wallet.coin;
+    }
+
     this.logger.info('Loaded: SendPage');
   }
 
@@ -168,21 +184,50 @@ export class SendPage {
     );
   }
 
+  public processTransferToChain(): void {
+    if (this.search) {
+      const parsedData = this.incomingDataProvider.parseData(this.search);
+      if (parsedData && _.indexOf(this.validDataTypeMap, parsedData.type) != -1) {
+        this.checkCoinAndNetwork(this.search);
+      }
+    }
+  }
+
+  public isCrsOrStraxCoin() {
+    return this.wallet.coin === Coin.CRS ||
+           this.wallet.coin === Coin.STRAX;
+  }
+
   private checkCoinAndNetwork(data, isPayPro?): boolean {
     let isValid, addrData;
+    let chain = this.currencyProvider.getChain(this.wallet.coin);
+
     if (isPayPro) {
       isValid =
         data &&
-        data.chain == this.currencyProvider.getChain(this.wallet.coin) &&
+        data.chain == chain &&
         data.network == this.wallet.network;
     } else {
-      addrData = this.addressProvider.getCoinAndNetwork(
-        data,
-        this.wallet.network
-      );
-      isValid =
-        this.currencyProvider.getChain(this.wallet.coin).toLowerCase() ==
-          addrData.coin && addrData.network == this.wallet.network;
+      addrData = this.addressProvider.getCoinAndNetwork(data, this.wallet.network);
+      chain = chain.toLowerCase();
+
+      if (this.isCrsOrStraxCoin()) {
+        const isCrossChain = (
+          chain === Coin.CRS && addrData.coin === Coin.STRAX ||
+          chain === Coin.STRAX && addrData.coin === Coin.CRS
+        );
+
+        isValid =
+          (chain === addrData.coin || isCrossChain) &&
+          addrData.network === this.wallet.network &&
+          addrData.coin === this.transferToChain;
+
+        if (isValid && isCrossChain) {
+          this.federation = this.federationMap[addrData.coin][addrData.network];
+        }
+      } else {
+        isValid = chain == addrData.coin && addrData.network == this.wallet.network;
+      }
     }
 
     if (isValid) {
@@ -204,12 +249,14 @@ export class SendPage {
   }
 
   private redir() {
-    this.incomingDataProvider.redir(this.search, {
+    this.incomingDataProvider.redir(this.federation || this.search, {
       activePage: 'SendPage',
       amount: this.navParams.data.amount,
-      coin: this.navParams.data.coin // TODO ???? what is this for ?
+      coin: this.navParams.data.coin, // TODO ???? what is this for ?
+      opReturn: !!this.federation ? this.search : undefined
     });
     this.search = '';
+    this.transferToChain = '';
   }
 
   private showErrorMessage() {
@@ -296,7 +343,9 @@ export class SendPage {
         _.indexOf(this.validDataTypeMap, parsedData.type) != -1
       ) {
         const isValid = this.checkCoinAndNetwork(this.search);
-        if (isValid) this.redir();
+        if (isValid && !this.isCrsOrStraxCoin()) {
+          this.redir();
+        }
       } else if (parsedData && parsedData.type == 'BitPayCard') {
         // this.close();
         this.incomingDataProvider.redir(this.search, {
@@ -312,6 +361,10 @@ export class SendPage {
     } else {
       this.invalidAddress = false;
     }
+  }
+
+  public nextPage(): void {
+    if (!this.invalidAddress) this.redir();
   }
 
   public async checkIfContact() {

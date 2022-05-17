@@ -1026,6 +1026,18 @@ export class ConfirmPage {
             gasLimit: tx.gasLimit // wallet connect needs exact gasLimit value
           }
         ];
+
+        if (this.navParams.data.opReturn) {
+          // Todo: Validations fail due to undefined values
+          // -- Need to utilize the .addData() method on Bitcore Transaction
+          // -- to output OP_RETURN data...but where?
+          // txp.outputs.push({
+          //   toAddress: undefined,
+          //   amount: 0,
+          //   message: undefined,
+          //   data: tx.opReturn
+          // })
+        }
       }
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;
       txp.dryRun = dryRun;
@@ -1190,6 +1202,8 @@ export class ConfirmPage {
               return resolve(ctxp);
             })
             .catch(err => {
+              // Note: error caught here for invalid outputs when attempting to
+              // -- create an OP_RETURN transaction by adding an extra output.
               return reject(err);
             });
         })

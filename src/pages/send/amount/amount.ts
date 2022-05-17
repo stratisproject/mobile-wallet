@@ -60,6 +60,7 @@ export class AmountPage {
   private unitDecimals: number;
   private zone;
   private description: string;
+  private opReturn: string;
 
   public disableHardwareKeyboard: boolean;
   public onlyIntegers: boolean;
@@ -142,6 +143,7 @@ export class AmountPage {
     this.color = this.navParams.data.color;
     this.fixedUnit = this.navParams.data.fixedUnit;
     this.description = this.navParams.data.description;
+    this.opReturn = this.navParams.data.opReturn;
     this.onlyIntegers = this.navParams.data.onlyIntegers
       ? this.navParams.data.onlyIntegers
       : false;
@@ -632,6 +634,10 @@ export class AmountPage {
 
     if (this.navParams.data.fromWalletDetails) {
       data.fromWalletDetails = true;
+    }
+
+    if (this.opReturn) {
+      data.opReturn = this.opReturn;
     }
 
     if (this.cardName && !skipActivationFeeAlert) {
