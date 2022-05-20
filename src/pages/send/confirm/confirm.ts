@@ -256,7 +256,8 @@ export class ConfirmPage {
       gasLimit: this.navParams.data.gasLimit,
       speedUpTx: this.isSpeedUpTx,
       fromSelectInputs: this.navParams.data.fromSelectInputs ? true : false,
-      inputs: this.navParams.data.inputs
+      inputs: this.navParams.data.inputs,
+      opReturn: this.navParams.data.opReturn
     };
 
     this.tx.sendMax = this.navParams.data.useSendMax ? true : false;
@@ -1027,16 +1028,8 @@ export class ConfirmPage {
           }
         ];
 
-        if (this.navParams.data.opReturn) {
-          // Todo: Validations fail due to undefined values
-          // -- Need to utilize the .addData() method on Bitcore Transaction
-          // -- to output OP_RETURN data...but where?
-          // txp.outputs.push({
-          //   toAddress: undefined,
-          //   amount: 0,
-          //   message: undefined,
-          //   data: tx.opReturn
-          // })
+        if (tx.opReturn) {
+          txp.opReturn = tx.opReturn;
         }
       }
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;

@@ -92,6 +92,7 @@ export interface TransactionProposal {
   gasPrice: number;
   gasLimit: number;
   contractData?: QrCodePayload;
+  opReturn?: string;
 }
 
 @Injectable()
@@ -565,7 +566,6 @@ export class WalletProvider {
   }
 
   public getAddressView(coin: Coin, network: string, address: string): string {
-    
     const protoAddr = this.getProtoAddress(coin, network, address);
     return protoAddr;
   }
