@@ -20,15 +20,11 @@
 
     <ion-row align-items-center class="wallet" *ngIf="tx.hasMultiplesOutputs && !tx.misunderstoodOutputs" (click)="showMultiplesOutputs = !showMultiplesOutputs">
       <ion-col>
-        <ion-icon item-start>
-          <img class="coin-img" src="assets/img/icon-{{tx.coin}}-small.svg" alt="Coin" />
-        </ion-icon>
+        <img class="coin-img" src="assets/img/icon-{{tx.coin}}-small.svg" alt="Coin" *ngIf="tx.coin !== 'crs' && tx.coin !== 'strax'"/>
+        <img class="coin-img" src="assets/img/currencies/{{tx.coin}}.svg" alt="Coin" *ngIf="tx.coin === 'crs' || tx.coin === 'strax'"/>
       </ion-col>
       <ion-col>
-        <span class="note-container ellipsis" translate>Multiple recipients </span>
-      </ion-col>
-      <ion-col>
-        <span>({{tx.recipientCount}}):</span>
+        <span class="note-container ellipsis" translate>Multiple recipients ({{tx.recipientCount}}):</span>
       </ion-col>
       <ion-col>
         <button ion-button clear color="grey" icon-only item-end>

@@ -104,6 +104,7 @@ export class ConfirmPage {
 
   public mainTitle: string;
   public isSpeedUpTx: boolean;
+  public destinationChain: any;
 
   // // Card flags for zen desk chat support
   // private isCardPurchase: boolean;
@@ -1030,6 +1031,7 @@ export class ConfirmPage {
 
         if (tx.opReturn) {
           txp.opReturn = tx.opReturn;
+          this.destinationChain = this.addressProvider.getCoinAndNetwork(txp.opReturn, this.wallet.network);
         }
       }
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;
@@ -1195,8 +1197,6 @@ export class ConfirmPage {
               return resolve(ctxp);
             })
             .catch(err => {
-              // Note: error caught here for invalid outputs when attempting to
-              // -- create an OP_RETURN transaction by adding an extra output.
               return reject(err);
             });
         })

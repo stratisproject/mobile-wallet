@@ -32,17 +32,10 @@
       <div class="send-header-wrapper">
         <ion-item class="search-wrapper destination" *ngIf="isCrsOrStraxCoin()">
           <ion-label>Destination Network</ion-label>
-          <ion-select [(ngModel)]="transferToChain" (ngModelChange)="processTransferToChain()" interface="action-sheet" placeholder="Select One">
+          <ion-select [(ngModel)]="transferToChain" (ngModelChange)="checkTransferToChain()" interface="action-sheet" placeholder="Select One">
             <ion-option value="crs">Cirrus Sidechain</ion-option>
             <ion-option value="strax">Strax Mainchain</ion-option>
           </ion-select>
-        </ion-item>
-
-        <ion-item class="confirmations-wrapper" *ngIf="!!transferToChain && wallet.coin !== transferToChain">
-          <h2>{{wallet.coin | uppercase}} to {{transferToChain | uppercase}} Confirmation Times</h2>
-          <p>Less than 50 {{wallet.coin | uppercase}} clear in 25 STRAX confirmations.</p>
-          <p>50 to 1000 {{wallet.coin | uppercase}} clear in 80 STRAX confirmations.</p>
-          <p>Over 1000 {{wallet.coin | uppercase}} clear in 500 STRAX confirmations.</p>
         </ion-item>
 
         <ion-item class="search-wrapper" [ngClass]="{'invalid': invalidAddress && search != ''}">
@@ -62,9 +55,5 @@
 
       <page-transfer-to [wallet]="wallet" [searchInput]="search" [useAsModal]="false" [fromWalletDetails]="true" #transferTo></page-transfer-to>
     </div>
-  </div>
-
-  <div footer-content *ngIf="isCrsOrStraxCoin()">
-    <button ion-button class="button-standard button-primary" (click)="nextPage()" [disabled]="!transferToChain || !search || invalidAddress">Next</button>
   </div>
 </wide-header-page>

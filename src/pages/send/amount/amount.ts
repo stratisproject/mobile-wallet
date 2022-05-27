@@ -106,6 +106,7 @@ export class AmountPage {
   selectOptions: { title: any; cssClass: string };
   altCurrencyInitial: any;
   supportedFiatWarning: boolean;
+  public crossChainConfirmations: number;
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -398,7 +399,25 @@ export class AmountPage {
       this.processAmount();
       this.changeDetectorRef.detectChanges();
       this.resizeFont();
+      if (this.opReturn) this._calcCrossChainConfirmations();
     });
+  }
+
+  private _calcCrossChainConfirmations(): void {
+    if (!this.allowSend) return;
+
+    // Could be fiat or coins
+    let expressionAmount = this.evaluate(this.format(this.expression));
+
+    // Evaluate and get coins amount
+    const amount = this.availableUnits[this.unitIndex].isFiat
+      ? this.fromFiat(expressionAmount)
+      : parseFloat(expressionAmount);
+
+    // Return confirmation amounts
+    if (amount < 50) this.crossChainConfirmations = 25;
+    else if (amount >= 50 && amount <= 1000) this.crossChainConfirmations = 80;
+    else this.crossChainConfirmations = 500;
   }
 
   public removeDigit(): void {

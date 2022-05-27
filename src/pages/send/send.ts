@@ -184,11 +184,13 @@ export class SendPage {
     );
   }
 
-  public processTransferToChain(): void {
+  public checkTransferToChain(): void {
     if (this.search) {
       const parsedData = this.incomingDataProvider.parseData(this.search);
-      if (parsedData && _.indexOf(this.validDataTypeMap, parsedData.type) != -1) {
-        this.checkCoinAndNetwork(this.search);
+      const validDataType = _.indexOf(this.validDataTypeMap, parsedData.type) != -1;
+
+      if (parsedData && validDataType) {
+        this.checkCoinAndNetwork(this.search)
       }
     }
   }
@@ -222,9 +224,9 @@ export class SendPage {
           addrData.network === this.wallet.network &&
           addrData.coin === this.transferToChain;
 
-        if (isValid && isCrossChain) {
-          this.federation = this.federationMap[addrData.coin][addrData.network];
-        }
+        this.federation = isValid && isCrossChain
+          ? this.federationMap[addrData.coin][addrData.network]
+          : undefined;
       } else {
         isValid = chain == addrData.coin && addrData.network == this.wallet.network;
       }
@@ -342,8 +344,12 @@ export class SendPage {
         parsedData &&
         _.indexOf(this.validDataTypeMap, parsedData.type) != -1
       ) {
-        const isValid = this.checkCoinAndNetwork(this.search);
-        if (isValid && !this.isCrsOrStraxCoin()) {
+        if (this.isCrsOrStraxCoin()) {
+          const addressData = this.addressProvider.getCoinAndNetwork(this.search, this.wallet.network)
+          this.transferToChain = addressData.coin;
+        }
+
+        if (this.checkCoinAndNetwork(this.search)) {
           this.redir();
         }
       } else if (parsedData && parsedData.type == 'BitPayCard') {
@@ -361,10 +367,6 @@ export class SendPage {
     } else {
       this.invalidAddress = false;
     }
-  }
-
-  public nextPage(): void {
-    if (!this.invalidAddress) this.redir();
   }
 
   public async checkIfContact() {

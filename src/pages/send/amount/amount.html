@@ -45,6 +45,10 @@
       </div>
     </div>
 
+    <div class="cross-chain-confirmations" *ngIf="opReturn && allowSend">
+      <p>Cross chain clears in {{crossChainConfirmations}} STRAX confirmations.</p>
+    </div>
+
     <form class="amount-switcher-margin" [ngClass]="{'fix-modal-switcher': useAsModal}" [formGroup]="quoteForm" *ngIf="this.quoteForm && fromBuyCrypto">
       <div class="amount-switcher">
         <ion-select class="switcher select-options" [selectOptions]="selectOptions" okText="{{okText}}" cancelText="{{cancelText}}" formControlName="altCurrency" (ionChange)="altCurrencyChange()">
