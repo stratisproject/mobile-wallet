@@ -60,6 +60,7 @@ export class AmountPage {
   private unitDecimals: number;
   private zone;
   private description: string;
+  private opReturn: string;
 
   public disableHardwareKeyboard: boolean;
   public onlyIntegers: boolean;
@@ -105,6 +106,7 @@ export class AmountPage {
   selectOptions: { title: any; cssClass: string };
   altCurrencyInitial: any;
   supportedFiatWarning: boolean;
+  public crossChainConfirmations: number;
 
   @ViewChild(Navbar) navBar: Navbar;
 
@@ -142,6 +144,7 @@ export class AmountPage {
     this.color = this.navParams.data.color;
     this.fixedUnit = this.navParams.data.fixedUnit;
     this.description = this.navParams.data.description;
+    this.opReturn = this.navParams.data.opReturn;
     this.onlyIntegers = this.navParams.data.onlyIntegers
       ? this.navParams.data.onlyIntegers
       : false;
@@ -396,7 +399,25 @@ export class AmountPage {
       this.processAmount();
       this.changeDetectorRef.detectChanges();
       this.resizeFont();
+      if (this.opReturn) this._calcCrossChainConfirmations();
     });
+  }
+
+  private _calcCrossChainConfirmations(): void {
+    if (!this.allowSend) return;
+
+    // Could be fiat or coins
+    let expressionAmount = this.evaluate(this.format(this.expression));
+
+    // Evaluate and get coins amount
+    const amount = this.availableUnits[this.unitIndex].isFiat
+      ? this.fromFiat(expressionAmount)
+      : parseFloat(expressionAmount);
+
+    // Return confirmation amounts
+    if (amount < 50) this.crossChainConfirmations = 25;
+    else if (amount >= 50 && amount <= 1000) this.crossChainConfirmations = 80;
+    else this.crossChainConfirmations = 500;
   }
 
   public removeDigit(): void {
@@ -632,6 +653,10 @@ export class AmountPage {
 
     if (this.navParams.data.fromWalletDetails) {
       data.fromWalletDetails = true;
+    }
+
+    if (this.opReturn) {
+      data.opReturn = this.opReturn;
     }
 
     if (this.cardName && !skipActivationFeeAlert) {

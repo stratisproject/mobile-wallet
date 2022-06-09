@@ -21,7 +21,7 @@ page-amount {
   }
   $short-screen: 630px;
   .amount-switcher-margin {
-    margin: 0 24px 40px 0;
+    margin: 0 24px 24px 0;
     @media (max-height: $short-screen) {
       margin: 1rem;
     }
@@ -115,7 +115,7 @@ page-amount {
     align-items: center;
     width: 100%;
     flex-grow: 1;
-    padding: 39px;
+    padding: 39px 39px 15px 39px;
     @media (max-height: $short-screen) {
       padding-top: 20px;
       padding-bottom: 10px;
@@ -183,5 +183,12 @@ page-amount {
     @media (max-height: $short-screen) {
       padding-bottom: 0;
     }
+  }
+
+  .cross-chain-confirmations {
+    background: rgba(79, 110, 247, 0.1);
+    color: white;
+    text-align: center;
+    padding: .25rem;
   }
 }

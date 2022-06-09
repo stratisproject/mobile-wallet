@@ -23,14 +23,16 @@
 
         <ion-note item-end>
           <div class="payment-proposal-to" *ngIf="!tx.recipientType">
-            <div class="background-content" *ngIf="!tx.paypro && !fromCoinbase" copy-to-clipboard="{{ tx.origToAddress }}">
+            <div class="background-content " *ngIf="!tx.paypro && !fromCoinbase" copy-to-clipboard="{{ (tx.opReturn || tx.origToAddress) }}">
               <img class="coin-img" src="assets/img/currencies/{{tx.coin}}.svg" [ngClass]="{'testnet': tx.network === 'testnet'}" alt="Coin" />
-              <span *ngIf="!tx.name">{{tx.origToAddress | shortenedAddress}}</span>
-              <span class="ellipsis" *ngIf="tx.name">{{tx.name}}</span>
+              <div>
+                <div *ngIf="!tx.name">{{(tx.opReturn || tx.origToAddress) | shortenedAddress}}</div>
+                <div class="ellipsis" *ngIf="tx.name">{{tx.name}}</div>
+                <div *ngIf="tx.opReturn && destinationChain">{{destinationChain.coin | uppercase}} Chain</div>
+              </div>
             </div>
 
             <div class="paypro" *ngIf="tx.paypro">
-
               <ion-icon *ngIf="tx.paypro.verified" name="lock" color="success"></ion-icon>
               <ion-icon *ngIf="!tx.paypro.verified" name="unlock" color="danger"></ion-icon>
 

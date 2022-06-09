@@ -26,6 +26,7 @@ export interface RedirParams {
   amount?: string;
   coin?: Coin;
   fromHomeCard?: boolean;
+  opReturn?: string;
 }
 
 @Injectable()
@@ -181,7 +182,7 @@ export class IncomingDataProvider {
     } else if (redirParams && redirParams.amount) {
       this.goSend(data, redirParams.amount, '', coin);
     } else {
-      this.goToAmountPage(data, coin);
+      this.goToAmountPage(data, coin, redirParams?.opReturn);
     }
   }
 
@@ -200,7 +201,7 @@ export class IncomingDataProvider {
     } else if (redirParams && redirParams.amount) {
       this.goSend(data, redirParams.amount, '', coin);
     } else {
-      this.goToAmountPage(data, coin);
+      this.goToAmountPage(data, coin, redirParams?.opReturn);
     }
   }
 
@@ -277,8 +278,8 @@ export class IncomingDataProvider {
     if (this.isValidStraxAddress(data)) {
       this.handlePlainStraxAddress(data, redirParams);
       return true;
-    } 
-    
+    }
+
     // Cirrus address
     if (this.isValidCirrusAddress(data)) {
       this.handlePlainCirrusAddress(data, redirParams);
@@ -289,20 +290,20 @@ export class IncomingDataProvider {
     if (this.isValidStraxUri(data)) {
       this.handleStraxUri(data, redirParams);
       return true;
-    } 
+    }
 
     // Cirrus URI
     if (this.isValidCirrusUri(data)) {
       this.handleCirrusUri(data, redirParams);
       return true;
-    } 
+    }
 
     if (this.isValidJoinCode(data) || this.isValidJoinLegacyCode(data)) {
       this.goToJoinWallet(data);
-      return true; 
+      return true;
     }
 
-    // Check Private Key    
+    // Check Private Key
     if (this.isValidPrivateKey(data)) {
       this.handlePrivateKey(data, redirParams);
       return true;
@@ -324,7 +325,7 @@ export class IncomingDataProvider {
     }
 
     this.logger.warn('Incoming-data: Unknown information');
-    return false;    
+    return false;
   }
 
   navigateToAuthConfirm(data: AuthData) {
@@ -415,7 +416,7 @@ export class IncomingDataProvider {
     let instanceOfQrCodeParameters = (parameters: []) => {
       return Array.isArray(parameters) && parameters.every(p => instanceOfQrCodeParameter(p));
     }
-  
+
     let instanceOfQrCodeParameter = (data: any) => {
       return 'label' in data
         && 'value' in data;
@@ -429,7 +430,7 @@ export class IncomingDataProvider {
         && 'callback' in data
         && instanceOfQrCodeParameters(data.parameters);
     }
-  
+
     try {
       let result = JSON.parse(data);
 
@@ -439,7 +440,7 @@ export class IncomingDataProvider {
 
       return result;
     }
-    catch (e) { 
+    catch (e) {
       return null;
     }
   }
@@ -453,15 +454,15 @@ export class IncomingDataProvider {
         type: 'StraxAddress',
         title: this.translate.instant('Strax Address')
       };
-    } 
-    
+    }
+
     if (this.isValidCirrusAddress(data)) {
       return {
         data,
         type: 'CirrusAddress',
         title: this.translate.instant('Cirrus Address')
       };
-    } 
+    }
 
     // Join
     if (this.isValidJoinCode(data) || this.isValidJoinLegacyCode(data)) {
@@ -470,15 +471,15 @@ export class IncomingDataProvider {
         type: 'JoinWallet',
         title: this.translate.instant('Invitation Code')
       };
-    } 
-    
+    }
+
     // Check Private Key
     if (this.isValidPrivateKey(data)) {
       return {
         data,
         type: 'PrivateKey',
         title: this.translate.instant('Private Key')
-      };    
+      };
     }
 
     // Import Private Key
@@ -488,8 +489,8 @@ export class IncomingDataProvider {
         type: 'ImportPrivateKey',
         title: this.translate.instant('Import Words')
       };
-    } 
-    
+    }
+
     // Anything else
   }
 
@@ -584,10 +585,11 @@ export class IncomingDataProvider {
     }
   }
 
-  private goToAmountPage(toAddress: string, coin: Coin): void {
+  private goToAmountPage(toAddress: string, coin: Coin, opReturn?: string): void {
     let stateParams = {
       toAddress,
-      coin
+      coin,
+      opReturn
     };
     let nextView = {
       name: 'AmountPage',
@@ -651,7 +653,7 @@ export class IncomingDataProvider {
       );
       const instructions = payProDetails.instructions[0];
       const { toAddress, data } = instructions;
-      
+
       const stateParams = {
         amount: estimatedAmount,
         toAddress,

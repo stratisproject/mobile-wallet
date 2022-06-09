@@ -39,6 +39,9 @@ page-send {
     .backspace-icon {
       z-index: 999;
     }
+    &.destination {
+      margin-bottom: 1rem;
+    }
   }
   .invalid {
     border: 1px solid color($colors, error);

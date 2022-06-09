@@ -104,6 +104,7 @@ export class ConfirmPage {
 
   public mainTitle: string;
   public isSpeedUpTx: boolean;
+  public destinationChain: any;
 
   // // Card flags for zen desk chat support
   // private isCardPurchase: boolean;
@@ -256,7 +257,8 @@ export class ConfirmPage {
       gasLimit: this.navParams.data.gasLimit,
       speedUpTx: this.isSpeedUpTx,
       fromSelectInputs: this.navParams.data.fromSelectInputs ? true : false,
-      inputs: this.navParams.data.inputs
+      inputs: this.navParams.data.inputs,
+      opReturn: this.navParams.data.opReturn
     };
 
     this.tx.sendMax = this.navParams.data.useSendMax ? true : false;
@@ -1026,6 +1028,11 @@ export class ConfirmPage {
             gasLimit: tx.gasLimit // wallet connect needs exact gasLimit value
           }
         ];
+
+        if (tx.opReturn) {
+          txp.opReturn = tx.opReturn;
+          this.destinationChain = this.addressProvider.getCoinAndNetwork(txp.opReturn, this.wallet.network);
+        }
       }
       txp.excludeUnconfirmedUtxos = !tx.spendUnconfirmed;
       txp.dryRun = dryRun;
