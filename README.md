@@ -25,7 +25,7 @@ Clone the repo and open the directory:
 
 ```sh
 git clone https://github.com/stratisproject/mobile-wallet.git
-cd wallet
+cd mobile-wallet
 ```
 
 Ensure you have [Node](https://nodejs.org/) v10 installed, then install and start Wallet:
