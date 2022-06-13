@@ -40,7 +40,7 @@ export class AuthScanNewPage {
     this.loginUrlForm = this.formBuilder.group({
       url: [],
     });
-    
+
     this.appName = this.appProvider.info.nameCase;
     this.events.subscribe('Local/AuthScan', this.updateAddressHandler);
   }
@@ -48,10 +48,9 @@ export class AuthScanNewPage {
   ionViewDidLoad() {
     this.logger.info('Loaded: AuthScanNew');
 
-    this.hasScanner = this.platformProvider.isCordova;
-
-    if(this.hasScanner)
+    if(this.platformProvider.isCordova) {
       this.openScanner();
+    }
   }
 
   ngOnDestroy() {
@@ -69,7 +68,7 @@ export class AuthScanNewPage {
     );
 
     let loginData = this.parseInput(data.value);
-    
+
     if (loginData == null) {
       this.logger.error("Scanned auth URI was invalid")
       this.logger.error(data.value);
@@ -90,10 +89,10 @@ export class AuthScanNewPage {
       walletId: this.navParams.data.walletId,
     });
   }
-  
-  private confirm() {
+
+  public confirm() {
     let loginData = this.parseInput(this.loginUrlForm.controls['url'].value);
-    
+
     if (loginData == null) {
       this.logger.error("Scanned auth URI was invalid")
       return;
